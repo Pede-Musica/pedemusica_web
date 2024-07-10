@@ -1,6 +1,8 @@
-<section class="flex h-screen w-full">
-  <div class="lg:w-[500px] w-full h-full bg-gray-300">
-    asd
+<section class="flex h-screen w-full fade50">
+  <div class="h-full w-full lg:block hidden">
+    <!-- <img [src]="imagesService.background_login" alt="" class="object-cover h-full opacity-50"> -->
   </div>
-  <!-- <img [src]="imagesService.logo" alt="" class="h-[200px] w-full"> -->
+  <div class="lg:w-[600px] w-full h-full p-4 flex justify-center items-center">
+    <router-outlet></router-outlet>
+  </div>
 </section>

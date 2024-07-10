@@ -1,1 +1,46 @@
-<p>login works!</p>
+<section>
+  <div class="p-4">
+    <form [formGroup]="form" (ngSubmit)="doLogin()" class="p-4">
+
+      <mat-form-field class="w-full mb-3">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email"
+          placeholder="Ex. pat@example.com" required>
+        @if (this.form.controls['email'].invalid) {
+        <mat-error>Por favor, digite um e-mail válido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="w-full mb-2">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" required/>
+        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Esconder senha'"
+          [attr.aria-pressed]="hide()">
+          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (this.form.controls['password'].invalid) {
+          <mat-error>Insira a senha</mat-error>
+          }
+      </mat-form-field>
+
+      <div class="flex justify-center px-4 mb-4">
+        <button mat-flat-button type="submit" class="w-full !bg-primary">
+          @if (isLoading()) {
+            <mat-spinner diameter="30" color="tertiary"></mat-spinner>
+          } @else {
+          Entrar
+          }
+        </button>
+      </div>
+
+      @if(!isLoading) {
+        <div class="text-center">
+          <span class="text-sm text-gray-500 hover:underline hover:cursor-pointer">Esqueci minha senha</span>
+        </div>
+        }
+    </form>
+
+
+
+  </div>
+</section>

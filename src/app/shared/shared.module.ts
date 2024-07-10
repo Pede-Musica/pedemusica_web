@@ -1,7 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import {  CommonModule } from '@angular/common';
 import { MaterialModule } from './lib/material.module';
+import { ExtraOptions, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
+const config: ExtraOptions = {
+  useHash: false,
+  scrollPositionRestoration: 'top'
+};
 
 
 @NgModule({
@@ -9,10 +14,10 @@ import { MaterialModule } from './lib/material.module';
   imports: [
     CommonModule,
     MaterialModule,
-    NgOptimizedImage
   ],
   exports: [
+    RouterModule,
     MaterialModule
-  ]
+  ],
 })
 export class SharedModule { }
