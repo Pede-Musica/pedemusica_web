@@ -1,7 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
 import { ImagesService } from '@app/services/common/images.service';
+import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
 
 
@@ -10,7 +12,7 @@ import { SnackbarService } from '@app/services/common/snackbar.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public form: FormGroup;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
@@ -21,7 +23,9 @@ export class LoginComponent {
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     public imagesService: ImagesService,
-    public snackService: SnackbarService
+    public snackService: SnackbarService,
+    private _router: Router,
+    public navigationService: NavigationService
   ) {
     this.form = this._formBuilder.group(
       {
@@ -31,14 +35,31 @@ export class LoginComponent {
     )
   }
 
+  ngOnInit(): void {
+    this.checkAuth()
+  }
+
+  public checkAuth() {
+    const status = this._authService.isAuthenticated();
+
+    if (status) {
+      this._router.navigate(['/in/home']);
+    }
+  }
+
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
+  focusInput() {
+    const el = document.getElementById("user");
+    el?.focus();
+  }
+
   public doLogin() {
 
-    if(this.form.invalid){
+    if (this.form.invalid) {
       return
     }
 
@@ -48,7 +69,10 @@ export class LoginComponent {
 
     this._authService.login(data).subscribe(
       response => {
-        this.isLoading.set(false);
+        this._authService.setToken(response.access_token);
+        this._authService.setUser(response.user_name)
+        this._authService.setExpires(response.expires_in);
+        return this._router.navigate([this.navigationService.getPATH('home')])
       },
       excp => {
         this.isLoading.set(false);

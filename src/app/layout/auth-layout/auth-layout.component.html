@@ -1,5 +1,5 @@
 <section class="flex h-screen w-full fade50">
-  <div class="h-full w-full lg:flex items-center hidden relative border-r-4 border-secondary">
+  <div class="h-full w-full lg:flex items-center hidden relative">
     <div class="absolute p-10 z-50 max-w-[900px]">
       <div class="text-white bg-primary/15 p-2 rounded-md">
         <div class=" mb-2">
@@ -12,6 +12,7 @@
     </div>
     <img [src]="imagesService.background_login" alt="" class="object-cover h-full opacity-90">
   </div>
+  <div class="h-full w-3 bg-secondary"></div>
   <div class="lg:min-w-[500px] lg:max-w-[500px] w-full h-full p-4 flex justify-center items-center">
     <router-outlet></router-outlet>
   </div>

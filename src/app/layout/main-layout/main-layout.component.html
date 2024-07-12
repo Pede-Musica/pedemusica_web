@@ -1,0 +1,13 @@
+<section>
+  <div class="fixed top-0 w-full">
+    <app-navigation></app-navigation>
+  </div>
+  <main class="min-h-screen w-full overflow-auto flex fixed top-16 fade50">
+    <div class="relative">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="bg-purple-200 relative w-full">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</section>

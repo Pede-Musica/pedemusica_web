@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { differenceInSeconds, parseISO } from 'date-fns';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,56 @@ export class AuthService {
     this.router.navigate(['auth/login']);
   }
 
-  public getToken(): string | null {
-    return localStorage.getItem('access_token');
+  public getToken(): string | null{
+    const access = localStorage.getItem('access_token');
+    return access;
+  }
+
+  public setUser(user: any): void {
+    localStorage.setItem('user_data', btoa(JSON.stringify(user)));
+  }
+
+  public setToken(token: string): void {
+    localStorage.setItem('access_token', token);
+  }
+
+  public setExpires(token: string): void {
+    localStorage.setItem('expires_in', btoa(token));
+  }
+
+  public isAuthenticated(): boolean {
+
+    if (!this.getToken()) {
+      return false;
+    }
+
+    const exp = this.getExpires();
+    const now = new Date();
+    return exp > now;
+  }
+
+  public getExpires(): Date  {
+    const token = localStorage.getItem('access_token')!;
+    const decoded: any = jwtDecode(token);
+    const now = new Date();
+
+    if (decoded.exp) {
+      // exp is in seconds since the epoch (UTC)
+      const expDate = new Date(decoded.exp * 1000);
+      return expDate;
+    }
+
+    return now;
+  }
+
+  public getUser(): any {
+    const token = localStorage.getItem('access_token')!;
+    const decoded: any = jwtDecode(token);
+    return {
+      email: decoded?.email,
+      id: decoded?.id,
+      name: decoded?.name,
+      role: decoded?.role,
+    };
   }
 }

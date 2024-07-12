@@ -1,0 +1,17 @@
+<nav class="h-[60px] bg-gray-100 w-full mat-elevation-z2 flex items-center justify-between border-r-8 border-primary">
+  <div class="py-2 px-4">
+    <img [src]="imagesService.logo" alt="" class="h-[30px]">
+  </div>
+  <div class="flex justify-end items-center px-4">
+    <button mat-button [matMenuTriggerFor]="menu" class="!text-black">
+      <mat-icon>person</mat-icon>
+      {{ user_name() }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="doLogout()">
+        <mat-icon class="!text-red-500">logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</nav>
