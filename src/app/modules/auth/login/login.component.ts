@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '@app/services/auth/auth.service';
+import { ImagesService } from '@app/services/common/images.service';
+import { SnackbarService } from '@app/services/common/snackbar.service';
 
 
 @Component({
@@ -17,7 +19,9 @@ export class LoginComponent {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _authService: AuthService
+    private _authService: AuthService,
+    public imagesService: ImagesService,
+    public snackService: SnackbarService
   ) {
     this.form = this._formBuilder.group(
       {
@@ -45,6 +49,10 @@ export class LoginComponent {
     this._authService.login(data).subscribe(
       response => {
         this.isLoading.set(false);
+      },
+      excp => {
+        this.isLoading.set(false);
+        this.snackService.open(excp.error.message)
       }
     )
   }

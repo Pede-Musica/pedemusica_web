@@ -14,7 +14,7 @@ export class AuthService {
   ) { }
 
   public login(data: any): Observable<any> {
-    return this.http.post(`auth/login`, data);
+    return this.http.post(`user/auth`, data);
   }
 
   public clearAuthData(): void {
@@ -24,5 +24,9 @@ export class AuthService {
     localStorage.removeItem('expires_in');
 
     this.router.navigate(['auth/login']);
+  }
+
+  public getToken(): string | null {
+    return localStorage.getItem('access_token');
   }
 }

@@ -1,8 +1,18 @@
 <section class="flex h-screen w-full fade50">
-  <div class="h-full w-full lg:block hidden">
-    <!-- <img [src]="imagesService.background_login" alt="" class="object-cover h-full opacity-50"> -->
+  <div class="h-full w-full lg:flex items-center hidden relative border-r-4 border-secondary">
+    <div class="absolute p-10 z-50 max-w-[900px]">
+      <div class="text-white bg-primary/15 p-2 rounded-md">
+        <div class=" mb-2">
+          <span class="text-5xl drop-shadow-lg stroke-black stroke-2"><strong>Bem vindo ao CooperFlow</strong></span><br>
+        </div>
+        <div class="text-4xl font-normal drop-shadow-lg stroke-black stroke-2 flex">
+          <span class="mr-2">Aqui a sua cooperativa é mais prática, eficiente e inteligente.</span>
+        </div>
+      </div>
+    </div>
+    <img [src]="imagesService.background_login" alt="" class="object-cover h-full opacity-90">
   </div>
-  <div class="lg:w-[600px] w-full h-full p-4 flex justify-center items-center">
+  <div class="lg:min-w-[500px] lg:max-w-[500px] w-full h-full p-4 flex justify-center items-center">
     <router-outlet></router-outlet>
   </div>
 </section>

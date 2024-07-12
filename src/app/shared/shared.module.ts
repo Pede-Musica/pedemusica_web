@@ -13,7 +13,7 @@ const config: ExtraOptions = {
   declarations: [],
   imports: [
     CommonModule,
-    MaterialModule,
+    MaterialModule
   ],
   exports: [
     RouterModule,

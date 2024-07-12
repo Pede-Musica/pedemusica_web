@@ -1,11 +1,14 @@
 <section>
   <div class="p-4">
+    <div class="flex justify-center mb-6">
+      <img [src]="imagesService.logo" alt="" class="max-h-[35px]">
+    </div>
     <form [formGroup]="form" (ngSubmit)="doLogin()" class="p-4">
 
       <mat-form-field class="w-full mb-3">
         <mat-label>Email</mat-label>
-        <input type="email" matInput formControlName="email"
-          placeholder="Ex. pat@example.com" required>
+        <input type="email" matInput formControlName="email" floatLabel="always"
+          placeholder="" required>
         @if (this.form.controls['email'].invalid) {
         <mat-error>Por favor, digite um e-mail válido</mat-error>
         }
@@ -33,7 +36,7 @@
         </button>
       </div>
 
-      @if(!isLoading) {
+      @if(!isLoading()) {
         <div class="text-center">
           <span class="text-sm text-gray-500 hover:underline hover:cursor-pointer">Esqueci minha senha</span>
         </div>
