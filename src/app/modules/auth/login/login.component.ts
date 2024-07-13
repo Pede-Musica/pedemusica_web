@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     public imagesService: ImagesService,
-    public snackService: SnackbarService,
+    public snackbarService: SnackbarService,
     private _router: Router,
     public navigationService: NavigationService
   ) {
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
       },
       excp => {
         this.isLoading.set(false);
-        this.snackService.open(excp.error.message)
+        this.snackbarService.open(excp.error.message)
       }
     )
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { AuthService } from '@app/services/auth/auth.service';
 import { ImagesService } from '@app/services/common/images.service';
-import { Regex } from 'src/resources/handlers/regex';
+import { Regex } from '@app/resources/handlers/regex';
 
 @Component({
   selector: 'app-navigation',

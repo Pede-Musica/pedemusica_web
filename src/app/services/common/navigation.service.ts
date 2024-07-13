@@ -20,16 +20,47 @@ export class NavigationService {
 
   public getPATH(page: string) {
 
+    let obj = '/in/home';
+
     this.internal.map(i => {
       i.child.map((c: any) => {
         if (page === c.page) {
-          return c.path;
+          obj = c.path;
         }
       })
     })
 
-    return '/in/home';
+    return obj;
+  }
 
+  public getName(page: string) {
+
+    let obj = '';
+
+    this.internal.map(i => {
+      i.child.map((c: any) => {
+        if (page === c.page) {
+          obj = c.name;
+        }
+      })
+    })
+
+    return obj;
+  }
+
+  public getIcon(page: string) {
+
+    let obj = '';
+
+    this.internal.map(i => {
+      i.child.map((c: any) => {
+        if (page === c.page) {
+          obj = c.icon;
+        }
+      })
+    })
+
+    return obj;
   }
 
   public internal: Array<MenuProps> = [

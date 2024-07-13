@@ -1,0 +1,76 @@
+<section class="p-8">
+  @if(isLoading()) {
+  <app-loading></app-loading>
+  } @else {
+  <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+</section>
+
+<ng-template #mainTemplate>
+  <div class="mb-4 flex items-center justify-between">
+    <div class="mr-2">
+      <app-title [text]="title" [icon]="icon"></app-title>
+    </div>
+    <button mat-button routerLink="/in/users/new" class="!text-primary flex items-center"
+      matTooltip="Adicionar novo usuário">
+      <mat-icon>add</mat-icon>
+      Adicionar</button>
+  </div>
+
+  <div class="mb-8 flex">
+    <div class="lg:w-[150px] w-full mr-4">
+      <label  class="block text-sm font-medium text-gray-900">Ordem</label>
+      <select id="order" (change)="filterOrder($event)" [value]="order"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        <option selected value="asc">A → Z</option>
+        <option value="desc">Z → A</option>
+      </select>
+    </div>
+
+    <!-- <div class="lg:w-[150px] w-full mr-2">
+      <label class="block text-sm font-medium text-gray-900">Status</label>
+      <select id="status"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        <option selected [ngValue]="true">Ativo</option>
+        <option [ngValue]="false">Inativo</option>
+      </select>
+    </div> -->
+  </div>
+
+  <table mat-table [dataSource]="userList">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> E-mail </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.isActive}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef> Data de criação </th>
+      <td mat-cell *matCellDef="let element"> {{regex.convertToBRTime(element.created_at)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [routerLink]="'/in/users/' + element.id">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator (page)="pageEvent($event)" [length]="userTotal" [pageSize]="page_size"
+    [pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="page_index"></mat-paginator>
+</ng-template>

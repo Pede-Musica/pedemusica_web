@@ -5,6 +5,10 @@
 html, body { height: 100%; }
 body { margin: 0 }
 
+//COLORS
+$color-primary: theme('colors.primary');
+$color-secondary: theme('colors.secondary');
+$color-third: theme('colors.third');
 
 .fade25 {
   animation: fadeIn 0.25s;

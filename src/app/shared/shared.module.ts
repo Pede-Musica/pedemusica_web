@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TitleComponent } from './components/title/title.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -16,7 +18,9 @@ const config: ExtraOptions = {
   declarations: [
     LoaderComponent,
     NavigationComponent,
-    SidebarComponent
+    SidebarComponent,
+    TitleComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,9 @@ const config: ExtraOptions = {
     MaterialModule,
     LoaderComponent,
     NavigationComponent,
-    SidebarComponent
+    SidebarComponent,
+    TitleComponent,
+    LoadingComponent
   ],
 })
 export class SharedModule { }

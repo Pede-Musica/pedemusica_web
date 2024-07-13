@@ -1,0 +1,74 @@
+<section class="p-8">
+  @if(isLoading()) {
+  <app-loading></app-loading>
+  } @else {
+  <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+</section>
+
+<ng-template #mainTemplate>
+  <div class="mb-8 flex items-center justify-between">
+    <div class="mr-2">
+      <app-title [text]="(isEditing() ? 'Atualizar' : 'Novo') + ' usuário'" [icon]="icon"></app-title>
+    </div>
+    <button mat-button routerLink="/in/users" class="!text-primary flex items-center"
+      matTooltip="Voltar para lista de usuários">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar</button>
+  </div>
+
+  <div>
+    <form [formGroup]="form" (ngSubmit)="create()">
+      <div class="mb-4 flex">
+        <div class="lg:w-[500px] w-full mr-2">
+          <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Nome completo</label>
+          <input type="text" id="first_name" formControlName="name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          @if (form.controls['name'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Nome completo é obrigatório</p>
+          }
+        </div>
+
+        <div class="lg:w-[150px] w-full mr-2">
+          <label for="countries" class="block mb-1 text-sm font-medium text-gray-900">Status</label>
+          <select id="countries" formControlName="isActive"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option selected [ngValue]="true">Ativo</option>
+            <option [ngValue]="false">Inativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="lg:w-[500px] w-full">
+          <label for="email" class="block mb-1 text-sm font-medium text-gray-900">E-mail</label>
+          <input type="email" formControlName="email" placeholder="nome@cooperflow.com.br"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          @if (form.controls['email'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">E-mail é obrigatório</p>
+          }
+          @if (form.controls['email'].hasError('email') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">E-mail inválido</p>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="lg:w-[500px] w-full">
+          <label for="email" class="block mb-1 text-sm font-medium text-gray-900">Cargo</label>
+          <input type="email" formControlName="position" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            required />
+          @if (form.controls['position'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Cargo é obrigatório</p>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button mat-flat-button type="submit" class="!bg-green-600">{{ isEditing() ? 'Atualizar' : 'Salvar' }}</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>

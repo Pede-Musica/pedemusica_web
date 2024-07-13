@@ -1,0 +1,18 @@
+<div class="p-6">
+  <div class="flex justify-center mb-4">
+    @if(type() === 'success') {
+    <mat-icon class="scale-125 text-green-500">check</mat-icon>
+    } @else if(type() === 'error') {
+    <mat-icon class="scale-125 text-red-500">close</mat-icon>
+    } @else {
+
+    }
+  </div>
+  <div class="text-center mb-5">
+    <p class="font-medium">{{ text() }}</p>
+    <span class="text-sm">{{ submessage() }}</span>
+  </div>
+  <div class="flex justify-center">
+    <button mat-flat-button class="!bg-green-500" mat-dialog-close="">Ok!</button>
+  </div>
+</div>
