@@ -97,10 +97,10 @@ export class NavigationService {
           path: '/in/users'
         },
         {
-          page: 'farmers',
+          page: 'producers',
           name: 'Produtores',
           icon: 'compost',
-          path: '/in/farmers'
+          path: '/in/producers'
         },
         {
           page: 'customers',

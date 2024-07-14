@@ -3,23 +3,22 @@ import { PageEvent } from '@angular/material/paginator';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { UserService } from '@app/services/user/user.service';
+import { ProducerService } from '@app/services/user/producer.service';
 
-
-interface userProps {
+interface producerProps {
 
 }
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  selector: 'app-producer-list',
+  templateUrl: './producer-list.component.html',
+  styleUrl: './producer-list.component.scss'
 })
-export class UserListComponent implements OnInit {
+export class ProducerListComponent implements OnInit {
 
   public isLoading = signal(true);
   displayedColumns: string[] = ['name', 'email', 'status', 'created_at', 'action',];
-  public userList: Array<userProps> = [];
+  public userList: Array<producerProps> = [];
   public userTotal: number = 0;
   public page_size: number = 10;
   public page_index: number = 0;
@@ -27,13 +26,14 @@ export class UserListComponent implements OnInit {
 
   constructor(
     public navigationService: NavigationService,
-    private _userService: UserService,
+    private _producerService: ProducerService,
     private _snackbarService: SnackbarService,
     public regex: Regex,
   ) {}
 
+
   ngOnInit(): void {
-    this.getUsers();
+    this.getProducers();
   }
 
   get title() {
@@ -44,22 +44,23 @@ export class UserListComponent implements OnInit {
     return this.navigationService.getIcon('users');
   }
 
+  public filterOrder(event: Event) {
+    this.order = (event.target as HTMLInputElement).value;
+    this.getProducers();
+  }
+
   public pageEvent(event: PageEvent) {
     this.page_size = event.length;
     this.page_index = event.pageIndex;
     this.page_size = event.pageSize;
 
-    this.getUsers();
+    this.getProducers();
   }
 
-  public filterOrder(event: Event) {
-    this.order = (event.target as HTMLInputElement).value;
-    this.getUsers();
-  }
+  public getProducers() {
 
-  public getUsers() {
     this.isLoading.set(true);
-    console.log(this.order)
+
     const params = {
       search: '',
       page: this.page_index + 1,
@@ -67,7 +68,7 @@ export class UserListComponent implements OnInit {
       order: this.order
     }
 
-    this._userService.paginate(params).subscribe(
+    this._producerService.paginate(params).subscribe(
       data => {
         this.userList = data.data;
         this.userTotal = data.total;
@@ -78,6 +79,5 @@ export class UserListComponent implements OnInit {
       }
     )
   }
-
 
 }
