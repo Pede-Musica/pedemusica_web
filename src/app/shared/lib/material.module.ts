@@ -11,6 +11,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [],
@@ -27,7 +29,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRadioModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatInputModule,
@@ -41,7 +45,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRadioModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }

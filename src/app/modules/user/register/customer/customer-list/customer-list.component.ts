@@ -3,30 +3,31 @@ import { PageEvent } from '@angular/material/paginator';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { ProducerService } from '@app/services/user/producer.service';
+import { CustomerService } from '@app/services/user/customer.service';
 
-interface producerProps {
+interface props {
 
 }
 
+
 @Component({
-  selector: 'app-producer-list',
-  templateUrl: './producer-list.component.html',
-  styleUrl: './producer-list.component.scss'
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
+  styleUrl: './customer-list.component.scss'
 })
-export class ProducerListComponent implements OnInit {
+export class CustomerListComponent {
 
   public isLoading = signal(true);
   displayedColumns: string[] = ['name', 'email', 'status', 'created_at', 'action',];
-  public producerList: Array<producerProps> = [];
-  public producerTotal: number = 0;
+  public customerList: Array<props> = [];
+  public customerTotal: number = 0;
   public page_size: number = 10;
   public page_index: number = 0;
   public order: string = 'asc';
 
   constructor(
     public navigationService: NavigationService,
-    private _producerService: ProducerService,
+    private _customerService: CustomerService,
     private _snackbarService: SnackbarService,
     public regex: Regex,
   ) {}
@@ -37,11 +38,11 @@ export class ProducerListComponent implements OnInit {
   }
 
   get title() {
-    return this.navigationService.getName('producers');
+    return this.navigationService.getName('customers');
   }
 
   get icon() {
-    return this.navigationService.getIcon('producers');
+    return this.navigationService.getIcon('customers');
   }
 
   public filterOrder(event: Event) {
@@ -68,10 +69,10 @@ export class ProducerListComponent implements OnInit {
       order: this.order
     }
 
-    this._producerService.paginate(params).subscribe(
+    this._customerService.paginate(params).subscribe(
       data => {
-        this.producerList = data.data;
-        this.producerTotal = data.total;
+        this.customerList = data.data;
+        this.customerTotal = data.total;
         this.isLoading.set(false);
       },
       error => {

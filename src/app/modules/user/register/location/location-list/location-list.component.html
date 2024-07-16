@@ -11,8 +11,8 @@
     <div class="mr-2">
       <app-title [text]="title" [icon]="icon"></app-title>
     </div>
-    <button mat-button routerLink="/in/users/new" class="!text-primary flex items-center"
-      matTooltip="Adicionar novo usuário">
+    <button mat-button routerLink="/in/locations/new" class="!text-primary flex items-center"
+      matTooltip="Adicionar nova localização">
       <mat-icon>add</mat-icon>
       Adicionar</button>
   </div>
@@ -37,16 +37,16 @@
     </div> -->
   </div>
 
-  <table mat-table [dataSource]="userList">
+  <table mat-table [dataSource]="locationList">
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Nome </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> E-mail </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    <ng-container matColumnDef="sector">
+      <th mat-header-cell *matHeaderCellDef> Setor </th>
+      <td mat-cell *matCellDef="let element"> {{element.Sector?.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
@@ -68,7 +68,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button [routerLink]="'/in/users/' + element.id">
+        <button mat-icon-button [routerLink]="'/in/locations/' + element.id">
           <mat-icon>edit</mat-icon>
         </button>
       </td>
@@ -77,6 +77,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator (page)="pageEvent($event)" [length]="userTotal" [pageSize]="page_size"
+  <mat-paginator (page)="pageEvent($event)" [length]="locationTotal" [pageSize]="page_size"
     [pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="page_index"></mat-paginator>
 </ng-template>

@@ -8,6 +8,14 @@ import { UserListComponent } from './register/user/user-list/user-list.component
 import { UserFormComponent } from './register/user/user-form/user-form.component';
 import { ProducerListComponent } from './register/producer/producer-list/producer-list.component';
 import { ProducerFormComponent } from './register/producer/producer-form/producer-form.component';
+import { CustomerFormComponent } from './register/customer/customer-form/customer-form.component';
+import { CustomerListComponent } from './register/customer/customer-list/customer-list.component';
+import { ProductFormComponent } from './register/product/product-form/product-form.component';
+import { ProductListComponent } from './register/product/product-list/product-list.component';
+import { LocationFormComponent } from './register/location/location-form/location-form.component';
+import { LocationListComponent } from './register/location/location-list/location-list.component';
+import { MaterialFormComponent } from './register/material/material-form/material-form.component';
+import { MaterialListComponent } from './register/material/material-list/material-list.component';
 
 
 @NgModule({
@@ -16,7 +24,15 @@ import { ProducerFormComponent } from './register/producer/producer-form/produce
     UserListComponent,
     UserFormComponent,
     ProducerListComponent,
-    ProducerFormComponent
+    ProducerFormComponent,
+    CustomerFormComponent,
+    CustomerListComponent,
+    ProductFormComponent,
+    ProductListComponent,
+    LocationFormComponent,
+    LocationListComponent,
+    MaterialFormComponent,
+    MaterialListComponent
   ],
   imports: [
     CommonModule,

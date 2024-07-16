@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/services/auth/auth.service';
 import { ImagesService } from '@app/services/common/images.service';
 import { NavigationService } from '@app/services/common/navigation.service';
@@ -12,13 +12,16 @@ import { SnackbarService } from '@app/services/common/snackbar.service';
   templateUrl: './new-account.component.html',
   styleUrl: './new-account.component.scss'
 })
-export class NewAccountComponent {
+export class NewAccountComponent implements OnInit {
 
   public form: FormGroup;
   hide = signal(true);
   hide2 = signal(true);
   isLoading = signal(false);
+  isReady = signal(false);
   error = signal('');
+  email = signal('');
+  token = signal('');
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -26,12 +29,30 @@ export class NewAccountComponent {
     public imagesService: ImagesService,
     public snackbarService: SnackbarService,
     private _router: Router,
-    public navigationService: NavigationService
+    public navigationService: NavigationService,
+    private _activeRoute: ActivatedRoute
   ) {
     this.form = this._formBuilder.group(
       {
         password: ['', [Validators.required]],
         confirm: ['', [Validators.required]]
+      }
+    )
+  }
+
+  ngOnInit(): void {
+    this.checkToken();
+  }
+
+  public checkToken() {
+
+    const token = this._activeRoute.snapshot.params['token'];
+    this.token.set(token)
+
+    this._authService.validatePassword(token).subscribe(
+      response => {
+        this.email.set(response?.email)
+        this.isReady.set(true)
       }
     )
   }
@@ -57,7 +78,7 @@ export class NewAccountComponent {
     }
 
     if(data.password !== data.confirm) {
-      this.error.set('Senhas digitadas não coincidem');
+      this.error.set('Senhas não coincidem');
       return
     } else {
       this.error.set('')
@@ -65,6 +86,8 @@ export class NewAccountComponent {
 
     this.isLoading.set(true);
 
+    data.email = this.email();
+    data.token = this.token();
 
     this._authService.setPassword(data).subscribe(
       response => {

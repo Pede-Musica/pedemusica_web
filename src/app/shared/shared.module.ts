@@ -7,6 +7,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TitleComponent } from './components/title/title.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { NgxMaskPipe, NgxMaskDirective } from 'ngx-mask'
 
 const config: ExtraOptions = {
   useHash: false,
@@ -20,12 +21,14 @@ const config: ExtraOptions = {
     NavigationComponent,
     SidebarComponent,
     TitleComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    NgxMaskPipe,
+    NgxMaskDirective
   ],
   exports: [
     RouterModule,
@@ -34,7 +37,9 @@ const config: ExtraOptions = {
     NavigationComponent,
     SidebarComponent,
     TitleComponent,
-    LoadingComponent
+    LoadingComponent,
+    NgxMaskPipe,
+    NgxMaskDirective
   ],
 })
 export class SharedModule { }

@@ -3,33 +3,35 @@ import { PageEvent } from '@angular/material/paginator';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { ProducerService } from '@app/services/user/producer.service';
+import { CustomerService } from '@app/services/user/customer.service';
+import { ProductService } from '@app/services/user/product.service';
 
-interface producerProps {
+interface props {
 
 }
 
+
 @Component({
-  selector: 'app-producer-list',
-  templateUrl: './producer-list.component.html',
-  styleUrl: './producer-list.component.scss'
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.scss'
 })
-export class ProducerListComponent implements OnInit {
+export class ProductListComponent {
 
   public isLoading = signal(true);
   displayedColumns: string[] = ['name', 'email', 'status', 'created_at', 'action',];
-  public producerList: Array<producerProps> = [];
-  public producerTotal: number = 0;
+  public productList: Array<props> = [];
+  public productTotal: number = 0;
   public page_size: number = 10;
   public page_index: number = 0;
   public order: string = 'asc';
 
   constructor(
     public navigationService: NavigationService,
-    private _producerService: ProducerService,
+    private _productService: ProductService,
     private _snackbarService: SnackbarService,
     public regex: Regex,
-  ) {}
+  ) { }
 
 
   ngOnInit(): void {
@@ -37,11 +39,11 @@ export class ProducerListComponent implements OnInit {
   }
 
   get title() {
-    return this.navigationService.getName('producers');
+    return this.navigationService.getName('products');
   }
 
   get icon() {
-    return this.navigationService.getIcon('producers');
+    return this.navigationService.getIcon('products');
   }
 
   public filterOrder(event: Event) {
@@ -68,10 +70,10 @@ export class ProducerListComponent implements OnInit {
       order: this.order
     }
 
-    this._producerService.paginate(params).subscribe(
+    this._productService.paginate(params).subscribe(
       data => {
-        this.producerList = data.data;
-        this.producerTotal = data.total;
+        this.productList = data.data;
+        this.productTotal = data.total;
         this.isLoading.set(false);
       },
       error => {

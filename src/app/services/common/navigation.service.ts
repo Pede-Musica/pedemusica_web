@@ -75,8 +75,8 @@ export class NavigationService {
         },
         {
           page: 'movimentation',
-          name: 'Entrada e Saída',
-          icon: 'repeat',
+          name: 'Histórico',
+          icon: 'manage_search',
           path: '/in/movimentation'
         },
         {
@@ -124,7 +124,7 @@ export class NavigationService {
           page: 'materials',
           name: 'Materiais',
           icon: 'inventory',
-          path: '/in/locations'
+          path: '/in/materials'
         },
       ]
     }

@@ -1,52 +1,54 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { LocationService } from './../../../../../services/user/location.service';
+import { Component, signal } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { ProducerService } from '@app/services/user/producer.service';
+import { MaterialService } from '@app/services/user/material.service';
 
-interface producerProps {
+interface props {
 
 }
 
+
 @Component({
-  selector: 'app-producer-list',
-  templateUrl: './producer-list.component.html',
-  styleUrl: './producer-list.component.scss'
+  selector: 'app-material-list',
+  templateUrl: './material-list.component.html',
+  styleUrl: './material-list.component.scss'
 })
-export class ProducerListComponent implements OnInit {
+export class MaterialListComponent {
 
   public isLoading = signal(true);
   displayedColumns: string[] = ['name', 'email', 'status', 'created_at', 'action',];
-  public producerList: Array<producerProps> = [];
-  public producerTotal: number = 0;
+  public locationList: Array<props> = [];
+  public locationTotal: number = 0;
   public page_size: number = 10;
   public page_index: number = 0;
   public order: string = 'asc';
 
   constructor(
     public navigationService: NavigationService,
-    private _producerService: ProducerService,
+    private _materialService: MaterialService,
     private _snackbarService: SnackbarService,
     public regex: Regex,
-  ) {}
+  ) { }
 
 
   ngOnInit(): void {
-    this.getProducers();
+    this.getMaterials();
   }
 
   get title() {
-    return this.navigationService.getName('producers');
+    return this.navigationService.getName('materials');
   }
 
   get icon() {
-    return this.navigationService.getIcon('producers');
+    return this.navigationService.getIcon('materials');
   }
 
   public filterOrder(event: Event) {
     this.order = (event.target as HTMLInputElement).value;
-    this.getProducers();
+    this.getMaterials();
   }
 
   public pageEvent(event: PageEvent) {
@@ -54,10 +56,10 @@ export class ProducerListComponent implements OnInit {
     this.page_index = event.pageIndex;
     this.page_size = event.pageSize;
 
-    this.getProducers();
+    this.getMaterials();
   }
 
-  public getProducers() {
+  public getMaterials() {
 
     this.isLoading.set(true);
 
@@ -68,10 +70,10 @@ export class ProducerListComponent implements OnInit {
       order: this.order
     }
 
-    this._producerService.paginate(params).subscribe(
+    this._materialService.paginate(params).subscribe(
       data => {
-        this.producerList = data.data;
-        this.producerTotal = data.total;
+        this.locationList = data.data;
+        this.locationTotal = data.total;
         this.isLoading.set(false);
       },
       error => {

@@ -1,49 +1,57 @@
 <section>
   <div class="px-4">
-    <form [formGroup]="form" (ngSubmit)="createPassword()" class="p-4">
-      <div class="mb-2 text-center">
-        <span class="text-base font-medium">Primeiro acesso</span>
-      </div>
-      <mat-form-field class="w-full mb-4">
-        <mat-label>Nova senha</mat-label>
-        <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" required />
-        <mat-hint>Mínimo 6 caracteres</mat-hint>
-        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Esconder senha'"
-          [attr.aria-pressed]="hide()">
-          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        @if (this.form.controls['password'].invalid) {
-        <mat-error>Insira a senha</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field class="w-full">
-        <mat-label>Confirmar senha</mat-label>
-        <input matInput formControlName="confirm" [type]="hide2() ? 'password' : 'text'" required />
-        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Esconder senha'"
-          [attr.aria-pressed]="hide()">
-          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        @if (this.form.controls['password'].invalid) {
-        <mat-error>Insira a senha</mat-error>
-        }
-      </mat-form-field>
-
-      <div class="text-center mb-2">
-        <span class="text-red-500 text-sm">{{  error() }}</span>
-      </div>
-
-      <div class="flex justify-center px-4 mb-4">
-        <button mat-flat-button type="submit" class="w-full !bg-primary">
-          @if (isLoading()) {
-          <div>
-            <app-loader [diameter]="30"></app-loader>
-          </div>
-          } @else {
-          Salvar senha
-          }
-        </button>
-      </div>
-    </form>
+    @if(isReady()) {
+      <ng-container *ngTemplateOutlet="mainTemp"></ng-container>
+    } @else {
+      <app-loading></app-loading>
+    }
   </div>
 </section>
+
+<ng-template #mainTemp>
+  <form [formGroup]="form" (ngSubmit)="createPassword()" class="p-4">
+    <div class="mb-2 text-center">
+      <span class="text-base font-medium">Primeiro acesso</span>
+    </div>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Nova senha</mat-label>
+      <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" required />
+      <mat-hint>Mínimo 6 caracteres</mat-hint>
+      <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Esconder senha'"
+        [attr.aria-pressed]="hide()">
+        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      @if (this.form.controls['password'].invalid) {
+      <mat-error>Insira a senha</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Confirmar senha</mat-label>
+      <input matInput formControlName="confirm" [type]="hide2() ? 'password' : 'text'" required />
+      <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Esconder senha'"
+        [attr.aria-pressed]="hide()">
+        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      @if (this.form.controls['password'].invalid) {
+      <mat-error>Insira a senha</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="text-center mb-2">
+      <span class="text-red-500 text-sm">{{  error() }}</span>
+    </div>
+
+    <div class="flex justify-center px-4 mb-4">
+      <button mat-flat-button type="submit" class="w-full !bg-primary">
+        @if (isLoading()) {
+        <div>
+          <app-loader [diameter]="30"></app-loader>
+        </div>
+        } @else {
+        Salvar senha
+        }
+      </button>
+    </div>
+  </form>
+</ng-template>

@@ -11,6 +11,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthGuard } from './guards/auth.guard';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './resources/custom/custom-paginator';
+import { provideNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl },
+    provideNgxMask(),
     AuthGuard
   ],
 
@@ -33,5 +35,6 @@ const config: ExtraOptions = {
   useHash: false,
   scrollPositionRestoration: 'top'
 };
+
 
 

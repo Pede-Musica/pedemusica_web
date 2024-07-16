@@ -1,35 +1,37 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { LocationService } from './../../../../../services/user/location.service';
+import { Component, signal } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { ProducerService } from '@app/services/user/producer.service';
+import { ProductService } from '@app/services/user/product.service';
 
-interface producerProps {
+interface props {
 
 }
 
+
 @Component({
-  selector: 'app-producer-list',
-  templateUrl: './producer-list.component.html',
-  styleUrl: './producer-list.component.scss'
+  selector: 'app-location-list',
+  templateUrl: './location-list.component.html',
+  styleUrl: './location-list.component.scss'
 })
-export class ProducerListComponent implements OnInit {
+export class LocationListComponent {
 
   public isLoading = signal(true);
-  displayedColumns: string[] = ['name', 'email', 'status', 'created_at', 'action',];
-  public producerList: Array<producerProps> = [];
-  public producerTotal: number = 0;
+  displayedColumns: string[] = ['name', 'sector', 'status', 'created_at', 'action',];
+  public locationList: Array<props> = [];
+  public locationTotal: number = 0;
   public page_size: number = 10;
   public page_index: number = 0;
   public order: string = 'asc';
 
   constructor(
     public navigationService: NavigationService,
-    private _producerService: ProducerService,
+    private _locationService: LocationService,
     private _snackbarService: SnackbarService,
     public regex: Regex,
-  ) {}
+  ) { }
 
 
   ngOnInit(): void {
@@ -37,11 +39,11 @@ export class ProducerListComponent implements OnInit {
   }
 
   get title() {
-    return this.navigationService.getName('producers');
+    return this.navigationService.getName('locations');
   }
 
   get icon() {
-    return this.navigationService.getIcon('producers');
+    return this.navigationService.getIcon('locations');
   }
 
   public filterOrder(event: Event) {
@@ -68,10 +70,10 @@ export class ProducerListComponent implements OnInit {
       order: this.order
     }
 
-    this._producerService.paginate(params).subscribe(
+    this._locationService.paginate(params).subscribe(
       data => {
-        this.producerList = data.data;
-        this.producerTotal = data.total;
+        this.locationList = data.data;
+        this.locationTotal = data.total;
         this.isLoading.set(false);
       },
       error => {

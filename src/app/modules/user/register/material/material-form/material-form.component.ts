@@ -1,30 +1,33 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from '@app/services/common/dialog.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { ProducerService } from '@app/services/user/producer.service';
+import { MaterialService } from '@app/services/user/material.service';
+import { ProductService } from '@app/services/user/product.service';
 import { Observable } from 'rxjs';
 
+
+
 @Component({
-  selector: 'app-producer-form',
-  templateUrl: './producer-form.component.html',
-  styleUrl: './producer-form.component.scss'
+  selector: 'app-material-form',
+  templateUrl: './material-form.component.html',
+  styleUrl: './material-form.component.scss'
 })
-export class ProducerFormComponent {
+export class MaterialFormComponent {
 
   public isLoading = signal(false);
   public isEditing = signal(false);
   public showError = signal(false);
   public form: FormGroup
-  public producer_id = signal('');
+  public material_id = signal('');
 
   constructor(
     public navigationService: NavigationService,
     private _formBuilder: FormBuilder,
     public dialogService: DialogService,
-    private _producerService: ProducerService,
+    private _materialService: MaterialService,
     private _router: Router,
     private _snackService: SnackbarService,
     private _activeRoute: ActivatedRoute
@@ -32,31 +35,34 @@ export class ProducerFormComponent {
     this.form = this._formBuilder.group({
       name: ['', [Validators.required]],
       isActive: [true, [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      address: ['', [Validators.required]],
-      phone: ['', [Validators.required]]
+      volume: [0, [Validators.required, Validators.min(0), Validators.max(999999999)]],
+      volume_type: ['KG', [Validators.required]],
+      in_stock: [0, [Validators.required, Validators.min(0), Validators.max(999999999)]],
+      traceable: [false, [Validators.required]],
+      description: [''],
     })
   }
 
   ngOnInit(): void {
-    const producer_id = this._activeRoute.snapshot.params['id'];
+    const material_id = this._activeRoute.snapshot.params['id'];
 
-    if(producer_id){
+    if (material_id) {
       this.isEditing.set(true);
-      this.producer_id.set(producer_id)
-      this.detail(producer_id);
+      this.material_id.set(material_id)
+      this.detail(material_id);
     }
   }
 
 
   get icon() {
-    return this.navigationService.getIcon('producers');
+    return this.navigationService.getIcon('materials');
   }
+
 
   public detail(id: string) {
     this.isLoading.set(true);
 
-    this._producerService.detail(id).subscribe(
+    this._materialService.detail(id).subscribe(
       data => {
         this.form.patchValue(data);
         this.isLoading.set(false);
@@ -83,17 +89,17 @@ export class ProducerFormComponent {
 
     let observable: Observable<any>;
 
-    if(this.isEditing()) {
-      data.id = this.producer_id();
-      observable = this._producerService.update(data);
+    if (this.isEditing()) {
+      data.id = this.material_id();
+      observable = this._materialService.update(data);
     } else {
-      observable = this._producerService.create(data);
+      observable = this._materialService.create(data);
     }
 
     observable.subscribe(
       response => {
         this.dialogService.open(true, response.message, response.type, response.submessage);
-        this._router.navigate([this.navigationService.getPATH('customers')]);
+        this._router.navigate([this.navigationService.getPATH('materials')]);
       },
       error => {
         this.isLoading.set(false);

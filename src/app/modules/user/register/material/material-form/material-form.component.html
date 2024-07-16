@@ -1,0 +1,114 @@
+<section class="p-8">
+  @if(isLoading()) {
+  <app-loading></app-loading>
+  } @else {
+  <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+</section>
+
+<ng-template #mainTemplate>
+  <div class="mb-8 flex items-center justify-between">
+    <div class="mr-2">
+      <app-title [text]="(isEditing() ? 'Atualizar' : 'Novo') + ' material'" [icon]="icon"></app-title>
+    </div>
+    <button mat-button routerLink="/in/materials" class="!text-primary flex items-center"
+      matTooltip="Voltar para lista de usuários">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar</button>
+  </div>
+
+  <div>
+    <form [formGroup]="form" (ngSubmit)="create()">
+
+      <div class="mb-4 flex">
+        <div class="lg:w-[500px] w-full mr-2">
+          <label for="name" class="block mb-1 text-sm font-medium text-gray-900">
+            Nome do material
+          </label>
+          <input type="text" id="first_name" formControlName="name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          @if (form.controls['name'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Nome completo é obrigatório</p>
+          }
+        </div>
+
+        <div class="lg:w-[150px] w-full mr-2">
+          <label for="countries" class="block mb-1 text-sm font-medium text-gray-900">Status</label>
+          <select id="countries" formControlName="isActive"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option selected [ngValue]="true">Ativo</option>
+            <option [ngValue]="false">Inativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <div class="flex items-center">
+          <div class="lg:w-[200px] w-full mr-2">
+            <label for="volume" class="block mb-1 text-sm font-medium text-gray-900">
+              Volume do material
+            </label>
+            <input type="number" id="volume" formControlName="volume"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          </div>
+
+          <div class="lg:w-[200px] w-full mr-2">
+            <label for="volume_type" class="block mb-1 text-sm font-medium text-gray-900">Tipo de volume</label>
+            <select id="volume_type" formControlName="volume_type"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+              <option value="KG">KG (quilogramas)</option>
+              <option value="Unidades">Unidades</option>
+              <option value="G">G (gramas)</option>
+            </select>
+          </div>
+        </div>
+        @if (form.controls['volume'].hasError('required') && showError()) {
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">Volume é obrigatório</p>
+        }
+        @if (form.controls['volume'].hasError('min') && showError()) {
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">Volume inválido</p>
+        }
+        @if (form.controls['volume'].hasError('max') && showError()) {
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">Volume máximo ultrapassado (999.999.999)</p>
+        }
+      </div>
+
+      <div class="lg:w-[200px] w-full mr-2 mb-6">
+        <label for="in_stock" class="block mb-1 text-sm font-medium text-gray-900">
+          Quantidade em estoque
+        </label>
+        <input type="number" id="amount" formControlName="in_stock"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+        @if (form.controls['in_stock'].hasError('required') && showError()) {
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">Quantidade é obrigatório</p>
+        }
+        @if (form.controls['in_stock'].hasError('min') && showError()) {
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">Quantidade inválida</p>
+        }
+        @if (form.controls['in_stock'].hasError('max') && showError()) {
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">Quantidade máxima ultrapassada (999.999.999)</p>
+        }
+      </div>
+
+      <div class="mb-6">
+        <mat-slide-toggle formControlName="traceable">
+          <span class="flex items-center">Material rastreável <mat-icon class="scale-75 text-gray-500"
+              matTooltip="O material rastreável será disponibilizado no processo de rastreabilidade">info</mat-icon></span>
+        </mat-slide-toggle>
+      </div>
+
+      <div class="w-full mb-4">
+        <label for="name" class="block mb-1 text-sm font-medium text-gray-900">
+          Descrição
+        </label>
+        <textarea id="amount" formControlName="description"
+          class="bg-gray-50 h-[200px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
+      </div>
+
+      <div>
+        <button mat-flat-button type="submit" class="!bg-green-600">{{ isEditing() ? 'Atualizar' : 'Salvar' }}</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>
