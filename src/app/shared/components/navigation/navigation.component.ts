@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { AuthService } from '@app/services/auth/auth.service';
 import { ImagesService } from '@app/services/common/images.service';
 import { Regex } from '@app/resources/handlers/regex';
@@ -10,7 +10,9 @@ import { Regex } from '@app/resources/handlers/regex';
 })
 export class NavigationComponent implements OnInit {
 
+  @Output() openEvent = new EventEmitter<boolean>();
   public user_name = signal('');
+  public open = signal(true);
 
   constructor(
     public imagesService: ImagesService,
@@ -22,12 +24,15 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     const user_data = this.authService.getUser();
     const name = this.regex.getFirstAndLastName(user_data?.name)
-    this.user_name.set(name)
+    this.user_name.set(name);
   }
 
   public doLogout() {
-
     this._authService.clearAuthData();
+  }
+
+  public openSideBar() {
+    this.openEvent.emit();
   }
 
 }

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, signal } from "@angular/core";
 
 interface childProps {
   page: string
@@ -17,6 +17,8 @@ interface MenuProps {
 })
 
 export class NavigationService {
+
+  public isOpen = signal(false)
 
   public getPATH(page: string) {
 
@@ -68,10 +70,10 @@ export class NavigationService {
       type: '',
       child: [
         {
-          page: 'home',
+          page: 'track',
           name: 'Rastreabilidade',
           icon: 'account_tree',
-          path: '/in/home'
+          path: '/in/track'
         },
         {
           page: 'movimentation',

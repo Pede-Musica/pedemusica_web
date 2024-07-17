@@ -2,11 +2,11 @@ import { Component, OnInit, signal } from '@angular/core';
 import { NavigationService } from '@app/services/common/navigation.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  selector: 'app-track',
+  templateUrl: './track.component.html',
+  styleUrl: './track.component.scss'
 })
-export class HomeComponent implements OnInit{
+export class TrackComponent {
 
   public pathname = window.location.pathname;
   public isLoading = signal(true);
@@ -16,15 +16,19 @@ export class HomeComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.getTrack();
   }
 
   get title() {
-    return this.navigationService.getName('locations');
+    return this.navigationService.getName('track');
   }
 
   get icon() {
-    return this.navigationService.getIcon('locations');
+    return this.navigationService.getIcon('track');
+  }
+
+  public getTrack() {
+    this.isLoading.set(false)
   }
 
 }

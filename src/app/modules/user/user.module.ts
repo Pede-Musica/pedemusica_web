@@ -16,6 +16,9 @@ import { LocationFormComponent } from './register/location/location-form/locatio
 import { LocationListComponent } from './register/location/location-list/location-list.component';
 import { MaterialFormComponent } from './register/material/material-form/material-form.component';
 import { MaterialListComponent } from './register/material/material-list/material-list.component';
+import { ReportComponent } from './report/report.component';
+import { StockComponent } from './stock/stock.component';
+import { TrackComponent } from './track/track.component';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { MaterialListComponent } from './register/material/material-list/materia
     LocationFormComponent,
     LocationListComponent,
     MaterialFormComponent,
-    MaterialListComponent
+    MaterialListComponent,
+    ReportComponent,
+    StockComponent,
+    TrackComponent
   ],
   imports: [
     CommonModule,

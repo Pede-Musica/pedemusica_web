@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationService } from '@app/services/common/navigation.service';
 
@@ -10,6 +10,7 @@ import { NavigationService } from '@app/services/common/navigation.service';
 
 export class SidebarComponent {
 
+  @Output() openEvent = new EventEmitter<boolean>();
   public pathname = window.location.pathname;
 
   constructor(
@@ -19,6 +20,9 @@ export class SidebarComponent {
 
 
   public navigate(path: string) {
+    this.openEvent.emit(false);
     this._router.navigate([path])
   }
+
+
 }

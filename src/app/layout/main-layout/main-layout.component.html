@@ -1,12 +1,14 @@
 <section>
   <div class="fixed top-0 w-full">
-    <app-navigation></app-navigation>
+    <app-navigation (openEvent)="openSidebar.set(!openSidebar())"></app-navigation>
   </div>
-  <main class="min-h-screen w-full overflow-auto flex fixed top-16 fade50">
-    <div class="relative border-r-2 border-secondary/30">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div class="relative w-full p-1 bg-gray-50/50">
+  <main class="min-h-screen w-full overflow-auto flex fixed lg:top-16 top-12 fade50">
+    @if(openSidebar()) {
+      <div class="border-r-2 border-secondary/30 lg:absolute fixed h-screen z-40 fade_in lg:shadow-none shadow-lg">
+        <app-sidebar></app-sidebar>
+      </div>
+    }
+    <div class="absolute w-full p-1 bg-gray-50/50 lg:left-[200px]">
       <router-outlet></router-outlet>
     </div>
   </main>

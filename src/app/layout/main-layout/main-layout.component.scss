@@ -1,0 +1,15 @@
+.fade_in {
+  animation: fade 0.4s;
+  margin-left: 0;
+  height: 100%;
+}
+
+@keyframes fade {
+  from {
+    margin-left: -250px;
+  }
+
+  to {
+    margin-left: 0;
+  }
+}

@@ -13,12 +13,14 @@ import { MaterialListComponent } from './register/material/material-list/materia
 import { MaterialFormComponent } from './register/material/material-form/material-form.component';
 import { ProductListComponent } from './register/product/product-list/product-list.component';
 import { ProductFormComponent } from './register/product/product-form/product-form.component';
+import { ReportComponent } from './report/report.component';
+import { StockComponent } from './stock/stock.component';
+import { TrackComponent } from './track/track.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-
-  //Relatórios
-  { path: 'movimentation', component: HomeComponent },
+  { path: 'track', component: TrackComponent },
+  { path: 'report', component: ReportComponent },
+  { path: 'stock', component: StockComponent },
 
   // Cadastros
   { path: 'users', component: UserListComponent },
@@ -47,7 +49,7 @@ const routes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'track',
     pathMatch: 'full'
   }
 ];
