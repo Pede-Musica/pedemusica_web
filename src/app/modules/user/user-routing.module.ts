@@ -19,7 +19,7 @@ import { TrackComponent } from './track/track.component';
 
 const routes: Routes = [
   { path: 'track', component: TrackComponent },
-  { path: 'report', component: ReportComponent },
+  { path: 'register', component: ReportComponent },
   { path: 'stock', component: StockComponent },
 
   // Cadastros

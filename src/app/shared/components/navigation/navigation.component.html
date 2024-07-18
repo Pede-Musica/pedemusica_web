@@ -7,14 +7,23 @@
           <mat-icon>menu</mat-icon>
         </button>
       </div>
-      <img [src]="imagesService.logo" alt="" class="h-[30px]">
+      <div [routerLink]="navigationService.getPATH('track')" class="hover:bg-gray-200 rounded-md p-2 hover:cursor-pointer">
+        <img [src]="imagesService.logo" alt="" class="h-[30px]">
+      </div>
     </div>
 
     <div class="flex justify-end items-center px-4">
-      <button mat-button [matMenuTriggerFor]="menu" class="!text-black">
-        <mat-icon>person</mat-icon>
-        {{ user_name() }}
-      </button>
+      <div class="lg:flex hidden">
+        <button mat-button [matMenuTriggerFor]="menu" class="!text-black">
+          <mat-icon>person</mat-icon>
+          {{ user_name() }}
+        </button>
+      </div>
+      <div class="lg:hidden flex">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="!text-black">
+          <mat-icon>person</mat-icon>
+        </button>
+      </div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="doLogout()">
           <mat-icon class="!text-red-500">logout</mat-icon>

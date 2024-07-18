@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { AuthService } from '@app/services/auth/auth.service';
 import { ImagesService } from '@app/services/common/images.service';
 import { Regex } from '@app/resources/handlers/regex';
+import { NavigationService } from '@app/services/common/navigation.service';
 
 @Component({
   selector: 'app-navigation',
@@ -18,7 +19,8 @@ export class NavigationComponent implements OnInit {
     public imagesService: ImagesService,
     public authService: AuthService,
     private regex: Regex,
-    private _authService: AuthService
+    private _authService: AuthService,
+    public navigationService: NavigationService
   ) { }
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-<section class="px-8 py-4">
+<section class="lg:p-4 p-2">
   @if(isLoading()) {
   <app-loading></app-loading>
   } @else {
@@ -7,13 +7,19 @@
 </section>
 
 <ng-template #mainTemplate>
-  <div class="mb-4 flex items-center justify-between">
-    <div class="mr-2">
+  <div class="mb-4 lg:flex items-center">
+    <div class="mr-4 lg:mb-0 mb-4 flex items-center">
       <app-title [text]="title" [icon]="icon"></app-title>
     </div>
-    <button mat-button routerLink="/in/locations/new" class="!text-primary flex items-center"
-      matTooltip="Adicionar nova localização">
-      <mat-icon>add</mat-icon>
-      Adicionar</button>
+
+    <div class="flex">
+      <button mat-stroked-button class="!text-green-500 flex items-center mr-2" matTooltip="Entrada de produtos">
+        <mat-icon>exit_to_app</mat-icon>
+        Entrada</button>
+
+      <button mat-stroked-button class="!text-red-500 flex items-center" matTooltip="Saída de produtos">
+        <mat-icon>output</mat-icon>
+        Saída</button>
+    </div>
   </div>
 </ng-template>

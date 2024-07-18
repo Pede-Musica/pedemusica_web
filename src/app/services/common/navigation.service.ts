@@ -77,9 +77,9 @@ export class NavigationService {
         },
         {
           page: 'movimentation',
-          name: 'Histórico',
-          icon: 'manage_search',
-          path: '/in/movimentation'
+          name: 'Registros',
+          icon: 'app_registration',
+          path: '/in/register'
         },
         {
           page: 'stock',

@@ -6,7 +6,7 @@
           <span class="text-sm text-gray-600">{{ item.type }}</span>
         </div>
         <ng-container *ngFor="let child of item.child">
-          <div [routerLink]="child.path"
+          <div [routerLink]="child.path" (click)="navigate(child.path)"
             routerLinkActive="text-primary font-medium bg-gray-200 rounded-r-md border-l-4 border-primary"
             class="flex items-center py-1 px-2 hover:cursor-pointer text-gray-600 hover:bg-gray-300 hover:rounded-r-md hover:text-primary hover:font-medium">
             <mat-icon class="mr-1 scale-75">{{ child.icon }} </mat-icon>

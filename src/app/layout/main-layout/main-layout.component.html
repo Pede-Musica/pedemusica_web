@@ -2,13 +2,16 @@
   <div class="fixed top-0 w-full">
     <app-navigation (openEvent)="openSidebar.set(!openSidebar())"></app-navigation>
   </div>
-  <main class="min-h-screen w-full overflow-auto flex fixed lg:top-16 top-12 fade50">
+  <main class="min-h-screen w-full overflow-auto flex fixed lg:top-16 top-[45px] fade50">
     @if(openSidebar()) {
       <div class="border-r-2 border-secondary/30 lg:absolute fixed h-screen z-40 fade_in lg:shadow-none shadow-lg">
         <app-sidebar></app-sidebar>
       </div>
     }
-    <div class="absolute w-full p-1 bg-gray-50/50 lg:left-[200px]">
+    <div class="absolute w-full h-full p-1 bg-gray-50/50 lg:pl-[200px]">
+      @if(openSidebar() && displayMode() === 'mobile'){
+        <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-20"></div>
+      }
       <router-outlet></router-outlet>
     </div>
   </main>
