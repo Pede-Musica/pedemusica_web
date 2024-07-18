@@ -1,6 +1,4 @@
-# Dockerfile
-# Etapa 1: Construir a aplicação Angular
-FROM node:21
+FROM node:lts-alpine3.19 as builder
 WORKDIR /app
 COPY . .
 RUN npm install
