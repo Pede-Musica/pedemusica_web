@@ -7,6 +7,7 @@ RUN npm run build
 FROM nginx:alpine
 COPY --from=builder /app/dist/cooper_flow_web/browser/ usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY mime.types /etc/nginx/mime.types
 EXPOSE 4200
 
 CMD ["nginx", "-g", "daemon off;"]
