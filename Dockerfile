@@ -1,15 +1,13 @@
-FROM node:lts-alpine3.19 as angular
-
+# Dockerfile
+# Etapa 1: Construir a aplicação Angular
+FROM node:16 AS angular
 WORKDIR /app
-
-COPY . .
-
+COPY package*.json ./
 RUN npm install
-RUN npm run build
+COPY . .
+RUN npm run build --prod
 
-FROM httpd:alpine3.20
-
-WORKDIR /usr/local/apache2/htdocs
-COPY --from=angular /app/dist/cooper_flow_web .
-
+# Etapa 2: Servir os arquivos estáticos com Nginx
+FROM nginx:alpine
+COPY --from=build /app/dist/cooper_flow_web /usr/share/nginx/html
 EXPOSE 4200
