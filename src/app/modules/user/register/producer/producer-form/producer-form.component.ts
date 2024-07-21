@@ -34,7 +34,9 @@ export class ProducerFormComponent {
       isActive: [true, [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       address: ['', [Validators.required]],
-      phone: ['', [Validators.required]]
+      phone: ['', [Validators.required]],
+      cad_pro: [''],
+      ggn: ['']
     })
   }
 

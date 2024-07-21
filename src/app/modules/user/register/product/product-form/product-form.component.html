@@ -28,7 +28,7 @@
           <input type="text" id="first_name" formControlName="name"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
           @if (form.controls['name'].hasError('required') && showError()) {
-          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Nome completo é obrigatório</p>
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Nome do produto é obrigatório</p>
           }
         </div>
 
@@ -39,6 +39,88 @@
             <option selected [ngValue]="true">Ativo</option>
             <option [ngValue]="false">Inativo</option>
           </select>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <div class="mb-1">
+          <span class="text-sm font-medium mr-2 text-gray-900">Tipos do produto ({{ typesList.length }})</span>
+          <button mat-button type="button" class="!text-xs" (click)="addType()">
+            <mat-icon>add</mat-icon>
+            Adicionar
+          </button>
+        </div>
+        <div>
+          @for (type of typesList; track $index) {
+          <div class="pl-4 flex items-center mb-2">
+            <div class="lg:w-[500px] w-full mr-2">
+              <label for="name" class="block mb-1 text-sm font-medium text-gray-900">
+                Tipo {{ $index + 1 }}
+              </label>
+              <input type="text" [(ngModel)]="type.name" [ngModelOptions]="{standalone: true}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+              @if (['', null].includes(type.name) && showError()) {
+              <p class="mt-2 text-sm text-red-600 dark:text-red-500">Nome do tipo é obrigatório</p>
+              }
+            </div>
+
+            <div class="lg:w-[150px] w-full mr-2">
+              <label class="block mb-1 text-sm font-medium text-gray-900">Status</label>
+              <select [(ngModel)]="type.isActive" [ngModelOptions]="{standalone: true}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option [ngValue]="true">Ativo</option>
+                <option [ngValue]="false">Inativo</option>
+              </select>
+            </div>
+
+            <div class="pt-5">
+              <button mat-icon-button type="button"  (click)="deleteType($index)">
+                <mat-icon class="text-red-600">delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="mb-1">
+          <span class="text-sm font-medium mr-2 text-gray-900">Tamanhos do produto ({{ sizesList.length }})</span>
+          <button mat-button type="button" class="!text-xs" (click)="addSize()">
+            <mat-icon>add</mat-icon>
+            Adicionar
+          </button>
+        </div>
+        <div>
+          @for (size of sizesList; track $index) {
+          <div class="pl-4 flex items-center mb-2">
+            <div class="lg:w-[500px] w-full mr-2">
+              <label for="name" class="block mb-1 text-sm font-medium text-gray-900">
+                Tamanho {{ $index + 1 }}
+              </label>
+              <input type="text" [(ngModel)]="size.name" [ngModelOptions]="{standalone: true}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+              @if (['', null].includes(size.name) && showError()) {
+              <p class="mt-2 text-sm text-red-600 dark:text-red-500">Tamanho é obrigatório</p>
+              }
+            </div>
+
+            <div class="lg:w-[150px] w-full mr-2">
+              <label class="block mb-1 text-sm font-medium text-gray-900">Status</label>
+              <select [(ngModel)]="size.isActive" [ngModelOptions]="{standalone: true}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option [ngValue]="true">Ativo</option>
+                <option [ngValue]="false">Inativo</option>
+              </select>
+            </div>
+
+            <div class="pt-5">
+              <button mat-icon-button type="button" (click)="deleteSize($index)">
+                <mat-icon class="text-red-600">delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          }
         </div>
       </div>
 

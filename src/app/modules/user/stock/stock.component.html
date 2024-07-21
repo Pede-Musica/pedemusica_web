@@ -1,1 +1,15 @@
-<p>stock works!</p>
+<section class="lg:p-4 p-2">
+  @if(isLoading()) {
+  <app-loading></app-loading>
+  } @else {
+  <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+</section>
+
+<ng-template #mainTemplate>
+  <div class="mb-4 lg:flex items-center">
+    <div class="mr-4 lg:mb-0 mb-4 flex items-center">
+      <app-title [text]="title" [icon]="icon"></app-title>
+    </div>
+  </div>
+</ng-template>

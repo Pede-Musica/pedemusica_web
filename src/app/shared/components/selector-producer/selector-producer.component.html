@@ -1,0 +1,33 @@
+<div class="lg:min-w-[500px] min-w-[350px] max-w-screen lg:p-4 p-2 min-h-[500px]">
+  @if(isLoading()) {
+    <app-loading></app-loading>
+    } @else {
+    <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+    }
+</div>
+
+<ng-template #mainTemplate>
+  <div class="flex justify-center mb-4">
+    <app-title text="Selecione o produtor" [icon]="icon"></app-title>
+  </div>
+  <div>
+    @for (producer of producerList; track $index) {
+      <div class="mb-2 flex items-center justify-between">
+        <div class="flex items-center mr-2">
+          <div class="mr-2">
+            <img class="w-9 h-9 rounded-full" src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Rounded avatar">
+          </div>
+          <div>
+            <span class="text-sm font-medium">{{ producer.name }}</span>
+          </div>
+        </div>
+
+        <div>
+          <button mat-stroked-button type="button" [mat-dialog-close]="producer" class="!text-sm">
+            Selecionar
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</ng-template>

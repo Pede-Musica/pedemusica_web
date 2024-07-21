@@ -76,7 +76,7 @@ export class NavigationService {
           path: '/in/track'
         },
         {
-          page: 'movimentation',
+          page: 'register',
           name: 'Registros',
           icon: 'app_registration',
           path: '/in/register'

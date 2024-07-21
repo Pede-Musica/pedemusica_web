@@ -2,11 +2,11 @@ import { Component, OnInit, signal } from '@angular/core';
 import { NavigationService } from '@app/services/common/navigation.service';
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrl: './report.component.scss'
+  selector: 'app-track-exit',
+  templateUrl: './track-exit.component.html',
+  styleUrl: './track-exit.component.scss'
 })
-export class ReportComponent implements OnInit {
+export class TrackExitComponent implements OnInit {
 
   public isLoading = signal(true);
 
@@ -30,3 +30,4 @@ export class ReportComponent implements OnInit {
     this.isLoading.set(false);
   }
 }
+

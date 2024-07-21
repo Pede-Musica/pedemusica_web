@@ -1,17 +1,17 @@
 <section>
-  <div class="fixed top-0 w-full">
+  <div class="mb-[2px] fixed top-0 w-full z-50">
     <app-navigation (openEvent)="openSidebar.set(!openSidebar())"></app-navigation>
   </div>
-  <main class="min-h-screen w-full overflow-auto flex fixed lg:top-16 top-[45px] fade50">
+  <main class="min-h-screen w-full flex fade50  lg:pt-[60px] pt-[48px]">
     @if(openSidebar()) {
-      <div class="border-r-2 border-secondary/30 lg:absolute fixed h-screen z-40 fade_in lg:shadow-none shadow-lg">
+      <div class="border-r-2 border-secondary/30 fixed h-full fade_in lg:shadow-none shadow-lg rounded-tr-lg z-40">
         <app-sidebar></app-sidebar>
       </div>
     }
-    <div class="absolute w-full h-full p-1 bg-gray-50/50 lg:pl-[200px]">
-      @if(openSidebar() && displayMode() === 'mobile'){
-        <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-20"></div>
-      }
+    @if(openSidebar() && displayMode() === 'mobile'){
+      <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-30"></div>
+    }
+    <div class="w-full min-h-full p-1 bg-gray-50/50 lg:pl-[200px]">
       <router-outlet></router-outlet>
     </div>
   </main>

@@ -13,7 +13,7 @@ import { NavigationService } from '@app/services/common/navigation.service';
 })
 export class MainLayoutComponent implements OnInit {
 
-  public openSidebar = signal(true);
+  public openSidebar = signal(false);
   public displayMode = signal('')
 
   constructor(
@@ -30,16 +30,17 @@ export class MainLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     const width = window.innerWidth;
-
     if(width >= 1024 ) {
       this.displayMode.set('desktop')
+      this.openSidebar.set(true)
     } else {
       this.displayMode.set('mobile')
+      this.openSidebar.set(false)
     }
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize(event?: any) {
     const width = event.target.innerWidth;
     if(width >= 1024 ) {
       this.displayMode.set('desktop')

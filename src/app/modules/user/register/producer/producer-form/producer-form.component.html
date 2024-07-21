@@ -77,6 +77,24 @@
         </div>
       </div>
 
+      <div class="mb-4">
+        <div class="lg:w-[500px] w-full">
+          <label for="address" class="block mb-1 text-sm font-medium text-gray-900">CAD/PRO</label>
+          <input type="text" formControlName="cad_pro" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            />
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="lg:w-[500px] w-full">
+          <label for="address" class="block mb-1 text-sm font-medium text-gray-900">GGN</label>
+          <input type="text" formControlName="ggn" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            />
+        </div>
+      </div>
+
       <div class="flex lg:justify-start justify-center">
         <button mat-flat-button type="submit" class="!bg-green-600">{{ isEditing() ? 'Atualizar' : 'Salvar' }}</button>
       </div>

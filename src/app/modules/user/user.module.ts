@@ -19,6 +19,9 @@ import { MaterialListComponent } from './register/material/material-list/materia
 import { ReportComponent } from './report/report.component';
 import { StockComponent } from './stock/stock.component';
 import { TrackComponent } from './track/track.component';
+import { TrackEnterComponent } from './track/track-enter/track-enter.component';
+import { TrackExitComponent } from './track/track-exit/track-exit.component';
+import { TrackTransformComponent } from './track/track-transform/track-transform.component';
 
 
 @NgModule({
@@ -38,7 +41,10 @@ import { TrackComponent } from './track/track.component';
     MaterialListComponent,
     ReportComponent,
     StockComponent,
-    TrackComponent
+    TrackComponent,
+    TrackEnterComponent,
+    TrackExitComponent,
+    TrackTransformComponent
   ],
   imports: [
     CommonModule,

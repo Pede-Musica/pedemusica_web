@@ -20,6 +20,8 @@ export class ProductFormComponent {
   public showError = signal(false);
   public form: FormGroup
   public product_id = signal('');
+  public typesList: Array<any> = [];
+  public sizesList: Array<any> = [];
 
   constructor(
     public navigationService: NavigationService,
@@ -71,6 +73,8 @@ export class ProductFormComponent {
     this._productService.detail(id).subscribe(
       data => {
         this.form.patchValue(data);
+        this.typesList = data?.ProductType;
+        this.sizesList = data?.ProductSize;
         this.isLoading.set(false);
       },
       error => {
@@ -87,9 +91,28 @@ export class ProductFormComponent {
       return
     }
 
+    this.typesList?.map(t => {
+      if(t.name === '' || t.name === null) {
+        this.showError.set(true)
+      }
+    })
+
+    this.sizesList?.map(s => {
+      if(s.name === '' || s.name === null) {
+        this.showError.set(true)
+      }
+    })
+
+    if(this.showError() ===  true) {
+      return
+    }
+
     const data = this.form.value;
 
     data.phone = String(data.phone)
+
+    data.types = this.typesList;
+    data.sizes = this.sizesList;
 
     this.isLoading.set(true);
 
@@ -112,5 +135,33 @@ export class ProductFormComponent {
         this._snackService.open(error.error.message)
       }
     )
+  }
+
+  public addType() {
+
+    const data = {
+      name: '',
+      isActive: true
+    }
+
+    this.typesList.push(data);
+  }
+
+  public addSize() {
+
+    const data = {
+      name: '',
+      isActive: true
+    }
+
+    this.sizesList.push(data);
+  }
+
+  public deleteType(index: number) {
+    this.typesList.splice(index, 1);
+  }
+
+  public deleteSize(index: number) {
+    this.sizesList.splice(index, 1);
   }
 }

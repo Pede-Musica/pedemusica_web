@@ -16,9 +16,17 @@ import { ProductFormComponent } from './register/product/product-form/product-fo
 import { ReportComponent } from './report/report.component';
 import { StockComponent } from './stock/stock.component';
 import { TrackComponent } from './track/track.component';
+import { TrackTransformComponent } from './track/track-transform/track-transform.component';
+import { TrackEnterComponent } from './track/track-enter/track-enter.component';
+import { TrackExitComponent } from './track/track-exit/track-exit.component';
 
 const routes: Routes = [
+  // Rastreabilidade
   { path: 'track', component: TrackComponent },
+  { path: 'track/enter', component: TrackEnterComponent },
+  { path: 'track/trasform', component: TrackTransformComponent },
+  { path: 'track/exit', component: TrackExitComponent },
+
   { path: 'register', component: ReportComponent },
   { path: 'stock', component: StockComponent },
 

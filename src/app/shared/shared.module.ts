@@ -8,6 +8,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TitleComponent } from './components/title/title.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { NgxMaskPipe, NgxMaskDirective } from 'ngx-mask'
+import { LabelComponent } from './components/label/label.component';
+import { SelectorProducerComponent } from './components/selector-producer/selector-producer.component';
+import { SelectorProductComponent } from './components/selector-product/selector-product.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -22,6 +25,9 @@ const config: ExtraOptions = {
     SidebarComponent,
     TitleComponent,
     LoadingComponent,
+    LabelComponent,
+    SelectorProducerComponent,
+    SelectorProductComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +45,8 @@ const config: ExtraOptions = {
     TitleComponent,
     LoadingComponent,
     NgxMaskPipe,
-    NgxMaskDirective
+    NgxMaskDirective,
+    LabelComponent
   ],
 })
 export class SharedModule { }
