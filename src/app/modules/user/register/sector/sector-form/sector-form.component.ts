@@ -11,24 +11,24 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'app-location-form',
-  templateUrl: './location-form.component.html',
-  styleUrl: './location-form.component.scss'
+  selector: 'app-sector-form',
+  templateUrl: './sector-form.component.html',
+  styleUrl: './sector-form.component.scss'
 })
-export class LocationFormComponent {
+export class SectorFormComponent {
+
 
   public isLoading = signal(false);
   public isEditing = signal(false);
   public showError = signal(false);
   public form: FormGroup
-  public location_id = signal('');
+  public sector_id = signal('');
   public sectorList: Array<any> = [];
 
   constructor(
     public navigationService: NavigationService,
     private _formBuilder: FormBuilder,
     public dialogService: DialogService,
-    private _locationService: LocationService,
     private _sectorService: SectorService,
     private _router: Router,
     private _snackService: SnackbarService,
@@ -37,57 +37,29 @@ export class LocationFormComponent {
     this.form = this._formBuilder.group({
       name: ['', [Validators.required]],
       isActive: [true, [Validators.required]],
-      sector_id: [true, [Validators.required]],
-      description: [''],
     })
   }
 
   ngOnInit(): void {
-    this.getSectors();
-    const producer_id = this._activeRoute.snapshot.params['id'];
+    const sector_id = this._activeRoute.snapshot.params['id'];
 
-    if (producer_id) {
+    if (sector_id) {
       this.isEditing.set(true);
-      this.location_id.set(producer_id)
-      this.detail(producer_id);
+      this.sector_id.set(sector_id)
+      this.detail(sector_id);
     }
   }
 
 
   get icon() {
-    return this.navigationService.getIcon('locations');
+    return this.navigationService.getIcon('sectors');
   }
 
-  get type() {
-    return this.form.get(['type'])?.value;
-  }
-
-  get phoneLength() {
-    const value = this.form.get(['phone'])?.value;
-
-    if (value?.length < 11) {
-      return '(00) 0000-00000'
-    } else {
-      return '(00) 00000-0000'
-    }
-  }
-
-  public getSectors() {
-
-    this._sectorService.combolist().subscribe(
-      data => {
-        this.sectorList = data.data;
-      },
-      error => {
-        this._snackService.open(error.error.message)
-      }
-    )
-  }
 
   public detail(id: string) {
     this.isLoading.set(true);
 
-    this._locationService.detail(id).subscribe(
+    this._sectorService.detail(id).subscribe(
       data => {
         this.form.patchValue(data);
         this.isLoading.set(false);
@@ -108,23 +80,21 @@ export class LocationFormComponent {
 
     const data = this.form.value;
 
-    data.phone = String(data.phone)
-
     this.isLoading.set(true);
 
     let observable: Observable<any>;
 
     if (this.isEditing()) {
-      data.id = this.location_id();
-      observable = this._locationService.update(data);
+      data.id = this.sector_id();
+      observable = this._sectorService.update(data);
     } else {
-      observable = this._locationService.create(data);
+      observable = this._sectorService.create(data);
     }
 
     observable.subscribe(
       response => {
         this.dialogService.open(true, response.message, response.type, response.submessage);
-        this._router.navigate([this.navigationService.getPATH('locations')]);
+        this._router.navigate([this.navigationService.getPATH('sectors')]);
       },
       error => {
         this.isLoading.set(false);

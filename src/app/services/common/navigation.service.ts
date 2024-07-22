@@ -117,6 +117,12 @@ export class NavigationService {
           path: '/in/products'
         },
         {
+          page: 'sectors',
+          name: 'Setores',
+          icon: 'pin_drop',
+          path: '/in/sectors'
+        },
+        {
           page: 'locations',
           name: 'Localizações',
           icon: 'flag',

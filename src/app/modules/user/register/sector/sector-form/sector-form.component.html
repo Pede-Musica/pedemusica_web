@@ -1,0 +1,51 @@
+<section class="lg:p-8 p-2">
+  @if(isLoading()) {
+  <app-loading></app-loading>
+  } @else {
+  <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+</section>
+
+<ng-template #mainTemplate>
+  <div class="mb-8 flex items-center justify-between">
+    <div class="mr-2">
+      <app-title [text]="(isEditing() ? 'Atualizar' : 'Novo') + ' setor'" [icon]="icon"></app-title>
+    </div>
+    <button mat-button routerLink="/in/sectors" class="!text-primary flex items-center"
+      matTooltip="Voltar para lista de usuários">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar</button>
+  </div>
+
+  <div>
+    <form [formGroup]="form" (ngSubmit)="create()">
+
+      <div class="mb-4 lg:flex">
+        <div class="lg:w-[500px] w-full mr-2 mb-4">
+          <label for="name" class="block mb-1 text-sm font-medium text-gray-900">
+            Nome do setor
+          </label>
+          <input type="text" id="first_name" formControlName="name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          @if (form.controls['name'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Nome do setor é obrigatório</p>
+          }
+        </div>
+
+        <div class="lg:w-[150px] w-full">
+          <label for="countries" class="block mb-1 text-sm font-medium text-gray-900">Status</label>
+          <select id="countries" formControlName="isActive"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option selected [ngValue]="true">Ativo</option>
+            <option [ngValue]="false">Inativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex lg:justify-start justify-center">
+        <button mat-flat-button type="submit" class="!bg-green-600">{{ isEditing() ? 'Atualizar' : 'Salvar' }}</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>

@@ -19,6 +19,8 @@ import { TrackComponent } from './track/track.component';
 import { TrackTransformComponent } from './track/track-transform/track-transform.component';
 import { TrackEnterComponent } from './track/track-enter/track-enter.component';
 import { TrackExitComponent } from './track/track-exit/track-exit.component';
+import { SectorListComponent } from './register/sector/sector-list/sector-list.component';
+import { SectorFormComponent } from './register/sector/sector-form/sector-form.component';
 
 const routes: Routes = [
   // Rastreabilidade
@@ -46,6 +48,10 @@ const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'products/new', component: ProductFormComponent },
   { path: 'products/:id', component: ProductFormComponent },
+
+  { path: 'sectors', component: SectorListComponent },
+  { path: 'sectors/new', component: SectorFormComponent },
+  { path: 'sectors/:id', component: SectorFormComponent },
 
   { path: 'locations', component: LocationListComponent },
   { path: 'locations/new', component: LocationFormComponent },

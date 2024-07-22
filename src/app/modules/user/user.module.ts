@@ -22,6 +22,8 @@ import { TrackComponent } from './track/track.component';
 import { TrackEnterComponent } from './track/track-enter/track-enter.component';
 import { TrackExitComponent } from './track/track-exit/track-exit.component';
 import { TrackTransformComponent } from './track/track-transform/track-transform.component';
+import { SectorFormComponent } from './register/sector/sector-form/sector-form.component';
+import { SectorListComponent } from './register/sector/sector-list/sector-list.component';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { TrackTransformComponent } from './track/track-transform/track-transform
     TrackComponent,
     TrackEnterComponent,
     TrackExitComponent,
-    TrackTransformComponent
+    TrackTransformComponent,
+    SectorFormComponent,
+    SectorListComponent
   ],
   imports: [
     CommonModule,
