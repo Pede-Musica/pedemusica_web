@@ -94,21 +94,9 @@ export class NavigationService {
       child: [
         {
           page: 'users',
-          name: 'Usuários',
+          name: 'Pessoas',
           icon: 'group',
-          path: '/in/users'
-        },
-        {
-          page: 'producers',
-          name: 'Produtores',
-          icon: 'compost',
-          path: '/in/producers'
-        },
-        {
-          page: 'customers',
-          name: 'Clientes',
-          icon: 'handshake',
-          path: '/in/customers'
+          path: '/in/persons'
         },
         {
           page: 'products',

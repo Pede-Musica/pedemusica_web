@@ -21,6 +21,8 @@ import { TrackEnterComponent } from './track/track-enter/track-enter.component';
 import { TrackExitComponent } from './track/track-exit/track-exit.component';
 import { SectorListComponent } from './register/sector/sector-list/sector-list.component';
 import { SectorFormComponent } from './register/sector/sector-form/sector-form.component';
+import { PersonListComponent } from './register/person/person-list/person-list.component';
+import { PersonFormComponent } from './register/person/person-form/person-form.component';
 
 const routes: Routes = [
   // Rastreabilidade
@@ -33,7 +35,11 @@ const routes: Routes = [
   { path: 'stock', component: StockComponent },
 
   // Cadastros
-  { path: 'users', component: UserListComponent },
+  { path: 'persons', component: PersonListComponent },
+  { path: 'persons/new', component: PersonFormComponent },
+  { path: 'persons/:id', component: PersonFormComponent },
+
+  /* { path: 'users', component: UserListComponent },
   { path: 'users/new', component: UserFormComponent },
   { path: 'users/:id', component: UserFormComponent },
 
@@ -43,7 +49,7 @@ const routes: Routes = [
 
   { path: 'customers', component: CustomerListComponent },
   { path: 'customers/new', component: CustomerFormComponent },
-  { path: 'customers/:id', component: CustomerFormComponent },
+  { path: 'customers/:id', component: CustomerFormComponent }, */
 
   { path: 'products', component: ProductListComponent },
   { path: 'products/new', component: ProductFormComponent },

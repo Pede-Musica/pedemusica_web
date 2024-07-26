@@ -11,6 +11,7 @@ import { NgxMaskPipe, NgxMaskDirective } from 'ngx-mask'
 import { LabelComponent } from './components/label/label.component';
 import { SelectorProducerComponent } from './components/selector-producer/selector-producer.component';
 import { SelectorProductComponent } from './components/selector-product/selector-product.component';
+import { LabelRequiredComponent } from './components/label-required/label-required.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -27,7 +28,8 @@ const config: ExtraOptions = {
     LoadingComponent,
     LabelComponent,
     SelectorProducerComponent,
-    SelectorProductComponent
+    SelectorProductComponent,
+    LabelRequiredComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ const config: ExtraOptions = {
     LoadingComponent,
     NgxMaskPipe,
     NgxMaskDirective,
-    LabelComponent
+    LabelComponent,
+    LabelRequiredComponent
   ],
 })
 export class SharedModule { }

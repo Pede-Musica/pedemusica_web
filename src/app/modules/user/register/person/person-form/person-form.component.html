@@ -1,0 +1,160 @@
+<section class="lg:p-8 p-2">
+  @if(isLoading()) {
+  <app-loading></app-loading>
+  } @else {
+  <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+</section>
+
+<ng-template #mainTemplate>
+  <div class="mb-4 flex items-center justify-between">
+    <div class="mr-2">
+      <app-title [text]="(isEditing() ? 'Atualizar' : 'Nova') + ' pessoa'" [icon]="icon"></app-title>
+    </div>
+    <button mat-button routerLink="/in/persons" class="!text-primary flex items-center"
+      matTooltip="Voltar para lista de pessoas">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar</button>
+  </div>
+
+  <div>
+    <form [formGroup]="form" (ngSubmit)="create()">
+
+      <div class="mb-4">
+        <mat-radio-group formControlName="type">
+          <mat-radio-button [value]="1" class="mr-2" color="primary">Pessoa Física</mat-radio-button>
+          <mat-radio-button [value]="2" color="primary">Pessoa Jurídica</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="mb-4 flex">
+        <div class="lg:w-[500px] w-full mr-2">
+          <label for="name" class="block mb-1 text-sm font-medium text-gray-900">
+            @if(type === 1) {
+            Nome completo
+            } @else if(type === 2) {
+            Razão social
+            }
+            <required />
+          </label>
+          <input type="text" id="first_name" formControlName="name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          @if (form.controls['name'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Nome completo é obrigatório</p>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="lg:max-w-[500px] w-full">
+          <label for="email" class="block mb-1 text-sm font-medium text-gray-900">
+            @if(type === 1) {
+            CPF
+            } @else if(type === 2) {
+            CNPJ
+            }
+          </label>
+          <input type=" number" formControlName="cpf_cnpj" [mask]="type === 1 ? '000.000.000-00' : '00.000.000/0000-00'"
+            minlength="11" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            required />
+          @if (form.controls['cpf_cnpj'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Número de documento inválido</p>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="lg:w-[500px] w-full">
+          <label for="email" class="block mb-1 text-sm font-medium text-gray-900">E-mail
+            <required />
+          </label>
+          <input type="email" formControlName="email" placeholder="nome@cooperflow.com.br"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          @if (form.controls['email'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">E-mail é obrigatório</p>
+          }
+          @if (form.controls['email'].hasError('email') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">E-mail inválido</p>
+          }
+        </div>
+      </div>
+
+      <!-- <div class="mb-4">
+        <div class="lg:w-[500px] w-full">
+          <label class="block mb-1 text-sm font-medium text-gray-900">Cargo <required/></label>
+          <input type="text" formControlName="position" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            required />
+          @if (form.controls['position'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Cargo é obrigatório</p>
+          }
+        </div>
+      </div> -->
+
+      <div class="mb-4">
+        <div class="lg:max-w-[500px] w-full">
+          <label class="block mb-1 text-sm font-medium text-gray-900">Contato 1
+            <required />
+          </label>
+          <input type="number" formControlName="phone" mask="(00) 00000-0000" minlength="11" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            required />
+          @if (form.controls['phone'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Número de contato inválido</p>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="lg:w-[500px] w-full">
+          <label for="address" class="block mb-1 text-sm font-medium text-gray-900">Endereço</label>
+          <input type="text" formControlName="address" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            required />
+          @if (form.controls['address'].hasError('required') && showError()) {
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">Endereço é obrigatório</p>
+          }
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <div class="mb-2">
+          <label class="block mb-1 text-sm font-medium text-gray-900">Tipos de usuário</label>
+        </div>
+        <div class="flex items-center mb-4">
+          <mat-slide-toggle formControlName="isUser" class="mr-4" color="primary">
+            Usuário
+          </mat-slide-toggle>
+
+          <mat-slide-toggle formControlName="isProducer" class="mr-4" color="primary">
+            Produtor
+          </mat-slide-toggle>
+
+          <mat-slide-toggle formControlName="isCustomer" class="mr-4" color="primary">
+            Cliente
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <!-- USER SECTION -->
+        @if (this.form.get(['isUser'])?.value === true) {
+          <div>
+            <div for="email" class="mb-1 text-sm font-medium text-gray-900 flex items-center">
+              <mat-icon class="scale-75">person</mat-icon>
+              <div class="pt-1">
+                <span>Informações de usuário</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="flex lg:justify-start justify-center">
+        <button mat-flat-button type="submit" class="!bg-green-600">{{ isEditing() ? 'Atualizar' : 'Salvar' }}</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>
