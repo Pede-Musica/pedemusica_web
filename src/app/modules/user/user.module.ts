@@ -26,6 +26,8 @@ import { SectorFormComponent } from './register/sector/sector-form/sector-form.c
 import { SectorListComponent } from './register/sector/sector-list/sector-list.component';
 import { PersonFormComponent } from './register/person/person-form/person-form.component';
 import { PersonListComponent } from './register/person/person-list/person-list.component';
+import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
+import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { PersonListComponent } from './register/person/person-list/person-list.c
     SectorFormComponent,
     SectorListComponent,
     PersonFormComponent,
-    PersonListComponent
+    PersonListComponent,
+    ProfileFormComponent,
+    ProfileListComponent
   ],
   imports: [
     CommonModule,

@@ -18,7 +18,7 @@
     <div class="pl-1 pb-4 border-b border-gray-300 mb-4">
       <div class="mb-1 flex items-center">
         <div class="mr-2">
-          <app-label text="Informações do produtor"></app-label>
+          <span class="text-sm font-medium">Informações do produtor</span>
         </div>
         @if(selectedProducer()) {
         <div class="pt-2">
@@ -41,11 +41,11 @@
 
         <div class="flex flex-wrap">
           <div class="mr-2">
-            <span class="text-xs">CAD/PRO: {{ producer?.cad_pro }}</span>
+            <span class="text-xs">CAD/PRO: {{ producer?.Producer?.cad_pro }}</span>
           </div>
 
           <div class="mr-2">
-            <span class="text-xs">GGN: {{ producer?.ggn }}</span>
+            <span class="text-xs">GGN: {{ producer?.Producer?.ggn }}</span>
           </div>
         </div>
 
@@ -56,10 +56,10 @@
         </div>
       </mat-card>
       } @else {
-      <div>
+      <div class="mt-4">
         <button mat-raised-button type="button" (click)="dialogProducer()">
           <mat-icon>add</mat-icon>
-          Selecione o produtor
+          Selecionar produtor
         </button>
       </div>
       }
@@ -69,7 +69,7 @@
     <div class="pb-4 border-b border-gray-300 mb-4 lg:flex">
       <div class="mb-4">
         <div class="lg:w-[300px] w-full mr-4">
-          <app-label text="Talhão"></app-label>
+          <span class="text-sm font-medium">Talhão</span>
           <input type="text" id="field" formControlName="field"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
           @if (form.controls['field'].hasError('required') && showError()) {
@@ -80,7 +80,7 @@
 
       <div>
         <div class="lg:w-[200px] w-full mr-2">
-          <app-label text="Data da entrada"></app-label>
+          <span class="text-sm font-medium">Data da entrada</span>
           <input type="datetime-local" id="field" formControlName="date"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
           @if (form.controls['date'].hasError('required') && showError()) {
@@ -92,13 +92,80 @@
 
     <div class="pb-4 border-b border-gray-30 mb-4">
       <div class="mb-2">
-        <app-label text="Produtos"></app-label>
+        <span class="text-sm font-medium">Produtos</span>
       </div>
 
+      @if (productList.length > 0) {
+      @for (prod of productList; track $index) {
+
       <div>
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <div class="mr-2">
+              <app-label [text]="prod?.name"></app-label>
+            </div>
+            <button mat-icon-button (click)="addVolume(prod)">
+              <mat-icon class="text-orange-500">add</mat-icon>
+            </button>
+          </div>
+          <button mat-icon-button (click)="deleteProduct($index)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <div>
+          <span class="text-xs text-gray-400">Total de volumes: {{ prod?.volumes?.length }}</span>
+        </div>
+
+        @for (volume of prod?.volumes; track $index) {
+        <mat-card class="mb-4 p-4">
+          <div class="flex mb-2">
+            <div>
+              <label class="text-xs text-gray-400">Tipo</label>
+              <select [(ngModel)]="volume.type" [ngModelOptions]="{standalone: true}"
+                class=" text-gray-900 text-sm rounded-l-lg border border-gray-300 block p-2.5 min-w-[100px] bg-gray-50">
+                @for (size of prod?.ProductType; track $index) {
+                <option [value]="size?.name">{{ size?.name }}</option>
+                }
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-gray-400">Tamanho</label>
+              <select [(ngModel)]="volume.size" [ngModelOptions]="{standalone: true}"
+                class=" text-gray-900 text-sm border border-gray-300 block p-2.5 min-w-[100px] bg-gray-50 rounded-e-lg">
+                @for (type of prod?.ProductSize; track $index) {
+                <option [value]="type?.name">{{ type?.name }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="flex">
+            <div>
+              <label class="text-xs text-gray-400">Quantidade</label>
+              <input type="number" [(ngModel)]="volume.amount" [ngModelOptions]="{standalone: true}"
+                class="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5">
+            </div>
+            <div>
+              <label class="text-xs text-gray-400">Embalagem</label>
+              <select [(ngModel)]="volume.size" [ngModelOptions]="{standalone: true}"
+                class=" text-gray-900 text-sm border border-gray-300 block p-2.5 min-w-[100px] bg-gray-50 rounded-e-lg">
+                @for (material of materialList; track $index) {
+                <option [value]="material?.name">{{ material?.volume }}{{ material?.volume_type }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        </mat-card>
+        }
+      </div>
+
+      }
+      }
+
+      <div class="mt-4">
         <button mat-raised-button type="button" (click)="dialogProduct()">
           <mat-icon>add</mat-icon>
-          Selecione o produto
+          Selecionar produto
         </button>
       </div>
     </div>
@@ -106,7 +173,7 @@
     <div>
       <div class="mb-4">
         <div class="lg:w-[300px] w-full mr-4">
-          <app-label text="Observação"></app-label>
+          <span class="text-sm font-medium">Observações</span>
           <textarea id="amount" formControlName="observation"
             class="bg-gray-50 h-[200px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block lg:w-[500px] w-full p-2.5"></textarea>
         </div>
@@ -117,12 +184,12 @@
   <div class="flex lg:justify-start justify-center">
     <button mat-flat-button type="submit" class="!bg-green-600">
       @if (isLoading()) {
-        <div>
-          <app-loader [diameter]="30"></app-loader>
-        </div>
-        } @else {
-        Salvar entrada
-        }
+      <div>
+        <app-loader [diameter]="30"></app-loader>
+      </div>
+      } @else {
+      Salvar entrada
+      }
     </button>
   </div>
 

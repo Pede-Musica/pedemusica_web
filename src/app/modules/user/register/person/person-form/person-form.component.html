@@ -18,7 +18,7 @@
   </div>
 
   <div>
-    <form [formGroup]="form" (ngSubmit)="create()">
+    <form [formGroup]="form">
 
       <div class="mb-4">
         <mat-radio-group formControlName="type">
@@ -47,7 +47,7 @@
 
       <div class="mb-4">
         <div class="lg:max-w-[500px] w-full">
-          <label for="email" class="block mb-1 text-sm font-medium text-gray-900">
+          <label for="cpf" class="block mb-1 text-sm font-medium text-gray-900">
             @if(type === 1) {
             CPF
             } @else if(type === 2) {
@@ -97,9 +97,8 @@
           <label class="block mb-1 text-sm font-medium text-gray-900">Contato 1
             <required />
           </label>
-          <input type="number" formControlName="phone" mask="(00) 00000-0000" minlength="11" placeholder=""
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            required />
+          <input type="text" formControlName="phone" mask="(00) 00000-0000" minlength="10" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
           @if (form.controls['phone'].hasError('required') && showError()) {
           <p class="mt-2 text-sm text-red-600 dark:text-red-500">Número de contato inválido</p>
           }
@@ -107,6 +106,15 @@
       </div>
 
       <div class="mb-4">
+        <div class="lg:max-w-[500px] w-full">
+          <label class="block mb-1 text-sm font-medium text-gray-900">Contato 2</label>
+          <input type="text" formControlName="phone2" mask="(00) 00000-0000" minlength="10" placeholder=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+        </div>
+      </div>
+
+
+      <div class="mb-8">
         <div class="lg:w-[500px] w-full">
           <label for="address" class="block mb-1 text-sm font-medium text-gray-900">Endereço</label>
           <input type="text" formControlName="address" placeholder=""
@@ -118,12 +126,16 @@
         </div>
       </div>
 
+      <div class="mb-8">
+        <mat-divider></mat-divider>
+      </div>
+
       <div class="mb-6">
         <div class="mb-2">
-          <label class="block mb-1 text-sm font-medium text-gray-900">Tipos de usuário</label>
+          <label class="block mb-1 text-sm font-medium text-gray-900">Tipos de pessoa</label>
         </div>
         <div class="flex items-center mb-4">
-          <mat-slide-toggle formControlName="isUser" class="mr-4" color="primary">
+          <mat-slide-toggle formControlName="isUser" onchange="setUser()" class="mr-4" color="primary">
             Usuário
           </mat-slide-toggle>
 
@@ -137,24 +149,83 @@
         </div>
       </div>
 
-      <div class="mb-6">
-        <!-- USER SECTION -->
-        @if (this.form.get(['isUser'])?.value === true) {
-          <div>
-            <div for="email" class="mb-1 text-sm font-medium text-gray-900 flex items-center">
-              <mat-icon class="scale-75">person</mat-icon>
-              <div class="pt-1">
-                <span>Informações de usuário</span>
-              </div>
-            </div>
-          </div>
-        }
+    </form>
+
+    <!-- USER SECTION -->
+    @if (this.form.get(['isUser'])?.value === true) {
+    <mat-card class="p-4 mb-6">
+      <div class="mb-4 text-sm font-medium text-gray-900 flex items-center">
+        <mat-icon class="scale-75 mr-1">person</mat-icon>
+        <div class="pt-1">
+          <span>Informações de usuário</span>
+        </div>
       </div>
 
-      <div class="flex lg:justify-start justify-center">
-        <button mat-flat-button type="submit" class="!bg-green-600">{{ isEditing() ? 'Atualizar' : 'Salvar' }}</button>
+
+      <form [formGroup]="form_user">
+        <div class="mb-1">
+          <div class="lg:w-[500px] w-full">
+            <label class="block mb-1 text-sm font-medium text-gray-900">Usuário <required/></label>
+            <input type="text" formControlName="user" placeholder=""
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required />
+            @if (form_user.controls['user'].hasError('required') && showError()) {
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">Usuário é obrigatório</p>
+            }
+            <div class="flex justify-end">
+              <button (click)="setUser()" class="text-sm hover:underline text-gray-500">
+                Copiar e-mail
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:w-[150px] w-full mr-2">
+          <label for="countries" class="block mb-1 text-sm font-medium text-gray-900">Status</label>
+          <select id="countries" formControlName="isActive"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option selected [ngValue]="true">Ativo</option>
+            <option [ngValue]="false">Inativo</option>
+          </select>
+        </div>
+      </form>
+    </mat-card>
+    }
+
+    <!-- PRODUCER SECTION -->
+    @if (this.form.get(['isProducer'])?.value === true) {
+    <mat-card class="p-4 mb-6">
+      <div class="mb-4 text-sm font-medium text-gray-900 flex items-center">
+        <mat-icon class="scale-75 mr-1">agriculture</mat-icon>
+        <div class="pt-1">
+          <span>Informações de produtor</span>
+        </div>
       </div>
-    </form>
+
+      <form [formGroup]="form_producer">
+
+        <div class="mb-4">
+          <div class="lg:w-[500px] w-full">
+            <label class="block mb-1 text-sm font-medium text-gray-900">CAD/PRO</label>
+            <input type="text" formControlName="cad_pro" placeholder=""
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <div class="lg:w-[500px] w-full">
+            <label class="block mb-1 text-sm font-medium text-gray-900">GGN (Global GAP Number)</label>
+            <input type="text" formControlName="ggn" placeholder=""
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          </div>
+        </div>
+      </form>
+    </mat-card>
+    }
+
+    <div class="flex lg:justify-start justify-center">
+      <button mat-flat-button (click)="create()" type="button" class="!bg-green-600">{{ isEditing() ? 'Atualizar' : 'Salvar' }}</button>
+    </div>
   </div>
 
 </ng-template>

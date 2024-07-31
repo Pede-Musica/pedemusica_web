@@ -23,6 +23,8 @@ import { SectorListComponent } from './register/sector/sector-list/sector-list.c
 import { SectorFormComponent } from './register/sector/sector-form/sector-form.component';
 import { PersonListComponent } from './register/person/person-list/person-list.component';
 import { PersonFormComponent } from './register/person/person-form/person-form.component';
+import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
+import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
 
 const routes: Routes = [
   // Rastreabilidade
@@ -66,6 +68,10 @@ const routes: Routes = [
   { path: 'materials', component: MaterialListComponent },
   { path: 'materials/new', component: MaterialFormComponent },
   { path: 'materials/:id', component: MaterialFormComponent },
+
+  { path: 'profiles', component: ProfileListComponent },
+  { path: 'profiles/new', component: ProfileFormComponent },
+  { path: 'profiles/:id', component: ProfileFormComponent },
 
   {
     path: '**',

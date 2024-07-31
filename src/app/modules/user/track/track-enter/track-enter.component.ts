@@ -2,7 +2,9 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DateTime } from '@app/resources/handlers/datetime';
+import { ImagesService } from '@app/services/common/images.service';
 import { NavigationService } from '@app/services/common/navigation.service';
+import { MaterialService } from '@app/services/user/material.service';
 import { SelectorProducerComponent } from '@app/shared/components/selector-producer/selector-producer.component';
 import { SelectorProductComponent } from '@app/shared/components/selector-product/selector-product.component';
 
@@ -18,13 +20,16 @@ export class TrackEnterComponent implements OnInit {
   public selectedProducer = signal(false);
   public producer: any = {};
   public productList: Array<any> = [];
+  public materialList: Array<any> = [];
   public form: FormGroup;
 
   constructor(
     public navigationService: NavigationService,
     private _formBuilder: FormBuilder,
     public dateTime: DateTime,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public image: ImagesService,
+    private _materialService: MaterialService
   ) {
     this.form = this._formBuilder.group({
       field: ['', [Validators.required]],
@@ -34,6 +39,7 @@ export class TrackEnterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getMaterial();
     this.getReport();
   }
 
@@ -69,10 +75,47 @@ export class TrackEnterComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       response => {
         if (response) {
-          this.productList.push(response)
           console.log(response)
+          const sizes = response?.ProductSize;
+          const types = response?.ProductType;
+
+          const volumes = [
+            {
+              size:  sizes[0]?.name,
+              type:  types[0]?.name,
+              amount: 0
+            }
+          ]
+
+          response.volumes = volumes;
+          this.productList.push(response)
         }
       }
+    )
+  }
+
+  public deleteProduct(index: number) {
+
+    this.productList.splice(index, 1);
+  }
+
+  public addVolume(prod: any) {
+    console.log(prod)
+  }
+
+  public getMaterial() {
+
+    const params = {
+      search: '',
+      page: 1,
+      pageSize: 99999999,
+      traceable: true
+    }
+
+    this._materialService.paginate(params).subscribe(
+      data => {
+        this.materialList = data?.data
+      },
     )
   }
 }

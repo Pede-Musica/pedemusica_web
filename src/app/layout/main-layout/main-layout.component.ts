@@ -21,7 +21,6 @@ export class MainLayoutComponent implements OnInit {
     private _route: Router
   ) {
     this._route.events.subscribe((val) => {
-      console.log(val)
       if(this.displayMode() === 'mobile') {
         this.openSidebar.set(false)
       }

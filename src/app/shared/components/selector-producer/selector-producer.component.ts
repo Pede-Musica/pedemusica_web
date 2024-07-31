@@ -1,7 +1,8 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { ImagesService } from '@app/services/common/images.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { ProducerService } from '@app/services/user/producer.service';
+import { PersonService } from '@app/services/user/person.service';
 
 @Component({
   selector: 'app-selector-producer',
@@ -13,14 +14,15 @@ export class SelectorProducerComponent implements OnInit {
   public isLoading = signal(true);
   public producerList: Array<any> = [];
   public producerTotal: number = 0;
-  public page_size: number = 10;
+  public page_size: number = 9999999;
   public page_index: number = 0;
   public order: string = 'asc';
 
   constructor(
     public navigationService: NavigationService,
-    private _producerService: ProducerService,
-    private _snackbarService: SnackbarService
+    private _personService: PersonService,
+    private _snackbarService: SnackbarService,
+    public image: ImagesService
   ){}
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class SelectorProducerComponent implements OnInit {
   }
 
   get icon() {
-    return this.navigationService.getIcon('producers');
+    return this.navigationService.getIcon('persons');
   }
 
   public getProducers() {
@@ -39,10 +41,11 @@ export class SelectorProducerComponent implements OnInit {
       search: '',
       page: this.page_index + 1,
       pageSize: this.page_size,
-      order: this.order
+      order: this.order,
+      isProducer: true
     }
 
-    this._producerService.paginate(params).subscribe(
+    this._personService.paginate(params).subscribe(
       data => {
         this.producerList = data.data;
         this.producerTotal = data.total;

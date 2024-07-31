@@ -92,7 +92,7 @@ export class NewAccountComponent implements OnInit {
     this._authService.setPassword(data).subscribe(
       response => {
         this.snackbarService.open(response.message);
-        this._router.navigate(['/auth'])
+        this._authService.clearAuthData();
       },
       error => {
         this.isLoading.set(false);

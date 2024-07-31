@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { ImagesService } from '@app/services/common/images.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
 import { ProductService } from '@app/services/user/product.service';
@@ -20,18 +21,19 @@ export class SelectorProductComponent {
   constructor(
     public navigationService: NavigationService,
     private _productService: ProductService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    public image: ImagesService
   ){}
 
   ngOnInit(): void {
-    this.getProducers()
+    this.getProduct()
   }
 
   get icon() {
     return this.navigationService.getIcon('products');
   }
 
-  public getProducers() {
+  public getProduct() {
 
     this.isLoading.set(true);
 
@@ -39,7 +41,8 @@ export class SelectorProductComponent {
       search: '',
       page: this.page_index + 1,
       pageSize: this.page_size,
-      order: this.order
+      order: this.order,
+      isActive: true
     }
 
     this._productService.paginate(params).subscribe(

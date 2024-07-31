@@ -93,7 +93,7 @@ export class NavigationService {
       type: 'Cadastros',
       child: [
         {
-          page: 'users',
+          page: 'persons',
           name: 'Pessoas',
           icon: 'group',
           path: '/in/persons'
@@ -123,6 +123,17 @@ export class NavigationService {
           path: '/in/materials'
         },
       ]
-    }
+    },
+    /* {
+      type: 'Sistema',
+      child: [
+        {
+          page: 'profiles',
+          name: 'Perfis',
+          icon: 'manage_accounts',
+          path: '/in/profiles'
+        },
+      ]
+    } */
   ]
 }

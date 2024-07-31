@@ -1,10 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from '@app/services/common/dialog.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
-import { UserService } from '@app/services/user/user.service';
+import { PersonService } from '@app/services/user/person.service';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-person-form',
@@ -16,14 +16,17 @@ export class PersonFormComponent {
   public isLoading = signal(false);
   public isEditing = signal(false);
   public showError = signal(false);
-  public form: FormGroup
+  public form: FormGroup;
+  public form_user: FormGroup;
+  public form_producer: FormGroup;
+  public form_customer: FormGroup;
   public user_id = signal('');
 
   constructor(
     public navigationService: NavigationService,
     private _formBuilder: FormBuilder,
     public dialogService: DialogService,
-    private _userService: UserService,
+    private _personService: PersonService,
     private _router: Router,
     private _snackService: SnackbarService,
     private _activeRoute: ActivatedRoute
@@ -32,13 +35,30 @@ export class PersonFormComponent {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required]],
+      phone2: [''],
       address: ['', [Validators.required]],
       type: [1, [Validators.required]],
       cpf_cnpj: ['', [Validators.required]],
       isCustomer: [false, [Validators.required]],
       isProducer: [false, [Validators.required]],
       isUser: [false, [Validators.required]]
+    });
+
+    this.form_user = this._formBuilder.group({
+      user: ['', [Validators.required]],
+      isActive: [true, [Validators.required]],
     })
+
+    this.form_producer = this._formBuilder.group({
+      cad_pro: [''],
+      ggn: [''],
+    })
+
+    this.form_customer = this._formBuilder.group({
+
+    })
+
+
   }
 
   ngOnInit(): void {
@@ -53,7 +73,7 @@ export class PersonFormComponent {
 
 
   get icon() {
-    return this.navigationService.getIcon('users');
+    return this.navigationService.getIcon('persons');
   }
 
   get type() {
@@ -63,9 +83,11 @@ export class PersonFormComponent {
   public detail(id: string) {
     this.isLoading.set(true);
 
-    this._userService.detail(id).subscribe(
+    this._personService.detail(id).subscribe(
       data => {
         this.form.patchValue(data);
+        this.form_user.patchValue(data.User)
+        this.form_producer.patchValue(data.Producer)
         this.isLoading.set(false);
       },
       error => {
@@ -82,28 +104,48 @@ export class PersonFormComponent {
       return
     }
 
+    if (this.form.get(['isUser'])?.value && this.form_user.invalid) {
+      this.showError.set(true)
+      return
+    }
+
+    if (this.form.get(['isProducer'])?.value && this.form_producer.invalid) {
+      this.showError.set(true)
+      return
+    }
+
     this.isLoading.set(true);
 
     const data = this.form.value;
+    data.user = this.form_user.value;
+    data.producer = this.form_producer.value;
 
     let observable: Observable<any>;
 
     if (this.isEditing()) {
       data.id = this.user_id();
-      observable = this._userService.update(data);
+      observable = this._personService.update(data);
     } else {
-      observable = this._userService.create(data);
+      observable = this._personService.create(data);
     }
 
     observable.subscribe(
       response => {
         this.dialogService.open(true, response.message, response.type, response.submessage);
-        this._router.navigate([this.navigationService.getPATH('users')]);
+        this._router.navigate([this.navigationService.getPATH('persons')]);
       },
       error => {
         this.isLoading.set(false);
         this._snackService.open(error.error.message)
       }
     )
+  }
+
+  public setUser() {
+
+    const email = this.form.get(['email'])?.value;
+
+    this.form_user.get(['user'])?.setValue(email)
+
   }
 }
