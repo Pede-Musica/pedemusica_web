@@ -8,6 +8,13 @@ import { MaterialService } from '@app/services/user/material.service';
 import { SelectorProducerComponent } from '@app/shared/components/selector-producer/selector-producer.component';
 import { SelectorProductComponent } from '@app/shared/components/selector-product/selector-product.component';
 
+interface volumeProps {
+  amount: number
+  material: any
+  size: string
+  type: string
+}
+
 @Component({
   selector: 'app-track-enter',
   templateUrl: './track-enter.component.html',
@@ -76,14 +83,19 @@ export class TrackEnterComponent implements OnInit {
       response => {
         if (response) {
           console.log(response)
+          
           const sizes = response?.ProductSize;
           const types = response?.ProductType;
 
           const volumes = [
             {
-              size:  sizes[0]?.name,
-              type:  types[0]?.name,
-              amount: 0
+              size: sizes[0]?.name,
+              type: types[0]?.name,
+              amount: 0,
+              material: {
+                volume: false,
+                volume_type: ''
+              }
             }
           ]
 
@@ -99,8 +111,19 @@ export class TrackEnterComponent implements OnInit {
     this.productList.splice(index, 1);
   }
 
-  public addVolume(prod: any) {
-    console.log(prod)
+  public addVolume(prod: any, index: number) {
+
+    const volume = {
+      size: prod.ProductSize[0]?.name,
+      type: prod.ProductType[0]?.name,
+      amount: 0,
+      material: {
+        volume: false,
+        volume_type: ''
+      }
+    }
+
+    this.productList[index].volumes.push(volume)
   }
 
   public getMaterial() {
@@ -117,5 +140,32 @@ export class TrackEnterComponent implements OnInit {
         this.materialList = data?.data
       },
     )
+  }
+
+  public getTotalVolume(volume: volumeProps) {
+    try {
+      const total = `${volume.amount} x ${volume.material?.volume ? volume.material?.volume : '0'} ${volume.material?.volume_type} = ${volume.amount * volume.material?.volume} ${volume.material?.volume_type}`
+      return total
+    }
+    catch (error) {
+      return 'Erro ao calcular total'
+    }
+  }
+
+  public revision() {
+
+    const data = this.form.value;
+    data.products = this.productList;
+
+    console.log(data)
+
+
+    if (this.form.invalid) {
+      this.showError.set(true)
+      return
+    }
+
+
+
   }
 }

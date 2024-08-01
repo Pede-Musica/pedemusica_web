@@ -104,7 +104,7 @@
             <div class="mr-2">
               <app-label [text]="prod?.name"></app-label>
             </div>
-            <button mat-icon-button (click)="addVolume(prod)">
+            <button mat-icon-button (click)="addVolume(prod, $index)">
               <mat-icon class="text-orange-500">add</mat-icon>
             </button>
           </div>
@@ -114,22 +114,22 @@
         </div>
 
         <div>
-          <span class="text-xs text-gray-400">Total de volumes: {{ prod?.volumes?.length }}</span>
+          <span class="text-xs text-gray-400">Total de volumes: {{ prod?.volumes?.length }}</span><br>
         </div>
 
         @for (volume of prod?.volumes; track $index) {
-        <mat-card class="mb-4 p-4">
+        <mat-card class="mb-2 p-4">
           <div class="flex mb-2">
             <div>
               <label class="text-xs text-gray-400">Tipo</label>
               <select [(ngModel)]="volume.type" [ngModelOptions]="{standalone: true}"
-                class=" text-gray-900 text-sm rounded-l-lg border border-gray-300 block p-2.5 min-w-[100px] bg-gray-50">
+                class=" text-gray-900 text-sm rounded-l-lg border border-gray-300 block p-2.5 lg:min-w-[200px] min-w-[100px] bg-gray-50">
                 @for (size of prod?.ProductType; track $index) {
                 <option [value]="size?.name">{{ size?.name }}</option>
                 }
               </select>
             </div>
-            <div>
+            <div class="w-full">
               <label class="text-xs text-gray-400">Tamanho</label>
               <select [(ngModel)]="volume.size" [ngModelOptions]="{standalone: true}"
                 class=" text-gray-900 text-sm border border-gray-300 block p-2.5 min-w-[100px] bg-gray-50 rounded-e-lg">
@@ -143,22 +143,26 @@
             <div>
               <label class="text-xs text-gray-400">Quantidade</label>
               <input type="number" [(ngModel)]="volume.amount" [ngModelOptions]="{standalone: true}"
-                class="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5">
+                class="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 lg:min-w-[50px] max-w-[100px] text-sm border-gray-300 p-2.5">
             </div>
-            <div>
-              <label class="text-xs text-gray-400">Embalagem</label>
-              <select [(ngModel)]="volume.size" [ngModelOptions]="{standalone: true}"
-                class=" text-gray-900 text-sm border border-gray-300 block p-2.5 min-w-[100px] bg-gray-50 rounded-e-lg">
+            <div class="w-full">
+              <label class="text-xs text-gray-400">Material</label>
+              <select [(ngModel)]="volume.material" [ngModelOptions]="{standalone: true}"
+                class=" text-gray-900 text-sm border border-gray-300 block p-2.5 w-full bg-gray-50 rounded-e-lg">
                 @for (material of materialList; track $index) {
-                <option [value]="material?.name">{{ material?.volume }}{{ material?.volume_type }}</option>
+                <option [ngValue]="material">{{ material?.name }}</option>
                 }
               </select>
+              <div class="text-end">
+                <span class="text-xs text-gray-400">
+                  {{ getTotalVolume(volume) }}
+                </span>
+              </div>
             </div>
           </div>
         </mat-card>
         }
       </div>
-
       }
       }
 
@@ -170,8 +174,8 @@
       </div>
     </div>
 
-    <div>
-      <div class="mb-4">
+    <div class="w-full">
+      <div class="mb-4 w-full">
         <div class="lg:w-[300px] w-full mr-4">
           <span class="text-sm font-medium">Observações</span>
           <textarea id="amount" formControlName="observation"
@@ -182,13 +186,13 @@
   </form>
 
   <div class="flex lg:justify-start justify-center">
-    <button mat-flat-button type="submit" class="!bg-green-600">
+    <button mat-flat-button type="button" (click)="revision()" class="!bg-green-600">
       @if (isLoading()) {
       <div>
         <app-loader [diameter]="30"></app-loader>
       </div>
       } @else {
-      Salvar entrada
+      Revisar entrada
       }
     </button>
   </div>
