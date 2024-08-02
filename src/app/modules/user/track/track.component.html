@@ -7,19 +7,86 @@
 </section>
 
 <ng-template #mainTemplate>
-  <div class="mb-4 lg:flex items-center">
+  <div class="mb-2 lg:flex items-center">
     <div class="mr-4 lg:mb-0 mb-4 flex items-center">
       <app-title [text]="title" [icon]="icon"></app-title>
     </div>
 
     <div class="flex">
-      <button mat-stroked-button routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2" matTooltip="Entrada de produtos">
+      <button mat-stroked-button routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2"
+        matTooltip="Entrada de produtos">
         <mat-icon>exit_to_app</mat-icon>
         Entrada</button>
 
-      <button mat-stroked-button routerLink="/in/track/exit" class="!text-red-500 flex items-center" matTooltip="Saída de produtos">
+      <button mat-stroked-button routerLink="/in/track/exit" class="!text-red-500 flex items-center"
+        matTooltip="Saída de produtos">
         <mat-icon>output</mat-icon>
         Saída</button>
+    </div>
+  </div>
+
+  <div class="sm:px-4 p-1">
+
+    <div class="mb-6">
+      <div class="lg:w-[150px] w-full mr-2">
+        <label class="block mb-1 text-sm font-medium text-gray-900">Setor</label>
+        <select [(ngModel)]="sector_id" [ngModelOptions]="{standalone: true}" (ngModelChange)="getTrack()"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <option value="">Todos</option>
+          @for (sector of sectorList; track $index) {
+          <option [ngValue]="sector.id">{{ sector.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <mat-accordion>
+        @for (location of locationList; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title class="flex justify-between">
+              <span class="mr-2">{{ location.name }}</span>
+              <span class="text-sm text-gray-400">Volumes: {{ location?.Volume?.length }}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            @for (volume of location?.Volume; track $index) {
+            <div class="mb-2">
+              <div class="text-xs text-white bg-gray-700 py-1 px-2 min-w-[100px] rounded-tr-xl">
+                <span class="text-green-400 font-medium mr-2">E{{ volume.entry_id }}</span>
+                <span>{{ volume?.Entry?.Producer?.Person?.name }}</span>
+              </div>
+              <div class="py-2 px-3 rounded-b-md border border-gray-400">
+                <div>
+                  <div class="mr-2 flex items-center">
+                    <div class="mr-2">
+                      <app-label [text]="volume?.Product?.name"></app-label>
+                    </div>
+                    <span class="text-xs text-gray-800 rounded-full mr-2">› {{ volume?.type }} ›</span>
+                    <span class="text-xs text-gray-800 rounded-full">{{ volume?.size }}</span>
+                  </div>
+                </div>
+                <div class="p-1 text-sm">
+                  <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume?.amount) }}</span>
+                  <span class="font-medium mr-2">→ {{ volume?.volume }} {{ volume?.volume_type }}</span>
+                  <span class="text-xs text-gray-400">({{ volume?.Material?.name }})</span>
+                </div>
+                <div class="font-medium text-xs text-end">
+                  <span class="text-gray-400"> {{ dateTime.convertToBRTime(volume?.created_at) }} </span>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="flex justify-center">
+              <button mat-flat-button>Movimentar</button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        }
+
+      </mat-accordion>
     </div>
   </div>
 </ng-template>

@@ -2,17 +2,23 @@
   @if(isLoading()) {
   <app-loading></app-loading>
   } @else {
+  <div class="mb-4 lg:flex items-center">
+    <div class="mr-4 lg:mb-0 mb-4 flex items-center">
+      <app-title [text]="step() === 1 ? 'Entrada' : 'Confirmar entrada'" icon="exit_to_app"></app-title>
+    </div>
+  </div>
+  @switch (step()) {
+  @case (1) {
   <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+  @case (2) {
+  <ng-container *ngTemplateOutlet="confirmTemplate"></ng-container>
+  }
+  }
   }
 </section>
 
 <ng-template #mainTemplate>
-  <div class="mb-4 lg:flex items-center">
-    <div class="mr-4 lg:mb-0 mb-4 flex items-center">
-      <app-title text="Entrada" icon="exit_to_app"></app-title>
-    </div>
-  </div>
-
   <form [formGroup]="form">
     <!-- Informações do produtor -->
     <div class="pl-1 pb-4 border-b border-gray-300 mb-4">
@@ -22,7 +28,7 @@
         </div>
         @if(selectedProducer()) {
         <div class="pt-2">
-          <button mat-icon type="button" (click)="dialogProducer()">
+          <button mat-icon-button type="button" (click)="dialogProducer()">
             <mat-icon class="text-gray-500">sync_alt</mat-icon>
           </button>
         </div>
@@ -124,8 +130,8 @@
               <label class="text-xs text-gray-400">Tipo</label>
               <select [(ngModel)]="volume.type" [ngModelOptions]="{standalone: true}"
                 class=" text-gray-900 text-sm rounded-l-lg border border-gray-300 block p-2.5 lg:min-w-[200px] min-w-[100px] bg-gray-50">
-                @for (size of prod?.ProductType; track $index) {
-                <option [value]="size?.name">{{ size?.name }}</option>
+                @for (type of prod?.ProductType; track $index) {
+                <option [value]="type?.name">{{ type?.name }}</option>
                 }
               </select>
             </div>
@@ -133,12 +139,23 @@
               <label class="text-xs text-gray-400">Tamanho</label>
               <select [(ngModel)]="volume.size" [ngModelOptions]="{standalone: true}"
                 class=" text-gray-900 text-sm border border-gray-300 block p-2.5 min-w-[100px] bg-gray-50 rounded-e-lg">
-                @for (type of prod?.ProductSize; track $index) {
-                <option [value]="type?.name">{{ type?.name }}</option>
+                @for (size of prod?.ProductSize; track $index) {
+                <option [value]="size?.name">{{ size?.name }}</option>
                 }
               </select>
             </div>
           </div>
+
+          <div class="w-full mb-1">
+            <label class="text-xs text-gray-400">Localização</label>
+            <select [(ngModel)]="volume.location" [ngModelOptions]="{standalone: true}"
+              class=" text-gray-900 text-sm border border-gray-300 block p-2.5 w-full bg-gray-50 rounded-lg">
+              @for (location of locationList; track $index) {
+              <option [ngValue]="location">{{ location?.name }}</option>
+              }
+            </select>
+          </div>
+
           <div class="flex">
             <div>
               <label class="text-xs text-gray-400">Quantidade</label>
@@ -160,6 +177,7 @@
               </div>
             </div>
           </div>
+
         </mat-card>
         }
       </div>
@@ -187,14 +205,120 @@
 
   <div class="flex lg:justify-start justify-center">
     <button mat-flat-button type="button" (click)="revision()" class="!bg-green-600">
-      @if (isLoading()) {
-      <div>
-        <app-loader [diameter]="30"></app-loader>
-      </div>
-      } @else {
       Revisar entrada
-      }
     </button>
   </div>
 
+</ng-template>
+
+<ng-template #confirmTemplate>
+  <div>
+
+    <div>
+      <!-- Informações do produtor -->
+      <div class="mb-4">
+        <div class="mr-2">
+          <span class="text-sm font-medium">Informações do produtor</span>
+        </div>
+        <div>
+          <mat-card appearance="outlined" class="p-2">
+            <div class="flex mr-2">
+              <div class="mr-1 pb-1">
+                <mat-icon class="text-gray-600 scale-75">person</mat-icon>
+              </div>
+              <div>
+                <span class="text-sm font-medium">{{ finalData?.producer.name }}</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap">
+              <div class="mr-2">
+                <span class="text-xs">CAD/PRO: {{ finalData?.producer?.Producer?.cad_pro }}</span>
+              </div>
+
+              <div class="mr-2">
+                <span class="text-xs">GGN: {{ finalData?.producer?.Producer?.ggn }}</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="mr-2">
+                <span class="text-xs">Endereço: {{ finalData?.producer?.address }}</span>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Talhão -->
+      <div class="mb-4">
+        <div class="mr-2">
+          <span class="text-sm"><span class="font-medium">Talhão:</span> {{ finalData?.field }}</span>
+        </div>
+      </div>
+
+      <!-- Data de entrada -->
+      <div class="mb-4">
+        <div class="mr-2">
+          <span class="text-sm"><span class="font-medium">Data da entrada:</span> {{ regex.convertToBRTime(finalData?.date) }}</span>
+        </div>
+      </div>
+
+      <!-- Produtos -->
+      <div class="mb-4">
+        <div class="mr-2">
+          <span class="text-sm font-medium">Produtos:</span>
+        </div>
+        @for (product of finalData?.products; track $index) {
+        <div class="mr-2">
+          <app-label [text]="product?.name"></app-label>
+        </div>
+        @for (volume of product?.volumes; track $index) {
+        <mat-card appearance="outlined" class="p-2 mb-2">
+          <div class="mr-2">
+            <span class="text-sm"><span class="font-medium">Tipo: </span> {{ volume?.type }}</span>
+          </div>
+          <div class="mr-2">
+            <span class="text-sm"><span class="font-medium">Tamanho: </span> {{ volume?.size }}</span>
+          </div>
+          <div class="mr-2">
+            <span class="text-sm"><span class="font-medium">Localização: </span> {{ volume?.location?.name }}</span>
+          </div>
+          <div class="mr-2">
+            <span class="text-sm"><span class="font-medium">Quantidade: </span> {{ volume?.amount }} → {{ volume?.material?.name }}</span>
+          </div>
+          <div class="mr-2">
+            <span class="text-sm"><span class="font-medium">Total: </span> {{ getTotalVolume(volume) }}</span>
+          </div>
+        </mat-card>
+        }
+        }
+      </div>
+
+      <div>
+        <div class="mr-2">
+          <span class="text-xs font-medium">Observações: </span><br>
+          <span class="text-xs">{{ finalData?.observation }}</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="flex lg:justify-start justify-center mt-8">
+      <button mat-flat-button type="button" (click)="createEntry()" class="!bg-green-600 mr-2">
+        @if (isLoading()) {
+        <div>
+          <app-loader [diameter]="30"></app-loader>
+        </div>
+        } @else {
+        Confirmar entrada
+        }
+      </button>
+      @if (isLoading() === false) {
+        <button mat-stroked-button type="button" (click)="step.set(1)" class="">
+          Corrigir
+        </button>
+      }
+    </div>
+  </div>
 </ng-template>

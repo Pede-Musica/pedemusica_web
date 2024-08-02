@@ -76,7 +76,7 @@ export class LocationFormComponent {
 
     this._sectorService.combolist().subscribe(
       data => {
-        this.sectorList = data.data;
+        this.sectorList = data;
       },
       error => {
         this._snackService.open(error.error.message)

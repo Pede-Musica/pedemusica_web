@@ -24,4 +24,8 @@ export class MaterialService {
   public update(data: any): Observable<any> {
     return this.http.post(`material/update`, data);
   }
+
+  public combolist(): Observable<any> {
+    return this.http.get(`material/combolist`);
+  }
 }

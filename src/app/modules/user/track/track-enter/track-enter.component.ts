@@ -1,10 +1,15 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DateTime } from '@app/resources/handlers/datetime';
+import { Regex } from '@app/resources/handlers/regex';
+import { DialogService } from '@app/services/common/dialog.service';
 import { ImagesService } from '@app/services/common/images.service';
 import { NavigationService } from '@app/services/common/navigation.service';
+import { LocationService } from '@app/services/user/location.service';
 import { MaterialService } from '@app/services/user/material.service';
+import { RegisterService } from '@app/services/user/register.service';
 import { SelectorProducerComponent } from '@app/shared/components/selector-producer/selector-producer.component';
 import { SelectorProductComponent } from '@app/shared/components/selector-product/selector-product.component';
 
@@ -24,11 +29,14 @@ export class TrackEnterComponent implements OnInit {
 
   public isLoading = signal(true);
   public showError = signal(false);
+  public step = signal(1);
   public selectedProducer = signal(false);
   public producer: any = {};
   public productList: Array<any> = [];
   public materialList: Array<any> = [];
   public form: FormGroup;
+  public locationList: Array<any> = [];
+  public finalData: any = {};
 
   constructor(
     public navigationService: NavigationService,
@@ -36,17 +44,23 @@ export class TrackEnterComponent implements OnInit {
     public dateTime: DateTime,
     public dialog: MatDialog,
     public image: ImagesService,
-    private _materialService: MaterialService
+    private _materialService: MaterialService,
+    private _locationService: LocationService,
+    private _dialog: DialogService,
+    public regex: Regex,
+    private _registerService: RegisterService,
+    public router: Router
   ) {
     this.form = this._formBuilder.group({
       field: ['', [Validators.required]],
       date: [this.dateTime.getDateTime(), [Validators.required]],
-      observation: ['', [Validators.required]],
+      observation: [''],
     })
   }
 
   ngOnInit(): void {
     this.getMaterial();
+    this.getLocations();
     this.getReport();
   }
 
@@ -83,7 +97,7 @@ export class TrackEnterComponent implements OnInit {
       response => {
         if (response) {
           console.log(response)
-          
+
           const sizes = response?.ProductSize;
           const types = response?.ProductType;
 
@@ -95,7 +109,8 @@ export class TrackEnterComponent implements OnInit {
               material: {
                 volume: false,
                 volume_type: ''
-              }
+              },
+              location: null
             }
           ]
 
@@ -128,16 +143,9 @@ export class TrackEnterComponent implements OnInit {
 
   public getMaterial() {
 
-    const params = {
-      search: '',
-      page: 1,
-      pageSize: 99999999,
-      traceable: true
-    }
-
-    this._materialService.paginate(params).subscribe(
+    this._materialService.combolist().subscribe(
       data => {
-        this.materialList = data?.data
+        this.materialList = data
       },
     )
   }
@@ -154,18 +162,94 @@ export class TrackEnterComponent implements OnInit {
 
   public revision() {
 
-    const data = this.form.value;
-    data.products = this.productList;
-
-    console.log(data)
-
-
     if (this.form.invalid) {
       this.showError.set(true)
       return
     }
+    const data = this.form.value;
+
+    if (this.selectedProducer() === false) {
+      this._dialog.open(true, 'Selecione o produtor', 'warning')
+      return
+    }
+
+    data.producer = this.producer;
+
+    if (this.productList.length === 0) {
+      this._dialog.open(true, 'Entrada sem produtos', 'warning')
+      return
+    }
 
 
+    let error: string | boolean = false;
+    const products = this.productList;
 
+    products?.map((prod: any) => {
+      prod?.volumes?.map((volume: any) => {
+
+        if ([null, false, '', undefined].includes(volume?.material?.volume)) {
+          error = 'Material não definido'
+        }
+        if ([null, false, '', undefined].includes(volume?.location)) {
+          error = 'Localização do volume não definido'
+        }
+        if (volume?.amount === 0) {
+          error = 'Quantidade não pode ser zero'
+        }
+        if ([null, false, '', undefined].includes(volume?.size)) {
+          error = 'Volume não definido'
+        }
+        if ([null, false, '', undefined].includes(volume?.type)) {
+          error = 'Tipo não definido'
+        }
+      })
+
+      if (prod?.volumes?.length === 0) {
+        error = 'Sem volumes adicionados'
+      }
+    })
+
+    if (error) {
+      this._dialog.open(true, error, 'warning');
+      return
+    }
+
+    data.products = products;
+
+    console.log(data)
+
+    this.finalData = data;
+
+    this.step.set(2)
+
+  }
+
+  public getLocations() {
+
+    this._locationService.combolist().subscribe(
+      data => {
+        this.locationList = data
+      }
+    )
+  }
+
+  public createEntry() {
+
+    this.isLoading.set(true);
+
+    const data = this.finalData;
+
+    data.entry_at = new Date(data.date).toISOString();
+
+    this._registerService.createEntry(data).subscribe(
+      response => {
+        this._dialog.open(true, response.message, 'success')
+        this.router.navigate(['/track'])
+      },
+      excp => {
+        this._dialog.open(true, excp.error.message, 'error');
+        this.isLoading.set(false);
+      }
+    )
   }
 }

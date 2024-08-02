@@ -28,4 +28,12 @@ export class LocationService {
   public combolistSectors(): Observable<any> {
     return this.http.get(`location/sector/combolist`);
   }
+
+  public combolist(): Observable<any> {
+    return this.http.get(`location/combolist`);
+  }
+
+  public track(params: any): Observable<any> {
+    return this.http.get(`location/track`, { params });
+  }
 }

@@ -42,4 +42,8 @@ export class Regex {
 
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   }
+
+  public formatToTwoDigits(number: any) {
+    return number < 10 ? '0' + number : number.toString();
+  }
 }

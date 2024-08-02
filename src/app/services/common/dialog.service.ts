@@ -13,6 +13,7 @@ export class DialogService {
   constructor() { }
 
   public open(status: boolean, text: string, type: string, submessage?: string) {
+
     if(status) {
       this.dialog.open(DialogComponent, {
         data: {

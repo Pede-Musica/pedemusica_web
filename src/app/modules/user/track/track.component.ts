@@ -1,5 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { DateTime } from '@app/resources/handlers/datetime';
+import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
+import { LocationService } from '@app/services/user/location.service';
+import { SectorService } from '@app/services/user/sector.service';
 
 @Component({
   selector: 'app-track',
@@ -10,12 +14,20 @@ export class TrackComponent {
 
   public pathname = window.location.pathname;
   public isLoading = signal(true);
+  public locationList: Array<any> = [];
+  public sectorList: Array<any> = [];
+  public sector_id = "";
 
   constructor(
-    public navigationService: NavigationService
+    public navigationService: NavigationService,
+    private _locationService: LocationService,
+    private _sectorService: SectorService,
+    public regex: Regex,
+    public dateTime: DateTime,
   ) { }
 
   ngOnInit(): void {
+    this.getSectors();
     this.getTrack();
   }
 
@@ -27,8 +39,28 @@ export class TrackComponent {
     return this.navigationService.getIcon('track');
   }
 
+  public getSectors() {
+
+    this._sectorService.combolist().subscribe(
+      data => {
+        this.sectorList = data;
+      }
+    )
+  }
+
   public getTrack() {
-    this.isLoading.set(false)
+    this.isLoading.set(true);
+
+    const params = {
+      sector_id: this.sector_id
+    }
+
+    this._locationService.track(params).subscribe(
+      data => {
+        this.locationList = data;
+        this.isLoading.set(false);
+      }
+    )
   }
 
 }
