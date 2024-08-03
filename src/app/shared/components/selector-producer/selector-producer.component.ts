@@ -14,6 +14,7 @@ export class SelectorProducerComponent implements OnInit {
   public isLoading = signal(true);
   public producerList: Array<any> = [];
   public producerTotal: number = 0;
+  public search: string = '';
   public page_size: number = 9999999;
   public page_index: number = 0;
   public order: string = 'asc';
@@ -38,7 +39,7 @@ export class SelectorProducerComponent implements OnInit {
     this.isLoading.set(true);
 
     const params = {
-      search: '',
+      search: this.search,
       page: this.page_index + 1,
       pageSize: this.page_size,
       order: this.order,
@@ -55,6 +56,14 @@ export class SelectorProducerComponent implements OnInit {
         this._snackbarService.open(error.error.message)
       }
     )
+  }
+
+  public filter(event: any) {
+    const value = event?.target?.value;
+    console.log(value)
+    this.search = value;
+
+    this.getProducers();
   }
 
 }

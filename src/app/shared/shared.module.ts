@@ -12,6 +12,8 @@ import { LabelComponent } from './components/label/label.component';
 import { SelectorProducerComponent } from './components/selector-producer/selector-producer.component';
 import { SelectorProductComponent } from './components/selector-product/selector-product.component';
 import { LabelRequiredComponent } from './components/label-required/label-required.component';
+import { VolumeCard1Component } from './components/volume-card-1/volume-card-1.component';
+import { VolumeCard2Component } from './components/volume-card-2/volume-card-2.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -29,7 +31,9 @@ const config: ExtraOptions = {
     LabelComponent,
     SelectorProducerComponent,
     SelectorProductComponent,
-    LabelRequiredComponent
+    LabelRequiredComponent,
+    VolumeCard1Component,
+    VolumeCard2Component
   ],
   imports: [
     CommonModule,
@@ -49,7 +53,9 @@ const config: ExtraOptions = {
     NgxMaskPipe,
     NgxMaskDirective,
     LabelComponent,
-    LabelRequiredComponent
+    LabelRequiredComponent,
+    VolumeCard1Component,
+    VolumeCard2Component
   ],
 })
 export class SharedModule { }

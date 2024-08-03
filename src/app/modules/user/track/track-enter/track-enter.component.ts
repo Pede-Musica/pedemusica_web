@@ -9,6 +9,7 @@ import { ImagesService } from '@app/services/common/images.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { LocationService } from '@app/services/user/location.service';
 import { MaterialService } from '@app/services/user/material.service';
+import { PersonService } from '@app/services/user/person.service';
 import { RegisterService } from '@app/services/user/register.service';
 import { SelectorProducerComponent } from '@app/shared/components/selector-producer/selector-producer.component';
 import { SelectorProductComponent } from '@app/shared/components/selector-product/selector-product.component';
@@ -37,6 +38,7 @@ export class TrackEnterComponent implements OnInit {
   public form: FormGroup;
   public locationList: Array<any> = [];
   public finalData: any = {};
+  public producerList: Array<any> = [];
 
   constructor(
     public navigationService: NavigationService,
@@ -49,7 +51,8 @@ export class TrackEnterComponent implements OnInit {
     private _dialog: DialogService,
     public regex: Regex,
     private _registerService: RegisterService,
-    public router: Router
+    public router: Router,
+    private _personService: PersonService
   ) {
     this.form = this._formBuilder.group({
       field: ['', [Validators.required]],
@@ -70,6 +73,23 @@ export class TrackEnterComponent implements OnInit {
 
   get icon() {
     return this.navigationService.getIcon('register');
+  }
+
+  public getProducer() {
+
+    const params = {
+      search: '',
+      page: 1,
+      pageSize: 999999999,
+      order: 'asc',
+      isProducer: true
+    }
+
+    this._personService.paginate(params).subscribe(
+      data => {
+        this.producerList = data.data;
+      }
+    )
   }
 
   public getReport() {
@@ -108,7 +128,6 @@ export class TrackEnterComponent implements OnInit {
               amount: 0,
               material: {
                 volume: false,
-                volume_type: ''
               },
               location: null
             }
@@ -134,7 +153,6 @@ export class TrackEnterComponent implements OnInit {
       amount: 0,
       material: {
         volume: false,
-        volume_type: ''
       }
     }
 
@@ -152,7 +170,7 @@ export class TrackEnterComponent implements OnInit {
 
   public getTotalVolume(volume: volumeProps) {
     try {
-      const total = `${volume.amount} x ${volume.material?.volume ? volume.material?.volume : '0'} ${volume.material?.volume_type} = ${volume.amount * volume.material?.volume} ${volume.material?.volume_type}`
+      const total = `${volume.amount} x ${volume.material?.volume ? volume.material?.volume : '0'} KG = ${volume.amount * volume.material?.volume} KG`
       return total
     }
     catch (error) {

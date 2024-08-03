@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { DateTime } from '@app/resources/handlers/datetime';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
@@ -24,6 +25,7 @@ export class TrackComponent {
     private _sectorService: SectorService,
     public regex: Regex,
     public dateTime: DateTime,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,14 @@ export class TrackComponent {
 
   get icon() {
     return this.navigationService.getIcon('track');
+  }
+
+  get iconLocations() {
+    return this.navigationService.getIcon('locations');
+  }
+
+  get iconProducers() {
+    return this.navigationService.getIcon('producers');
   }
 
   public getSectors() {
@@ -61,6 +71,10 @@ export class TrackComponent {
         this.isLoading.set(false);
       }
     )
+  }
+
+  public detailLocation(id: string) {
+    this.router.navigate(['/in/track/location/detail/' + id])
   }
 
 }

@@ -17,6 +17,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [],
@@ -39,7 +41,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSidenavModule,
     MatCardModule,
     MatDividerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatTabsModule
   ],
   exports: [
     MatInputModule,
@@ -59,7 +63,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSidenavModule,
     MatCardModule,
     MatDividerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule { }

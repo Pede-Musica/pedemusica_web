@@ -1,0 +1,44 @@
+<section class="lg:p-4 p-2">
+  @if(isLoading()) {
+  <app-loading></app-loading>
+  } @else {
+  <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  }
+</section>
+
+
+<ng-template #mainTemplate>
+  <div>
+    <div class="mb-4 flex items-center justify-between">
+      <div class="mr-4 lg:mb-0 mb-4 flex items-center">
+        <div class="mr-4">
+          <app-title [text]="locationData.name" [icon]="icon"></app-title>
+        </div>
+        <div class="px-2 bg-gray-400 rounded-md">
+          <span class="text-white text-sm">{{ locationData.Sector.name }}</span>
+        </div>
+      </div>
+      <div>
+        <button mat-button routerLink="/in/track" class="!text-primary flex items-center"
+          matTooltip="Voltar para rastreabilidade">
+          <mat-icon>arrow_back</mat-icon>
+          Voltar</button>
+      </div>
+    </div>
+
+    <div class="mr-4">
+      <span class="text-sm text-gray-400">{{ locationData.description }}</span>
+    </div>
+
+    <div>
+      <div class="mb-2">
+        <span class="text-gray-900 font-medium text-sm">Volumes ({{ locationData.Volume.length }})</span>
+      </div>
+      @for (volume of locationData.Volume; track $index) {
+      <div class="mb-2">
+        <app-volume-card-2 [volume]="volume"></app-volume-card-2>
+      </div>
+      }
+    </div>
+  </div>
+</ng-template>

@@ -46,4 +46,19 @@ export class Regex {
   public formatToTwoDigits(number: any) {
     return number < 10 ? '0' + number : number.toString();
   }
+
+  public getFirstNameAndLastNameInitial(fullName: string) {
+    // Divide a string em um array de palavras usando o espaço como separador
+    const names = fullName.trim().split(" ");
+
+    // Verifica se há mais de um nome na string
+    if (names.length > 1) {
+      const firstName = names[0];
+      const lastNameInitial = names[names.length - 1][0]; // Obtém a primeira letra do último nome
+      return `${firstName} ${lastNameInitial}.`;
+    } else {
+      // Se houver apenas um nome, retorna apenas esse nome
+      return names[0];
+    }
+  }
 }

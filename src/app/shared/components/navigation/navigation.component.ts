@@ -26,7 +26,9 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     const user_data = this.authService.getUser();
     const name = this.regex.getFirstAndLastName(user_data?.name)
-    this.user_name.set(name);
+
+    const user_name = this.regex.getFirstNameAndLastNameInitial(name)
+    this.user_name.set(user_name);
   }
 
   public doLogout() {

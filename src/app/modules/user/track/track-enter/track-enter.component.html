@@ -26,6 +26,7 @@
         <div class="mr-2">
           <span class="text-sm font-medium">Informações do produtor</span>
         </div>
+
         @if(selectedProducer()) {
         <div class="pt-2">
           <button mat-icon-button type="button" (click)="dialogProducer()">
@@ -34,6 +35,7 @@
         </div>
         }
       </div>
+
       @if (selectedProducer()) {
       <mat-card appearance="outlined" class="p-2">
         <div class="flex mr-2">
@@ -285,7 +287,7 @@
             <span class="text-sm"><span class="font-medium">Localização: </span> {{ volume?.location?.name }}</span>
           </div>
           <div class="mr-2">
-            <span class="text-sm"><span class="font-medium">Quantidade: </span> {{ volume?.amount }} → {{ volume?.material?.name }}</span>
+            <span class="text-sm"><span class="font-medium">Quantidade: </span> {{ volume?.amount }} unidades • {{ volume?.material?.name }}</span>
           </div>
           <div class="mr-2">
             <span class="text-sm"><span class="font-medium">Total: </span> {{ getTotalVolume(volume) }}</span>

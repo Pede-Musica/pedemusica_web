@@ -1,0 +1,66 @@
+<div>
+  <div class="py-2 px-3 rounded-md border border-gray-400 bg-gray-50">
+    <div class="flex items-center justify-between">
+      <div>
+        <span class="text-sm font-medium text-gray-700">Registro: </span>
+        <span class="text-green-600 font-medium mr-2 text-sm">E{{ volume.entry_id }}</span>
+        <span class="text-sm text-gray-500">{{ dateTime.convertToBRTime(volume.created_at) }}</span>
+      </div>
+
+      <div class="flex">
+
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>apps</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="'/in/track/'" class="!text-sm mr-2">
+            <mat-icon>app_registration</mat-icon>
+            Ver registro
+          </button>
+          <button mat-menu-item [routerLink]="'/in/track/'" class="!text-sm">
+            <mat-icon>published_with_changes</mat-icon>
+            Transformar
+          </button>
+          <button mat-menu-item [routerLink]="'/in/track/'" class="!text-sm">
+            <mat-icon>delete</mat-icon>
+            Excluir volume
+          </button>
+        </mat-menu>
+
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <span class="text-sm font-medium text-gray-700">Recebido por: </span>
+      <span class="text-sm">{{ volume.Entry.User.Person.name }}</span>
+    </div>
+
+    <div class="mb-2">
+      <span class="text-sm"><span class="font-medium text-gray-700">Produtor: </span>{{
+        volume.Entry.Producer.Person.name }}</span>
+    </div>
+
+    <div class="border-l-2 border-orange-400 pl-2 mb-3">
+      <div>
+        <div class="mr-2 flex items-center">
+          <div class="mr-2">
+            <span class="font-medium text-sm">{{ volume.Product.name }}</span>
+          </div>
+          <span class="text-xs rounded-full mr-2">› {{ volume.type }} ›</span>
+          <span class="text-xs rounded-full">{{ volume.size }}</span>
+        </div>
+      </div>
+
+      <div class="text-sm">
+        <span class="font-normal mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
+        <span class="font-normal mr-2">• {{ volume.volume }} {{ volume.volume_type }}</span>
+        <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
+      </div>
+    </div>
+
+    <div class="mb-2 text-sm">
+      <span class="font-medium text-gray-700">Observação</span><br>
+      <span>{{ volume.Entry.observation}}</span>
+    </div>
+  </div>
+</div>

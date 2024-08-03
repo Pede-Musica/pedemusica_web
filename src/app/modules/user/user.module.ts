@@ -28,6 +28,7 @@ import { PersonFormComponent } from './register/person/person-form/person-form.c
 import { PersonListComponent } from './register/person/person-list/person-list.component';
 import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
 import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
+import { TrackLocationComponent } from './track/track-location/track-location.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { ProfileListComponent } from './system/profile/profile-list/profile-list
     PersonFormComponent,
     PersonListComponent,
     ProfileFormComponent,
-    ProfileListComponent
+    ProfileListComponent,
+    TrackLocationComponent
   ],
   imports: [
     CommonModule,

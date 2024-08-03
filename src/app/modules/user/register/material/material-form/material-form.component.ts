@@ -36,7 +36,6 @@ export class MaterialFormComponent {
       name: ['', [Validators.required]],
       isActive: [true, [Validators.required]],
       volume: [0, [Validators.required, Validators.min(0), Validators.max(999999999)]],
-      volume_type: ['KG', [Validators.required]],
       in_stock: [0, [Validators.required, Validators.min(0), Validators.max(999999999)]],
       traceable: [false, [Validators.required]],
       description: [''],

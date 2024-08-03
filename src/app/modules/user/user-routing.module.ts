@@ -25,6 +25,7 @@ import { PersonListComponent } from './register/person/person-list/person-list.c
 import { PersonFormComponent } from './register/person/person-form/person-form.component';
 import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
 import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
+import { TrackLocationComponent } from './track/track-location/track-location.component';
 
 const routes: Routes = [
   // Rastreabilidade
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'track/enter', component: TrackEnterComponent },
   { path: 'track/trasform', component: TrackTransformComponent },
   { path: 'track/exit', component: TrackExitComponent },
+  { path: 'track/location/detail/:id', component: TrackLocationComponent },
 
   { path: 'register', component: ReportComponent },
   { path: 'stock', component: StockComponent },

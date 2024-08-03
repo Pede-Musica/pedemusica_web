@@ -25,6 +25,9 @@
         </button>
       </div>
       <mat-menu #menu="matMenu">
+        <div class="text-center text-sm border-b border-gray-300 pb-1 lg:hidden flex justify-center">
+          <span>{{ user_name() }}</span>
+        </div>
         <button mat-menu-item (click)="doLogout()">
           <mat-icon class="!text-red-500">logout</mat-icon>
           <span>Logout</span>

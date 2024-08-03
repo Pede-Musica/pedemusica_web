@@ -13,4 +13,5 @@ export class RegisterService {
     return this.http.post(`register/entry`, data);
   }
 
+
 }

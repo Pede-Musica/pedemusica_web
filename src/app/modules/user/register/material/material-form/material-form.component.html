@@ -44,23 +44,17 @@
 
       <div class="mb-6">
         <div class="flex items-center">
-          <div class="lg:w-[200px] w-full mr-2">
+          <div class="w-full mr-2">
             <label for="volume" class="block mb-1 text-sm font-medium text-gray-900">
               Volume do material
             </label>
-            <input type="number" id="volume" formControlName="volume"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+            <div class="flex items-center">
+              <input type="number" id="volume" formControlName="volume"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block lg:w-[100px]  p-2.5 mr-2" />
+              <span class="w-[200px] ">KG (Quilogramas)</span>
+            </div>
           </div>
 
-          <div class="lg:w-[200px] w-full mr-2">
-            <label for="volume_type" class="block mb-1 text-sm font-medium text-gray-900">Tipo de volume</label>
-            <select id="volume_type" formControlName="volume_type"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-              <option value="KG">KG (quilogramas)</option>
-              <option value="Unidades">Unidades</option>
-              <option value="G">G (gramas)</option>
-            </select>
-          </div>
         </div>
         @if (form.controls['volume'].hasError('required') && showError()) {
         <p class="mt-2 text-sm text-red-600 dark:text-red-500">Volume é obrigatório</p>
