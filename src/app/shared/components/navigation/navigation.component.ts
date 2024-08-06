@@ -18,7 +18,7 @@ export class NavigationComponent implements OnInit {
   constructor(
     public imagesService: ImagesService,
     public authService: AuthService,
-    private regex: Regex,
+    public regex: Regex,
     private _authService: AuthService,
     public navigationService: NavigationService
   ) { }
@@ -27,8 +27,7 @@ export class NavigationComponent implements OnInit {
     const user_data = this.authService.getUser();
     const name = this.regex.getFirstAndLastName(user_data?.name)
 
-    const user_name = this.regex.getFirstNameAndLastNameInitial(name)
-    this.user_name.set(user_name);
+    this.user_name.set(name);
   }
 
   public doLogout() {

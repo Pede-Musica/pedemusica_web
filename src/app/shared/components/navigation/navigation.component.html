@@ -1,6 +1,6 @@
 <nav class="w-full">
   <div
-    class="lg:h-[60px] h-[45px] bg-gray-100 w-full mat-elevation-z2 flex items-center justify-between border-r-8 border-primary">
+    class="lg:h-[60px] h-[45px] bg-gray-100 w-full mat-elevation-z2 flex items-center justify-between sm:border-r-8 sm:border-l-0 border-l-8 border-primary">
     <div class="py-2 lg:px-4 px-2 flex items-center">
       <div class="mr-1 lg:hidden flex">
         <button mat-icon-button (click)="openSideBar()">
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="flex justify-end items-center px-4">
+    <div class="flex justify-end items-center px-2">
       <div class="lg:flex hidden">
         <button mat-button [matMenuTriggerFor]="menu" class="!text-black">
           <mat-icon>person</mat-icon>
@@ -26,7 +26,7 @@
       </div>
       <mat-menu #menu="matMenu">
         <div class="text-center text-sm border-b border-gray-300 pb-1 lg:hidden flex justify-center">
-          <span>{{ user_name() }}</span>
+          <span>{{ regex.getFirstNameAndLastNameInitial(user_name()) }}</span>
         </div>
         <button mat-menu-item (click)="doLogout()">
           <mat-icon class="!text-red-500">logout</mat-icon>
