@@ -44,18 +44,6 @@ const routes: Routes = [
   { path: 'persons/new', component: PersonFormComponent },
   { path: 'persons/:id', component: PersonFormComponent },
 
-  /* { path: 'users', component: UserListComponent },
-  { path: 'users/new', component: UserFormComponent },
-  { path: 'users/:id', component: UserFormComponent },
-
-  { path: 'producers', component: ProducerListComponent },
-  { path: 'producers/new', component: ProducerFormComponent },
-  { path: 'producers/:id', component: ProducerFormComponent },
-
-  { path: 'customers', component: CustomerListComponent },
-  { path: 'customers/new', component: CustomerFormComponent },
-  { path: 'customers/:id', component: CustomerFormComponent }, */
-
   { path: 'products', component: ProductListComponent },
   { path: 'products/new', component: ProductFormComponent },
   { path: 'products/:id', component: ProductFormComponent },

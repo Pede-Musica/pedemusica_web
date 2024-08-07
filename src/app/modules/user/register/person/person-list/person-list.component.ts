@@ -53,11 +53,11 @@ export class PersonListComponent {
   }
 
   get title() {
-    return `${this.navigationService.getName('users')}`;
+    return `${this.navigationService.getName('persons')}`;
   }
 
   get icon() {
-    return this.navigationService.getIcon('users');
+    return this.navigationService.getIcon('persons');
   }
 
   public pageEvent(event: PageEvent) {
