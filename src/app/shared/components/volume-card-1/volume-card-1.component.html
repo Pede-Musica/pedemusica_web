@@ -7,7 +7,7 @@
     <div>
       <div class="mr-2 flex items-center">
         <div class="mr-2">
-          <app-label [text]="volume.Product.name"></app-label>
+          <app-label [text]="volume.product_name"></app-label>
         </div>
         <span class="text-xs text-gray-800 rounded-full mr-2">› {{ volume.type }} ›</span>
         <span class="text-xs text-gray-800 rounded-full">{{ volume.size }}</span>
@@ -15,7 +15,7 @@
     </div>
     <div class="p-1 text-sm">
       <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
-      <span class="font-medium mr-2">• {{ volume.volume }} {{ volume.volume_type }}</span>
+      <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
       <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
     </div>
     <div class="font-normal text-xs text-end mt-1">

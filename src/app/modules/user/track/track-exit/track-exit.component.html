@@ -7,9 +7,14 @@
 </section>
 
 <ng-template #mainTemplate>
-  <div class="mb-4 lg:flex items-center">
+  <div class="mb-4 flex items-center justify-between">
     <div class="mr-4 lg:mb-0 mb-4 flex items-center">
-      <app-title text="Saída" icon="output"></app-title>
+      <app-title text="Iniciar saída" icon="output"></app-title>
     </div>
+
+    <button mat-button routerLink="/in/track" class="!text-primary flex items-center"
+      matTooltip="Voltar para rastreabilidade">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar</button>
   </div>
 </ng-template>

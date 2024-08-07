@@ -26,6 +26,7 @@ import { PersonFormComponent } from './register/person/person-form/person-form.c
 import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
 import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
 import { TrackLocationComponent } from './track/track-location/track-location.component';
+import { SettingComponent } from './setting/setting.component';
 
 const routes: Routes = [
   // Rastreabilidade
@@ -74,6 +75,8 @@ const routes: Routes = [
   { path: 'profiles', component: ProfileListComponent },
   { path: 'profiles/new', component: ProfileFormComponent },
   { path: 'profiles/:id', component: ProfileFormComponent },
+
+  { path: 'setting', component: SettingComponent },
 
   {
     path: '**',

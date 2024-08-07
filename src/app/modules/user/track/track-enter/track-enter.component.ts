@@ -129,7 +129,8 @@ export class TrackEnterComponent implements OnInit {
               material: {
                 volume: false,
               },
-              location: null
+              location: null,
+              subtract_material: false
             }
           ]
 
@@ -153,7 +154,9 @@ export class TrackEnterComponent implements OnInit {
       amount: 0,
       material: {
         volume: false,
-      }
+      },
+      location: null,
+      subtract_material: false
     }
 
     this.productList[index].volumes.push(volume)

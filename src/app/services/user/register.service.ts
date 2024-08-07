@@ -13,5 +13,7 @@ export class RegisterService {
     return this.http.post(`register/entry`, data);
   }
 
-
+  public paginate(params: any): Observable<any> {
+    return this.http.get(`register/paginate`, { params });
+  }
 }

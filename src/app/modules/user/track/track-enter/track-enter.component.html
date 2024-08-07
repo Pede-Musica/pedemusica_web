@@ -2,10 +2,15 @@
   @if(isLoading()) {
   <app-loading></app-loading>
   } @else {
-  <div class="mb-4 lg:flex items-center">
+  <div class="mb-4 flex items-center justify-between">
     <div class="mr-4 lg:mb-0 mb-4 flex items-center">
       <app-title [text]="step() === 1 ? 'Entrada' : 'Confirmar entrada'" icon="exit_to_app"></app-title>
     </div>
+
+    <button mat-button routerLink="/in/track" class="!text-primary flex items-center"
+      matTooltip="Voltar para rastreabilidade">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar</button>
   </div>
   @switch (step()) {
   @case (1) {
@@ -262,7 +267,8 @@
       <!-- Data de entrada -->
       <div class="mb-4">
         <div class="mr-2">
-          <span class="text-sm"><span class="font-medium">Data da entrada:</span> {{ regex.convertToBRTime(finalData?.date) }}</span>
+          <span class="text-sm"><span class="font-medium">Data da entrada:</span> {{
+            regex.convertToBRTime(finalData?.date) }}</span>
         </div>
       </div>
 
@@ -287,7 +293,8 @@
             <span class="text-sm"><span class="font-medium">Localização: </span> {{ volume?.location?.name }}</span>
           </div>
           <div class="mr-2">
-            <span class="text-sm"><span class="font-medium">Quantidade: </span> {{ volume?.amount }} unidades • {{ volume?.material?.name }}</span>
+            <span class="text-sm"><span class="font-medium">Quantidade: </span> {{ volume?.amount }} unidades • {{
+              volume?.material?.name }}</span>
           </div>
           <div class="mr-2">
             <span class="text-sm"><span class="font-medium">Total: </span> {{ getTotalVolume(volume) }}</span>
@@ -317,9 +324,9 @@
         }
       </button>
       @if (isLoading() === false) {
-        <button mat-stroked-button type="button" (click)="step.set(1)" class="">
-          Corrigir
-        </button>
+      <button mat-stroked-button type="button" (click)="step.set(1)" class="">
+        Corrigir
+      </button>
       }
     </div>
   </div>

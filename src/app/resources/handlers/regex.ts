@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
 export class Regex {
 
   //Retorna o primeiro e o último nome
-  public getFirstAndLastName(text: string): string {
+  public getFirstAndLastName(text: string | undefined): string {
     if (typeof text !== 'string') {
       throw new Error('Input must be a string');
     }

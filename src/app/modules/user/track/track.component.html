@@ -7,38 +7,21 @@
 </section>
 
 <ng-template #mainTemplate>
-  <div class="sm:mb-4 mb-0 flex items-center sm:justify-start justify-between">
+  <div class="sm:mb-4 mb-0 flex items-center justify-between">
     <div class="mr-4 lg:mb-0 mb-4 flex items-center pt-2">
       <app-title [text]="title" [icon]="icon"></app-title>
     </div>
 
-    <div class="sm:flex hidden">
+    <div class="md:flex hidden pr-2">
       <button mat-raised-button routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2"
         matTooltip="Entrada de produtos">
         <mat-icon>exit_to_app</mat-icon>
         Entrada</button>
 
-      <button mat-raised-button routerLink="/in/track/exit" class="!text-red-500 flex items-center"
+      <button mat-raised-button routerLink="/in/track/exit" class="!text-blue-500 flex items-center"
         matTooltip="Saída de produtos">
         <mat-icon>output</mat-icon>
         Saída</button>
-    </div>
-
-    <div class="sm:hidden flex pb-2">
-      <button mat-icon-button [matMenuTriggerFor]="menu" class="mat-elevation-z2 !bg-orange-500 !text-white">
-        <mat-icon>add</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2"
-        matTooltip="Entrada de produtos">
-        <mat-icon class="!text-green">exit_to_app</mat-icon>
-        Entrada</button>
-
-      <button mat-menu-item routerLink="/in/track/exit" class="!text-red-500 flex items-center"
-        matTooltip="Saída de produtos">
-        <mat-icon class="!text-green">output</mat-icon>
-        Saída</button>
-      </mat-menu>
     </div>
   </div>
 

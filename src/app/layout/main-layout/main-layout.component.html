@@ -15,4 +15,21 @@
       <router-outlet></router-outlet>
     </div>
   </main>
+
+  <div class="md:hidden flex pb-2 z-40 fixed bottom-1 right-0 px-4">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="mat-elevation-z8 !bg-orange-500 !text-white">
+      <mat-icon>add</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" class="mb-2">
+      <button mat-menu-item routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2"
+      matTooltip="Entrada de produtos">
+      <mat-icon class="!text-green">exit_to_app</mat-icon>
+      Entrada</button>
+
+    <button mat-menu-item routerLink="/in/track/exit" class="!text-blue-500 flex items-center"
+      matTooltip="Saída de produtos">
+      <mat-icon class="!text-green">output</mat-icon>
+      Saída</button>
+    </mat-menu>
+  </div>
 </section>

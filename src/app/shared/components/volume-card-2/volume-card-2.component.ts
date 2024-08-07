@@ -5,6 +5,7 @@ import { Regex } from '@app/resources/handlers/regex';
 
 interface volumeProps {
   entry_id: string
+  product_name: string
   type: string
   size: string
   amount: number
@@ -43,6 +44,7 @@ export class VolumeCard2Component {
 
   @Input() public volume: volumeProps = {
     entry_id: '',
+    product_name: '',
     amount: 0,
     created_at: '',
     size: '',

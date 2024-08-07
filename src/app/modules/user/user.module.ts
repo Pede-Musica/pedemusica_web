@@ -29,6 +29,7 @@ import { PersonListComponent } from './register/person/person-list/person-list.c
 import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
 import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
 import { TrackLocationComponent } from './track/track-location/track-location.component';
+import { SettingComponent } from './setting/setting.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { TrackLocationComponent } from './track/track-location/track-location.co
     PersonListComponent,
     ProfileFormComponent,
     ProfileListComponent,
-    TrackLocationComponent
+    TrackLocationComponent,
+    SettingComponent
   ],
   imports: [
     CommonModule,
