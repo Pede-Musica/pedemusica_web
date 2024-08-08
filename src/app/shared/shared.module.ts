@@ -14,6 +14,7 @@ import { SelectorProductComponent } from './components/selector-product/selector
 import { LabelRequiredComponent } from './components/label-required/label-required.component';
 import { VolumeCard1Component } from './components/volume-card-1/volume-card-1.component';
 import { VolumeCard2Component } from './components/volume-card-2/volume-card-2.component';
+import { ZeroLengthComponent } from './components/zero-length/zero-length.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -33,7 +34,8 @@ const config: ExtraOptions = {
     SelectorProductComponent,
     LabelRequiredComponent,
     VolumeCard1Component,
-    VolumeCard2Component
+    VolumeCard2Component,
+    ZeroLengthComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,8 @@ const config: ExtraOptions = {
     LabelComponent,
     LabelRequiredComponent,
     VolumeCard1Component,
-    VolumeCard2Component
+    VolumeCard2Component,
+    ZeroLengthComponent
   ],
 })
 export class SharedModule { }
