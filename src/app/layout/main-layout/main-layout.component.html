@@ -1,15 +1,20 @@
-<section>
-  <div class="mb-[2px] fixed top-0 w-full z-50">
+@if (loadingService.isLoading()) {
+  <div class="fixed w-screen h-screen bg-gray-200/10 z-50 flex items-center justify-center">
+    <app-loading-transform></app-loading-transform>
+  </div>
+  }
+<section [class]="(loadingService.isLoading() ? 'blur-sm' : '')">
+  <div class="mb-[2px] fixed top-0 w-full z-40">
     <app-navigation (openEvent)="openSidebar.set(!openSidebar())"></app-navigation>
   </div>
   <main class="min-h-screen w-full flex fade50  lg:pt-[60px] pt-[48px]">
     @if(openSidebar()) {
-      <div class="border-r-2 border-secondary/30 fixed h-full fade_in lg:shadow-none shadow-lg rounded-tr-lg z-40">
-        <app-sidebar></app-sidebar>
-      </div>
+    <div class="border-r-2 border-secondary/30 fixed h-full fade_in lg:shadow-none shadow-lg rounded-tr-lg z-40">
+      <app-sidebar></app-sidebar>
+    </div>
     }
     @if(openSidebar() && displayMode() === 'mobile'){
-      <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-30"></div>
+    <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-30"></div>
     }
     <div class="w-full min-h-full p-1 bg-gray-50/50 lg:pl-[200px]">
       <router-outlet></router-outlet>
@@ -17,19 +22,21 @@
   </main>
 
   <div class="lg:hidden flex pb-2 z-40 fixed bottom-1 right-0 px-4">
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="mat-elevation-z8 !bg-orange-500 !text-white sm:!w-[70px] sm:!h-[70px] flex items-center justify-center">
+    <button mat-icon-button [matMenuTriggerFor]="menu"
+      class="mat-elevation-z8 !bg-orange-500 !text-white sm:!w-[70px] sm:!h-[70px] flex items-center justify-center">
       <mat-icon>add</mat-icon>
     </button>
     <mat-menu #menu="matMenu" class="mb-2">
       <button mat-menu-item routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2"
-      matTooltip="Entrada de produtos">
-      <mat-icon class="!text-green">exit_to_app</mat-icon>
-      Entrada</button>
+        matTooltip="Entrada de produtos">
+        <mat-icon class="!text-green">exit_to_app</mat-icon>
+        Entrada</button>
 
-    <button mat-menu-item routerLink="/in/track/exit" class="!text-blue-500 flex items-center"
-      matTooltip="Saída de produtos">
-      <mat-icon class="!text-green">output</mat-icon>
-      Saída</button>
+      <button mat-menu-item routerLink="/in/track/exit" class="!text-blue-500 flex items-center"
+        matTooltip="Saída de produtos">
+        <mat-icon class="!text-green">output</mat-icon>
+        Saída</button>
     </mat-menu>
   </div>
+
 </section>

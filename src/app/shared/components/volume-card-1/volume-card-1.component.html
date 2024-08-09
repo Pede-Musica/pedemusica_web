@@ -9,7 +9,7 @@
         <div class="mr-2">
           <app-label [text]="volume.product_name"></app-label>
         </div>
-        <span class="text-xs text-gray-800 rounded-full mr-2">› {{ volume.type }} ›</span>
+        <span class="text-xs text-gray-800 rounded-full mr-2">• {{ volume.type }} •</span>
         <span class="text-xs text-gray-800 rounded-full">{{ volume.size }}</span>
       </div>
     </div>
@@ -18,8 +18,11 @@
       <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
       <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
     </div>
-    <div class="font-normal text-xs text-end mt-1">
-      <span class="text-gray-400"> {{ dateTime.convertToBRTime(volume.created_at) }} </span>
+    <div class="font-normal text-xs text-end mt-1 flex items-center justify-end">
+      @if (dateTime.checkNew(volume.created_at)) {
+        <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+      }
+      <span [class]="dateTime.checkNew(volume.created_at) ? 'text-green-500':'text-gray-400'"> {{ dateTime.convertToBRTime(volume.created_at) }} </span>
     </div>
   </div>
 </div>

@@ -121,9 +121,9 @@
               <mat-icon class="text-orange-500">add</mat-icon>
             </button>
           </div>
-          <button mat-icon-button (click)="deleteProduct($index)">
-            <mat-icon>delete</mat-icon>
-          </button>
+          <div>
+            <span (click)="deleteProduct($index)" class="text-xs text-blue-400 hover:underline">Remover</span>
+          </div>
         </div>
 
         <div>

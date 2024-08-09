@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { LocationService } from '@app/services/user/location.service';
 import { RegisterService } from '@app/services/user/register.service';
@@ -33,7 +33,8 @@ export class TrackLocationComponent implements OnInit {
   constructor(
     private _locationService: LocationService,
     public activeRoute: ActivatedRoute,
-    public navigationService: NavigationService
+    public navigationService: NavigationService,
+    public route: Router
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +42,9 @@ export class TrackLocationComponent implements OnInit {
 
     if(location_id) {
       this.getDetail(location_id)
+    }
+    else{
+      this.route.navigate(['/in/track'])
     }
   }
 

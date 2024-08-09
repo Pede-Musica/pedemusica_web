@@ -19,6 +19,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -43,7 +44,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDividerModule,
     MatExpansionModule,
     MatProgressBarModule,
-    MatTabsModule
+    MatTabsModule,
+    MatButtonToggleModule
   ],
   exports: [
     MatInputModule,
@@ -65,7 +67,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDividerModule,
     MatExpansionModule,
     MatProgressBarModule,
-    MatTabsModule
+    MatTabsModule,
+    MatButtonToggleModule
   ]
 })
 export class MaterialModule { }

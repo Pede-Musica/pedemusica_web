@@ -18,6 +18,7 @@ export class TrackComponent {
   public locationList: Array<any> = [];
   public sectorList: Array<any> = [];
   public sector_id = "";
+  public currentDate = new Date();
 
   constructor(
     public navigationService: NavigationService,
@@ -77,4 +78,20 @@ export class TrackComponent {
     this.router.navigate(['/in/track/location/detail/' + id])
   }
 
+  public checkNew(location: any) {
+
+    try{
+      let isNew = false;
+      const volumes = location?.Volume;
+      volumes?.map((v: any) => {
+        if(this.dateTime.checkNew(v.created_at)){
+          isNew = true;
+        }
+      })
+      return isNew
+    }
+    catch(err){
+      return false
+    }
+  }
 }

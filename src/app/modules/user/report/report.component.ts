@@ -42,7 +42,7 @@ export class ReportComponent implements OnInit {
   public total: number = 0;
   public page_size: number = 10;
   public page_index: number = 0;
-  public order: string = 'asc';
+  public order: string = 'desc';
 
   constructor(
     public navigationService: NavigationService,

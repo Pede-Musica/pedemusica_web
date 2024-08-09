@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { SharedModule } from "../../shared/shared.module";
 import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationService } from '@app/services/common/navigation.service';
+import { LoadingService } from '@app/services/common/loading.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -18,7 +19,8 @@ export class MainLayoutComponent implements OnInit {
 
   constructor(
     public navigationService: NavigationService,
-    private _route: Router
+    private _route: Router,
+    public loadingService: LoadingService
   ) {
     this._route.events.subscribe((val) => {
       if(this.displayMode() === 'mobile') {

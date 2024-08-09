@@ -32,7 +32,7 @@ const routes: Routes = [
   // Rastreabilidade
   { path: 'track', component: TrackComponent },
   { path: 'track/enter', component: TrackEnterComponent },
-  { path: 'track/trasform', component: TrackTransformComponent },
+  { path: 'track/transform/:id', component: TrackTransformComponent },
   { path: 'track/exit', component: TrackExitComponent },
   { path: 'track/location/detail/:id', component: TrackLocationComponent },
 

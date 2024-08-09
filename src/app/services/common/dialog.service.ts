@@ -12,6 +12,7 @@ export class DialogService {
 
   constructor() { }
 
+  // succes, error, warning
   public open(status: boolean, text: string, type: string, submessage?: string) {
 
     if(status) {

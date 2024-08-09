@@ -52,4 +52,14 @@ export class DateTime {
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   }
 
+  public checkNew(date: string) {
+    const now = new Date();
+    const created = new Date(date);
+    created.setHours(created.getHours() + 1)
+
+    const diference = created > now;
+
+    return diference
+  }
+
 }

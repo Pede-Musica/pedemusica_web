@@ -15,6 +15,7 @@ import { LabelRequiredComponent } from './components/label-required/label-requir
 import { VolumeCard1Component } from './components/volume-card-1/volume-card-1.component';
 import { VolumeCard2Component } from './components/volume-card-2/volume-card-2.component';
 import { ZeroLengthComponent } from './components/zero-length/zero-length.component';
+import { LoadingTransformComponent } from './components/loading-transform/loading-transform.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -35,7 +36,8 @@ const config: ExtraOptions = {
     LabelRequiredComponent,
     VolumeCard1Component,
     VolumeCard2Component,
-    ZeroLengthComponent
+    ZeroLengthComponent,
+    LoadingTransformComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +60,8 @@ const config: ExtraOptions = {
     LabelRequiredComponent,
     VolumeCard1Component,
     VolumeCard2Component,
-    ZeroLengthComponent
+    ZeroLengthComponent,
+    LoadingTransformComponent
   ],
 })
 export class SharedModule { }
