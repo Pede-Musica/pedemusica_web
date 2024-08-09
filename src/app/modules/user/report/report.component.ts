@@ -5,6 +5,7 @@ import { NavigationService } from '@app/services/common/navigation.service';
 import { RegisterService } from '@app/services/user/register.service';
 
 interface props {
+  id: number
   type: string
   created_at: string
   Entry: {

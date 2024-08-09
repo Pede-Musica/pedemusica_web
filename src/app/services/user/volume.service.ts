@@ -12,4 +12,8 @@ export class VolumeService {
   public detail(id: string): Observable<any> {
     return this.http.get(`volume/detail/${id}`);
   }
+
+  public transform(data: any): Observable<any> {
+    return this.http.post(`volume/transform`, data);
+  }
 }

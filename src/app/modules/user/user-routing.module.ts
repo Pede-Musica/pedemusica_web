@@ -27,6 +27,7 @@ import { ProfileListComponent } from './system/profile/profile-list/profile-list
 import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
 import { TrackLocationComponent } from './track/track-location/track-location.component';
 import { SettingComponent } from './setting/setting.component';
+import { ReportDetailComponent } from './report/report-detail/report-detail.component';
 
 const routes: Routes = [
   // Rastreabilidade
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'track/location/detail/:id', component: TrackLocationComponent },
 
   { path: 'register', component: ReportComponent },
+  { path: 'register/:id', component: ReportDetailComponent },
   { path: 'stock', component: StockComponent },
 
   // Cadastros

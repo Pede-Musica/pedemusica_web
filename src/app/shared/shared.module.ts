@@ -16,6 +16,8 @@ import { VolumeCard1Component } from './components/volume-card-1/volume-card-1.c
 import { VolumeCard2Component } from './components/volume-card-2/volume-card-2.component';
 import { ZeroLengthComponent } from './components/zero-length/zero-length.component';
 import { LoadingTransformComponent } from './components/loading-transform/loading-transform.component';
+import { DialogTransformComponent } from './components/dialog-transform/dialog-transform.component';
+import { SheetVolumeComponent } from './components/sheet-volume/sheet-volume.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -37,7 +39,9 @@ const config: ExtraOptions = {
     VolumeCard1Component,
     VolumeCard2Component,
     ZeroLengthComponent,
-    LoadingTransformComponent
+    LoadingTransformComponent,
+    DialogTransformComponent,
+    SheetVolumeComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +65,9 @@ const config: ExtraOptions = {
     VolumeCard1Component,
     VolumeCard2Component,
     ZeroLengthComponent,
-    LoadingTransformComponent
+    LoadingTransformComponent,
+    DialogTransformComponent,
+    SheetVolumeComponent
   ],
 })
 export class SharedModule { }

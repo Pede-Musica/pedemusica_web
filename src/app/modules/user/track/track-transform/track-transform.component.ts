@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateTime } from '@app/resources/handlers/datetime';
 import { Regex } from '@app/resources/handlers/regex';
@@ -9,6 +10,7 @@ import { SnackbarService } from '@app/services/common/snackbar.service';
 import { LocationService } from '@app/services/user/location.service';
 import { MaterialService } from '@app/services/user/material.service';
 import { VolumeService } from '@app/services/user/volume.service';
+import { DialogTransformComponent } from '@app/shared/components/dialog-transform/dialog-transform.component';
 
 @Component({
   selector: 'app-track-transform',
@@ -18,7 +20,7 @@ import { VolumeService } from '@app/services/user/volume.service';
 export class TrackTransformComponent implements OnInit {
 
   public isLoading = signal(true);
-  public template = signal('location');
+  public template = signal('movimentation');
   public volumeData: any = {};
   public locationList: Array<any> = [];
   public volumeList: Array<any> = [];
@@ -36,6 +38,7 @@ export class TrackTransformComponent implements OnInit {
     public snackService: SnackbarService,
     public loadingService: LoadingService,
     public dialogService: DialogService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -59,19 +62,40 @@ export class TrackTransformComponent implements OnInit {
   }
 
   get totalDrawn() {
+    const total = this.totalAmount * this.volumeData.volume;
+    return total
+  }
+
+  get totalAmount() {
     let total = 0;
 
     this.volumeList.map((volume) => {
       const material = this.materialList.find(m => m.id === volume?.material_id)
-      total = total + (volume?.amount * material?.volume);
+      total = total + (volume.amount * material.volume);
     })
 
-    return total
+    return this.regex.getNextNumber(total / this.volumeData.volume)
+  }
+
+  get notAlocate() {
+    let total = 0;
+
+    this.volumeList.map((volume) => {
+      const material = this.materialList.find(m => m.id === volume?.material_id)
+      total = total + (volume.amount * material.volume);
+    })
+
+    const result = this.totalDrawn - total;
+
+    return result
+  }
+
+  get remainingAmount() {
+    return this.volumeData.amount - this.regex.getNextNumber(this.totalAmount)
   }
 
   get remaining() {
-
-    return this.totalVolume - this.totalDrawn
+    return (this.volumeData.amount * this.volumeData.volume) - this.totalDrawn
   }
 
   public getBackRoute(volume: any) {
@@ -114,7 +138,6 @@ export class TrackTransformComponent implements OnInit {
       amount: 0,
       location_id: '',
       material_id: data?.Material?.id,
-      volume: data?.Material?.volume,
     }
 
     this.volumeList.push(volume);
@@ -146,23 +169,80 @@ export class TrackTransformComponent implements OnInit {
 
   public send() {
 
-    if(this.volumeList.length === 0) {
+    if (this.volumeList.length === 0) {
       this.dialogService.open(true, 'Sem novos volumes', 'warning')
       return;
     }
 
-    if(this.remaining < 0) {
-      this.dialogService.open(true, 'O volume restante não pode ser negativo', 'warning')
+    if (this.remaining < 0) {
+      this.dialogService.open(true, 'O volume retirado é maior que o volume disponível', 'warning')
+      return;
+    }
+
+    if (this.notAlocate > 0) {
+      this.dialogService.open(true, `${this.notAlocate} ${this.notAlocate > 1 ? 'unidades' : 'unidade'} ainda não foram alocadas`, 'warning')
+      return;
+    }
+
+    let stop: boolean | string = false;
+    this.volumeList.map((volume) => {
+      if (volume.amount < 0) {
+        stop = 'Não é permitido volumes negativos', 'warning';
+      }
+
+      if ([null, '', undefined, false].includes(volume.location_id)) {
+        stop = 'Selecione a nova localização do volume';
+      }
+
+      if (volume.amount === 0) {
+        stop = 'Não é permitido volumes zerados', 'warning';
+      }
+    })
+
+
+    if (stop) {
+      this.dialogService.open(true, stop, 'warning')
       return;
     }
 
     const data = {
       current_volume: this.volumeData,
-      updated_at: this.volumeData.created_at,
-      new_volumes: this.volumeList
+      updated_at: this.volumeData.updated_at,
+      new_volumes: this.volumeList,
+      drawn: this.totalDrawn,
+      drawn_amount: this.totalAmount,
+      remaining: this.remaining,
+      movimentation_type: this.template
     }
 
-    this.loadingService.setIsLoading(true);
+    const dialogRef = this.dialog.open(DialogTransformComponent, { data: data });
+    console.log(data)
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if (result) {
+          this.loadingService.setIsLoading(true);
+
+          this._volumeService.transform(data).subscribe(
+            response => {
+              setTimeout(() => {
+                this.snackService.open(response.message);
+                this.router.navigate(['/in/track'])
+                this.loadingService.setIsLoading(false);
+              }, 3000)
+            },
+            excp => {
+              this.snackService.open(excp.error.message);
+              if ([404].includes(excp.status)) {
+                this.router.navigate([this.getBackRoute(this.volumeData)])
+              } else {
+                this.loadingService.setIsLoading(false);
+              }
+            }
+          )
+        }
+      }
+    )
   }
 }
 

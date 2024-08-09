@@ -12,7 +12,7 @@
           <mat-icon>apps</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/in/track/" class="!text-sm mr-2">
+          <button mat-menu-item [routerLink]="'/in/register/' + volume.Entry.Register.id" class="!text-sm mr-2">
             <mat-icon>app_registration</mat-icon>
             Ver registro
           </button>
@@ -20,10 +20,10 @@
             <mat-icon>change_circle</mat-icon>
             Movimentar
           </button>
-          <button mat-menu-item routerLink="'/in/track/'" class="!text-sm">
+          <!-- <button mat-menu-item routerLink="'/in/track/'" class="!text-sm">
             <mat-icon>delete</mat-icon>
             Excluir volume
-          </button>
+          </button> -->
         </mat-menu>
 
       </div>
@@ -53,7 +53,7 @@
     </div>
 
     <div class="mt-[-10px]">
-      <span class="text-sm font-medium text-gray-700">Recebido por: </span>
+      <span class="text-sm font-medium text-gray-700">Responsável: </span>
       <span class="text-sm">{{ volume.Entry.User.Person.name }}</span>
     </div>
 

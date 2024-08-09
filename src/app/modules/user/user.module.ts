@@ -30,6 +30,7 @@ import { ProfileFormComponent } from './system/profile/profile-form/profile-form
 import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
 import { TrackLocationComponent } from './track/track-location/track-location.component';
 import { SettingComponent } from './setting/setting.component';
+import { ReportDetailComponent } from './report/report-detail/report-detail.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { SettingComponent } from './setting/setting.component';
     ProfileFormComponent,
     ProfileListComponent,
     TrackLocationComponent,
-    SettingComponent
+    SettingComponent,
+    ReportDetailComponent
   ],
   imports: [
     CommonModule,

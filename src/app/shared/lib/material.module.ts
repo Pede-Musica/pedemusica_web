@@ -20,6 +20,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatListModule} from '@angular/material/list';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [],
@@ -45,7 +49,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatExpansionModule,
     MatProgressBarModule,
     MatTabsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatBadgeModule,
+    MatChipsModule
   ],
   exports: [
     MatInputModule,
@@ -68,7 +76,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatExpansionModule,
     MatProgressBarModule,
     MatTabsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatBadgeModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule { }

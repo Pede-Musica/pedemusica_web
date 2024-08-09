@@ -61,4 +61,26 @@ export class Regex {
       return names[0];
     }
   }
+
+  public getDecimalPart(number: number) {
+    // Convertendo o número para string
+    let numberString = number.toString();
+
+    // Verificando se existe uma parte decimal
+    if (numberString.includes('.')) {
+      // Retorna a parte decimal, excluindo o ponto
+      return Number(numberString.split('.')[1]);
+    } else {
+      // Se não houver parte decimal, retorna '0'
+      return 0;
+    }
+  }
+
+  public getNextNumber(number: number){
+    return Math.ceil(number);
+  }
+
+  public decimal(number: number) {
+    return parseFloat(number.toFixed(2));
+}
 }

@@ -1,8 +1,13 @@
+import { Router } from '@angular/router';
+import { routes } from './../../../app.routes';
 import { Component, Input } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DateTime } from '@app/resources/handlers/datetime';
 import { Regex } from '@app/resources/handlers/regex';
+import { SheetVolumeComponent } from '../sheet-volume/sheet-volume.component';
 
 interface volumeProps {
+  id: string
   entry_id: string
   product_name: string
   type: string
@@ -12,6 +17,7 @@ interface volumeProps {
   volume_type: string
   created_at: string
   Entry: {
+    Register: any
     Producer: {
       Person: {
         name: string
@@ -34,6 +40,7 @@ interface volumeProps {
 export class VolumeCard1Component {
 
   @Input() public volume: volumeProps = {
+    id: '',
     entry_id: '',
     product_name: '',
     amount: 0,
@@ -43,6 +50,7 @@ export class VolumeCard1Component {
     volume: 0,
     volume_type: '',
     Entry: {
+      Register: {},
       Producer: {
         Person: {
           name: ''
@@ -59,7 +67,29 @@ export class VolumeCard1Component {
 
   constructor(
     public regex: Regex,
-    public dateTime: DateTime
+    public dateTime: DateTime,
+    private _bottomSheet: MatBottomSheet,
+    public router: Router
   ){}
+
+  public openBottomSheet() {
+    const sheets = this._bottomSheet.open(SheetVolumeComponent);
+
+    sheets.afterDismissed().subscribe(
+      response => {
+        console.log(response)
+        switch(response){
+          case 'register':{
+            this.router.navigate(['/in/register/' + this.volume?.Entry?.Register?.id])
+            break
+          }
+          case 'moviment':{
+            this.router.navigate(['/in/track/transform/' + this.volume.id])
+            break
+          }
+        }
+      }
+    )
+  }
 
 }

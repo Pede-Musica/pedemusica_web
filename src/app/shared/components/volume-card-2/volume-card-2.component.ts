@@ -14,6 +14,7 @@ interface volumeProps {
   volume_type: string
   created_at: string
   Entry: {
+    Register: any
     observation: string
     Producer: {
       Person: {
@@ -54,6 +55,7 @@ export class VolumeCard2Component {
     volume: 0,
     volume_type: '',
     Entry: {
+      Register: {},
       observation: '',
       Producer: {
         Person: {

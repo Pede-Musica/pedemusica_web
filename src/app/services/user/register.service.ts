@@ -16,4 +16,8 @@ export class RegisterService {
   public paginate(params: any): Observable<any> {
     return this.http.get(`register/paginate`, { params });
   }
+
+  public detail(id: string): Observable<any> {
+    return this.http.get(`register/detail/${id}`);
+  }
 }
