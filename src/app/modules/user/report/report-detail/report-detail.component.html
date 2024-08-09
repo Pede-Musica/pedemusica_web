@@ -24,112 +24,139 @@
 
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
     <mat-tab label="Entrada">
-      <div class="px-2 py-4">
-
-        <div class="mb-4">
-          <div class="mb-1 mt-[-10px]">
-            <span class="text-sm"><span class="font-medium text-gray-700">Produtor: </span>{{
-              registerData?.Entry?.Producer?.Person?.name }}</span>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <div class="mb-1 mt-[-10px]">
-            <span class="text-sm"><span class="font-medium text-gray-700">Responsável: </span>{{
-              registerData?.Entry?.User?.Person?.name }}</span>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <div class="mb-1 mt-[-10px]">
-            <span class="text-sm"><span class="font-medium text-gray-700">Referente: </span>{{
-              regex.convertToBRTime(registerData?.Entry?.entry_at) }}</span>
-          </div>
-        </div>
-
-        <div class="mb-8">
-          <div class="mb-1 mt-[-10px]">
-            <span class="text-sm"><span class="font-medium text-gray-700">Registrado em: </span>{{
-              regex.convertToBRTime(registerData?.created_at) }}</span>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <div>
-            <div class="mb-1 mt-[-10px]">
-              <span class="text-sm"><span class="font-medium text-gray-700">Volumes iniciais ({{
-                  registerData?.Entry?.Volume?.length }})</span></span>
-            </div>
-          </div>
-
-          @for (volume of registerData?.Entry?.VolumeEnter; track $index) {
-          <div class="py-2 px-3 rounded-md border border-gray-400 mb-2">
-            <div>
-              <div class="mr-2 flex items-center">
-                <div class="mr-2">
-                  <app-label [text]="volume.product_name"></app-label>
-                </div>
-                <span class="text-xs text-gray-800 rounded-full mr-2">• {{ volume.type }} •</span>
-                <span class="text-xs text-gray-800 rounded-full">{{ volume.size }}</span>
-              </div>
-            </div>
-            <div class="p-1 text-sm">
-              <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
-              <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
-              <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
-            </div>
-            <div class="p-1 text-sm">
-              <span class="font-medium mr-1">Localização inicial:</span>
-              <span>{{ volume?.Location?.name }}</span>
-            </div>
-          </div>
-          }
-        </div>
-
-      </div>
+      <ng-container *ngTemplateOutlet="entryDetailTemplate"></ng-container>
     </mat-tab>
 
     <mat-tab label="Volumes">
-      <div class="mb-4 p-4">
-        <div>
-          <div class="mb-1 mt-[-10px]">
-            <span class="text-sm"><span class="font-medium text-gray-700">Situação atual dos volumes</span></span>
-          </div>
-        </div>
+      <ng-container *ngTemplateOutlet="volumesTemplate"></ng-container>
+    </mat-tab>
 
-        @for (volume of registerData?.Entry?.Volume; track $index) {
-        <div class="py-2 px-3 rounded-md border border-gray-400 mb-2">
-          <div class="flex items-center justify-between">
-            <div class="mr-2 flex items-center">
-              <div class="mr-2">
-                <app-label [text]="volume.product_name"></app-label>
-              </div>
-              <span class="text-xs text-gray-800 rounded-full mr-2">• {{ volume.type }} •</span>
-              <span class="text-xs text-gray-800 rounded-full">{{ volume.size }}</span>
-            </div>
-
-            <div>
-              <button mat-icon-button [routerLink]="'/in/track/location/detail/' + volume?.Location?.id" class="scale-90" matTooltip="Ver volume">
-                <mat-icon>open_in_new</mat-icon>
-              </button>
-            </div>
-          </div>
-          <div class="p-1 text-sm">
-            <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
-            <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
-            <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
-          </div>
-          <div class="p-1 text-sm">
-            <span class="font-medium mr-1">Localização inicial:</span>
-            <span>{{ volume?.Location?.name }}</span>
-          </div>
-        </div>
-        }
-      </div>
+    <mat-tab label="Histórico">
+      <ng-container *ngTemplateOutlet="historicTemplate"></ng-container>
     </mat-tab>
   </mat-tab-group>
 
 
+</ng-template>
+
+<ng-template #entryDetailTemplate>
+  <div class="px-2 py-4">
+
+    <div class="mb-4">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Produtor: </span>{{
+          registerData?.Entry?.Producer?.Person?.name }}</span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Responsável: </span>{{
+          registerData?.Entry?.User?.Person?.name }}</span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Referente: </span>{{
+          regex.convertToBRTime(registerData?.Entry?.entry_at) }}</span>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Registrado em: </span>{{
+          regex.convertToBRTime(registerData?.created_at) }}</span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div>
+        <div class="mb-1 mt-[-10px]">
+          <span class="text-sm"><span class="font-medium text-gray-700">Volumes iniciais ({{
+              registerData?.Entry?.Volume?.length }})</span></span>
+        </div>
+      </div>
+
+      @for (volume of registerData?.Entry?.VolumeEnter; track $index) {
+      <div class="py-2 px-3 rounded-md border border-gray-400 mb-2">
+        <div>
+          <div class="mr-2 flex items-center">
+            <div class="mr-2">
+              <app-label [text]="volume.product_name"></app-label>
+            </div>
+            <span class="text-xs text-gray-800 rounded-full mr-2">• {{ volume.type }} •</span>
+            <span class="text-xs text-gray-800 rounded-full">{{ volume.size }}</span>
+          </div>
+        </div>
+        <div class="p-1 text-sm">
+          <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
+          <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
+          <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
+        </div>
+        <div class="p-1 text-sm">
+          <span class="font-medium mr-1">Localização inicial:</span>
+          <span>{{ volume?.Location?.name }}</span>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #volumesTemplate>
+  <div class="mb-4 p-4">
+    <div>
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Situação atual dos volumes</span></span>
+      </div>
+    </div>
+
+    @for (volume of registerData?.Entry?.Volume; track $index) {
+    <div class="py-2 px-3 rounded-md border border-gray-400 mb-2">
+      <div class="flex items-center justify-between">
+        <div class="mr-2 flex items-center">
+          <div class="mr-2">
+            <app-label [text]="volume.product_name"></app-label>
+          </div>
+          <span class="text-xs text-gray-800 rounded-full mr-2">• {{ volume.type }} •</span>
+          <span class="text-xs text-gray-800 rounded-full">{{ volume.size }}</span>
+        </div>
+
+        <div>
+          <button mat-icon-button [routerLink]="'/in/track/location/detail/' + volume?.Location?.id" class="scale-90" matTooltip="Ver volume">
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="p-1 text-sm">
+        <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
+        <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
+        <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
+      </div>
+      <div class="p-1 text-sm">
+        <span class="font-medium mr-1">Localização inicial:</span>
+        <span>{{ volume?.Location?.name }}</span>
+      </div>
+    </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #historicTemplate>
+  <div class="mb-4 p-4">
+    @for (log of registerData?.Entry?.VolumeLog; track $index) {
+      <div class="mb-4 leading-3">
+        <div>
+          <span class="text-xs text-gray-400">{{ dateTime.convertToBRTime(log.created_at) }}</span>
+        </div>
+        <div>
+          <span class="text-orange-400 text-xl mr-1">•</span>
+          <span class="text-sm">{{ log?.history }}</span>
+        </div>
+      </div>
+    }
+  </div>
 </ng-template>
 
 <ng-template #exitTemplate>

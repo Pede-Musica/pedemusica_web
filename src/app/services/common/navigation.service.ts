@@ -124,15 +124,15 @@ export class NavigationService {
         },
       ]
     },
-    {
+    /* {
       type: 'Sistema',
       child: [
-        /* {
+        {
           page: 'profiles',
           name: 'Perfis',
           icon: 'manage_accounts',
           path: '/in/profiles'
-        }, */
+        },
         {
           page: 'settings',
           name: 'Configurações',
@@ -140,6 +140,6 @@ export class NavigationService {
           path: '/in/setting'
         },
       ]
-    }
+    } */
   ]
 }

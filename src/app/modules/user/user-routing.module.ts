@@ -28,13 +28,17 @@ import { ProfileFormComponent } from './system/profile/profile-form/profile-form
 import { TrackLocationComponent } from './track/track-location/track-location.component';
 import { SettingComponent } from './setting/setting.component';
 import { ReportDetailComponent } from './report/report-detail/report-detail.component';
+import { TrackExitListComponent } from './track/track-exit-list/track-exit-list.component';
+import { TrackExitFormComponent } from './track/track-exit-form/track-exit-form.component';
 
 const routes: Routes = [
   // Rastreabilidade
   { path: 'track', component: TrackComponent },
   { path: 'track/enter', component: TrackEnterComponent },
   { path: 'track/transform/:id', component: TrackTransformComponent },
-  { path: 'track/exit', component: TrackExitComponent },
+  { path: 'track/exit/detail/:id', component: TrackExitComponent },
+  { path: 'track/exit/init', component: TrackExitFormComponent },
+  { path: 'track/exit/list', component: TrackExitListComponent },
   { path: 'track/location/detail/:id', component: TrackLocationComponent },
 
   { path: 'register', component: ReportComponent },

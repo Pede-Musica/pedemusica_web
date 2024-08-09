@@ -31,6 +31,8 @@ import { ProfileListComponent } from './system/profile/profile-list/profile-list
 import { TrackLocationComponent } from './track/track-location/track-location.component';
 import { SettingComponent } from './setting/setting.component';
 import { ReportDetailComponent } from './report/report-detail/report-detail.component';
+import { TrackExitFormComponent } from './track/track-exit-form/track-exit-form.component';
+import { TrackExitListComponent } from './track/track-exit-list/track-exit-list.component';
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { ReportDetailComponent } from './report/report-detail/report-detail.comp
     ProfileListComponent,
     TrackLocationComponent,
     SettingComponent,
-    ReportDetailComponent
+    ReportDetailComponent,
+    TrackExitFormComponent,
+    TrackExitListComponent
   ],
   imports: [
     CommonModule,

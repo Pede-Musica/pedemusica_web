@@ -20,4 +20,8 @@ export class RegisterService {
   public detail(id: string): Observable<any> {
     return this.http.get(`register/detail/${id}`);
   }
+
+  public listExits(): Observable<any> {
+    return this.http.get(`register/exit`);
+  }
 }
