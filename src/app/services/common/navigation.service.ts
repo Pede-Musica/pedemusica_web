@@ -1,4 +1,5 @@
 import { Inject, Injectable, signal } from "@angular/core";
+import { RegisterService } from "../user/register.service";
 
 interface childProps {
   page: string
@@ -18,7 +19,21 @@ interface MenuProps {
 
 export class NavigationService {
 
-  public isOpen = signal(false)
+  public isOpen = signal(false);
+  public hasExits = signal(0);
+
+  constructor(
+    private _registerService: RegisterService
+  ) {}
+
+  public getExits() {
+    this._registerService.listExits().subscribe(
+      data => {
+        this.hasExits.set(data?.length);
+      }
+    )
+  }
+
 
   public getPATH(page: string) {
 

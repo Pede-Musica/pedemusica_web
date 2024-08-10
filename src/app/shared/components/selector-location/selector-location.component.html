@@ -1,0 +1,41 @@
+<section>
+  @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  <div class="min-w-[300px] max-w-screen lg:p-4 p-2 min-h-[500px]">
+    <ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
+  </div>
+</section>
+
+
+<ng-template #mainTemplate>
+  <div class="flex justify-start mb-1 p-2">
+    <app-title text="Selecione a localização" [icon]="icon"></app-title>
+  </div>
+
+  <!-- <div class="mb-4">
+    <div>
+      <input type="text" (keyup)="filter($event)"
+        class="rounded-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-full text-sm border-gray-300 p-2.5">
+    </div>
+  </div> -->
+
+  <div>
+    @for (location of locationList; track $index) {
+    <div class="mb-2 flex items-center justify-between">
+      <div class="flex items-center mr-2">
+        <div>
+          <span class="text-sm font-medium">{{ location.name }}</span>
+        </div>
+      </div>
+
+      <div>
+        <button mat-stroked-button type="button" [mat-dialog-close]="location" class="!text-sm">
+          Selecionar
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+
+</ng-template>

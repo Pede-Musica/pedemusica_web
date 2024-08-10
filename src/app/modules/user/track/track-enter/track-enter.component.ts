@@ -7,6 +7,7 @@ import { Regex } from '@app/resources/handlers/regex';
 import { DialogService } from '@app/services/common/dialog.service';
 import { ImagesService } from '@app/services/common/images.service';
 import { NavigationService } from '@app/services/common/navigation.service';
+import { SnackbarService } from '@app/services/common/snackbar.service';
 import { LocationService } from '@app/services/user/location.service';
 import { MaterialService } from '@app/services/user/material.service';
 import { PersonService } from '@app/services/user/person.service';
@@ -52,7 +53,8 @@ export class TrackEnterComponent implements OnInit {
     public regex: Regex,
     private _registerService: RegisterService,
     public router: Router,
-    private _personService: PersonService
+    private _personService: PersonService,
+    public snackService: SnackbarService
   ) {
     this.form = this._formBuilder.group({
       field: ['', [Validators.required]],
@@ -190,14 +192,14 @@ export class TrackEnterComponent implements OnInit {
     const data = this.form.value;
 
     if (this.selectedProducer() === false) {
-      this._dialog.open(true, 'Selecione o produtor', 'warning')
+      this.snackService.open('Selecione o produtor')
       return
     }
 
     data.producer = this.producer;
 
     if (this.productList.length === 0) {
-      this._dialog.open(true, 'Entrada sem produtos', 'warning')
+      this.snackService.open('Entrada sem produtos')
       return
     }
 
@@ -231,7 +233,7 @@ export class TrackEnterComponent implements OnInit {
     })
 
     if (error) {
-      this._dialog.open(true, error, 'warning');
+      this.snackService.open(String(error));
       return
     }
 
@@ -264,11 +266,11 @@ export class TrackEnterComponent implements OnInit {
 
     this._registerService.createEntry(data).subscribe(
       response => {
-        this._dialog.open(true, response.message, 'success')
+        this.snackService.open(response.message)
         this.router.navigate(['/track'])
       },
       excp => {
-        this._dialog.open(true, excp.error.message, 'error');
+        this.snackService.open(excp.error.message);
         this.isLoading.set(false);
       }
     )

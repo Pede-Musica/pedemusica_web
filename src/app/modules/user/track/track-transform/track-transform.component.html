@@ -152,10 +152,10 @@
                 @case ("exit") {
                   <div class="w-full mb-[5px]">
                     <label class="text-xs text-gray-500">Saída em andamento</label>
-                    <select [(ngModel)]="volume.location_id" [ngModelOptions]="{standalone: true}"
+                    <select [(ngModel)]="volume.exit_id" [ngModelOptions]="{standalone: true}"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                      @for (location of locationList; track $index) {
-                      <option selected [ngValue]="location.id">{{ location.name }}</option>
+                      @for (exit of exitList; track $index) {
+                      <option selected [ngValue]="exit.id">S{{ exit.id }} - {{ exit?.Person?.name }}</option>
                       }
                     </select>
                   </div>

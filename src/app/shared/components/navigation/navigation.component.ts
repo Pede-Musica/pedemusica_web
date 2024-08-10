@@ -3,6 +3,7 @@ import { AuthService } from '@app/services/auth/auth.service';
 import { ImagesService } from '@app/services/common/images.service';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
+import { RegisterService } from '@app/services/user/register.service';
 
 @Component({
   selector: 'app-navigation',
@@ -20,7 +21,8 @@ export class NavigationComponent implements OnInit {
     public authService: AuthService,
     public regex: Regex,
     private _authService: AuthService,
-    public navigationService: NavigationService
+    public navigationService: NavigationService,
+    private _registerService: RegisterService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,14 @@ export class NavigationComponent implements OnInit {
 
   public openSideBar() {
     this.openEvent.emit();
+  }
+
+  get checkExits() {
+    if(this.navigationService.hasExits() > 0){
+      return false
+    } else {
+      return true
+    }
   }
 
 }

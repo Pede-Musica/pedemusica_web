@@ -38,6 +38,8 @@ export class MainLayoutComponent implements OnInit {
       this.displayMode.set('mobile')
       this.openSidebar.set(false)
     }
+
+    this.navigationService.getExits();
   }
 
   @HostListener('window:resize', ['$event'])

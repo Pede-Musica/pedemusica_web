@@ -16,10 +16,20 @@
             <mat-icon>app_registration</mat-icon>
             Ver registro
           </button>
-          <button mat-menu-item [routerLink]="'/in/track/transform/' + volume.id" class="!text-sm">
-            <mat-icon>change_circle</mat-icon>
-            Movimentar
-          </button>
+          @if (type === 'volume') {
+            <button mat-menu-item [routerLink]="'/in/track/transform/' + volume.id" class="!text-sm">
+              <mat-icon>change_circle</mat-icon>
+              Movimentar
+            </button>
+          }
+
+          @if (type === 'exit') {
+            <button mat-menu-item (click)="returnOrigin()" class="!text-sm">
+              <mat-icon>keyboard_return</mat-icon>
+              Retornar para origem
+            </button>
+          }
+
           <!-- <button mat-menu-item routerLink="'/in/track/'" class="!text-sm">
             <mat-icon>delete</mat-icon>
             Excluir volume

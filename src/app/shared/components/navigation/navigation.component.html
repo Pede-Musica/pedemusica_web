@@ -15,7 +15,7 @@
     <div class="flex justify-end items-center px-2">
       <div class="mr-4">
         <button mat-icon-button routerLink="/in/track/exit/list">
-          <mat-icon matBadge="0" matBadgeHidden="hidden">local_shipping</mat-icon>
+          <mat-icon [matBadge]="navigationService.hasExits()" [matBadgeHidden]="checkExits">local_shipping</mat-icon>
         </button>
       </div>
       <div class="lg:flex hidden">

@@ -110,7 +110,7 @@ export class CustomerFormComponent {
 
     observable.subscribe(
       response => {
-        this.dialogService.open(true, response.message, response.type, response.submessage);
+        this._snackService.open(response.message);
         this._router.navigate([this.navigationService.getPATH('customers')]);
       },
       error => {

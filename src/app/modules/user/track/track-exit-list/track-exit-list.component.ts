@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { DateTime } from '@app/resources/handlers/datetime';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { RegisterService } from '@app/services/user/register.service';
 
@@ -14,7 +15,8 @@ export class TrackExitListComponent {
 
   constructor(
     public navigationService: NavigationService,
-    public _registerService: RegisterService
+    public _registerService: RegisterService,
+    public dateTime: DateTime
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +34,8 @@ export class TrackExitListComponent {
   public getExits() {
     this._registerService.listExits().subscribe(
       data => {
-
+        this.exitList = data;
+        this.isLoading.set(false)
       }
     )
   }

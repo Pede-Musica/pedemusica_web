@@ -18,6 +18,9 @@ import { ZeroLengthComponent } from './components/zero-length/zero-length.compon
 import { LoadingTransformComponent } from './components/loading-transform/loading-transform.component';
 import { DialogTransformComponent } from './components/dialog-transform/dialog-transform.component';
 import { SheetVolumeComponent } from './components/sheet-volume/sheet-volume.component';
+import { SelectorCustomerComponent } from './components/selector-customer/selector-customer.component';
+import { SelectorLocationComponent } from './components/selector-location/selector-location.component';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -41,7 +44,10 @@ const config: ExtraOptions = {
     ZeroLengthComponent,
     LoadingTransformComponent,
     DialogTransformComponent,
-    SheetVolumeComponent
+    SheetVolumeComponent,
+    SelectorCustomerComponent,
+    SelectorLocationComponent,
+    DialogConfirmComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +73,10 @@ const config: ExtraOptions = {
     ZeroLengthComponent,
     LoadingTransformComponent,
     DialogTransformComponent,
-    SheetVolumeComponent
+    SheetVolumeComponent,
+    SelectorCustomerComponent,
+    SelectorLocationComponent,
+    DialogConfirmComponent
   ],
 })
 export class SharedModule { }

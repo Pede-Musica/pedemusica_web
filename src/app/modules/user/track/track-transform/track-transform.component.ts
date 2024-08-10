@@ -9,6 +9,7 @@ import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
 import { LocationService } from '@app/services/user/location.service';
 import { MaterialService } from '@app/services/user/material.service';
+import { RegisterService } from '@app/services/user/register.service';
 import { VolumeService } from '@app/services/user/volume.service';
 import { DialogTransformComponent } from '@app/shared/components/dialog-transform/dialog-transform.component';
 
@@ -25,6 +26,7 @@ export class TrackTransformComponent implements OnInit {
   public locationList: Array<any> = [];
   public volumeList: Array<any> = [];
   public materialList: Array<any> = [];
+  public exitList: Array<any> = [];
 
   constructor(
     public navigationService: NavigationService,
@@ -38,12 +40,14 @@ export class TrackTransformComponent implements OnInit {
     public snackService: SnackbarService,
     public loadingService: LoadingService,
     public dialogService: DialogService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public _registerService: RegisterService,
   ) { }
 
   ngOnInit(): void {
     this.getLocation();
     this.getMaterial();
+    this.getExits();
     const location_id = this.activeRoute.snapshot.params['id'];
 
     if (location_id) {
@@ -138,6 +142,7 @@ export class TrackTransformComponent implements OnInit {
       amount: 0,
       location_id: '',
       material_id: data?.Material?.id,
+      exit_id: '',
     }
 
     this.volumeList.push(volume);
@@ -170,17 +175,17 @@ export class TrackTransformComponent implements OnInit {
   public send() {
 
     if (this.volumeList.length === 0) {
-      this.dialogService.open(true, 'Sem novos volumes', 'warning')
+      this.snackService.open('Sem novos volumes')
       return;
     }
 
     if (this.remaining < 0) {
-      this.dialogService.open(true, 'O volume retirado é maior que o volume disponível', 'warning')
+      this.snackService.open('O volume retirado é maior que o volume disponível')
       return;
     }
 
     if (this.notAlocate > 0) {
-      this.dialogService.open(true, `${this.notAlocate} ${this.notAlocate > 1 ? 'unidades' : 'unidade'} ainda não foram alocadas`, 'warning')
+      this.snackService.open(`${this.notAlocate} ${this.notAlocate > 1 ? 'unidades' : 'unidade'} ainda não foram alocadas`)
       return;
     }
 
@@ -190,8 +195,12 @@ export class TrackTransformComponent implements OnInit {
         stop = 'Não é permitido volumes negativos', 'warning';
       }
 
-      if ([null, '', undefined, false].includes(volume.location_id)) {
+      if ([null, '', undefined, false].includes(volume.location_id) && this.template() === 'movimentation') {
         stop = 'Selecione a nova localização do volume';
+      }
+
+      if ([null, '', undefined, false].includes(volume.exit_id) && this.template() === 'exit') {
+        stop = 'Selecione a saída';
       }
 
       if (volume.amount === 0) {
@@ -201,7 +210,7 @@ export class TrackTransformComponent implements OnInit {
 
 
     if (stop) {
-      this.dialogService.open(true, stop, 'warning')
+      this.snackService.open(stop)
       return;
     }
 
@@ -212,7 +221,7 @@ export class TrackTransformComponent implements OnInit {
       drawn: this.totalDrawn,
       drawn_amount: this.totalAmount,
       remaining: this.remaining,
-      movimentation_type: this.template
+      movimentation_type: this.template()
     }
 
     const dialogRef = this.dialog.open(DialogTransformComponent, { data: data });
@@ -229,7 +238,7 @@ export class TrackTransformComponent implements OnInit {
                 this.snackService.open(response.message);
                 this.router.navigate(['/in/track'])
                 this.loadingService.setIsLoading(false);
-              }, 3000)
+              }, 2000)
             },
             excp => {
               this.snackService.open(excp.error.message);
@@ -241,6 +250,15 @@ export class TrackTransformComponent implements OnInit {
             }
           )
         }
+      }
+    )
+  }
+
+  public getExits() {
+    this._registerService.listExits().subscribe(
+      data => {
+        this.exitList = data;
+        this.isLoading.set(false)
       }
     )
   }

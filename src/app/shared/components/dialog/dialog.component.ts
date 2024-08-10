@@ -16,12 +16,11 @@ export class DialogComponent {
 
   readonly dialogRef = inject(MatDialogRef<DialogComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
-  readonly text = model(this.data.text);
-  readonly type = model(this.data.type);
-  readonly submessage = model(this.data.submessage);
+  readonly text = model(this.data?.text);
+  readonly type = model(this.data?.type);
+  readonly submessage = model(this.data?.submessage);
 
   constructor(
-    public dialogService: DialogService,
 
   ) {}
 

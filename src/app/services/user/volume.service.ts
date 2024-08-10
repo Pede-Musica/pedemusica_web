@@ -16,4 +16,8 @@ export class VolumeService {
   public transform(data: any): Observable<any> {
     return this.http.post(`volume/transform`, data);
   }
+
+  public returnVolume(data: any): Observable<any> {
+    return this.http.post(`volume/return`, data);
+  }
 }

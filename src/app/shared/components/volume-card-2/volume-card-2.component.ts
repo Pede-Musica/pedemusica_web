@@ -1,11 +1,19 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DateTime } from '@app/resources/handlers/datetime';
 import { Regex } from '@app/resources/handlers/regex';
+import { VolumeService } from '@app/services/user/volume.service';
+import { SelectorLocationComponent } from '../selector-location/selector-location.component';
+import { DialogService } from '@app/services/common/dialog.service';
+import { Router } from '@angular/router';
+import { LoadingService } from '@app/services/common/loading.service';
+import { SnackbarService } from '@app/services/common/snackbar.service';
 
 
 interface volumeProps {
   id: string
   entry_id: string
+  exit_id: string
   product_name: string
   type: string
   size: string
@@ -47,6 +55,7 @@ export class VolumeCard2Component {
   @Input() public volume: volumeProps = {
     id: '',
     entry_id: '',
+    exit_id: '',
     product_name: '',
     amount: 0,
     created_at: '',
@@ -76,9 +85,42 @@ export class VolumeCard2Component {
     }
   }
 
+  @Input() type: string = 'volume';
+
   constructor(
     public regex: Regex,
-    public dateTime: DateTime
+    public dateTime: DateTime,
+    private _volumeService: VolumeService,
+    public dialog: MatDialog,
+    private _dialog: DialogService,
+    public router: Router,
+    private _loadingService: LoadingService,
+    public snackService: SnackbarService
   ) { }
+
+  public returnOrigin() {
+
+    const dialogRef =this.dialog.open(SelectorLocationComponent);
+
+    dialogRef.afterClosed().subscribe(
+      response => {
+        console.log(response)
+
+        this._loadingService.setIsLoading(true);
+        const data = {
+          volume_id: this.volume.id,
+          location_id: response.id
+        }
+
+        this._volumeService.returnVolume(data).subscribe(
+          response => {
+            this.snackService.open(response.message);
+            this._loadingService.setIsLoading(false);
+            this.router.navigate(['/in/track']);
+          }
+        )
+      }
+    )
+  }
 
 }
