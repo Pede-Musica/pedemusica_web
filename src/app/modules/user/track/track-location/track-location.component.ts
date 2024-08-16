@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService } from '@app/services/common/navigation.service';
+import { SnackbarService } from '@app/services/common/snackbar.service';
 import { LocationService } from '@app/services/user/location.service';
 import { RegisterService } from '@app/services/user/register.service';
 
@@ -34,7 +35,8 @@ export class TrackLocationComponent implements OnInit {
     private _locationService: LocationService,
     public activeRoute: ActivatedRoute,
     public navigationService: NavigationService,
-    public route: Router
+    public router: Router,
+    public snackService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class TrackLocationComponent implements OnInit {
       this.getDetail(location_id)
     }
     else{
-      this.route.navigate(['/in/track'])
+      this.router.navigate(['/in/track'])
     }
   }
 
@@ -61,6 +63,10 @@ export class TrackLocationComponent implements OnInit {
       data => {
         this.locationData = data;
         this.isLoading.set(false);
+      },
+      excp => {
+        this.snackService.open(excp.error.message)
+        this.router.navigate(['/in/track'])
       }
     )
   }

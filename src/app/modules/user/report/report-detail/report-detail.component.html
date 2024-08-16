@@ -92,7 +92,7 @@
         <div class="p-1 text-sm">
           <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
           <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
-          <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
+          <span class="text-xs text-gray-400">({{ volume?.Material ? volume?.Material?.name : 'avulso' }})</span>
         </div>
         <div class="p-1 text-sm">
           <span class="font-medium mr-1">Localização inicial:</span>
@@ -132,7 +132,7 @@
       <div class="p-1 text-sm">
         <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
         <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
-        <span class="text-xs text-gray-400">({{ volume.Material.name }})</span>
+        <span class="text-xs text-gray-400">({{ volume?.Material ? volume?.Material?.name : 'avulso'}})</span>
       </div>
       <div class="p-1 text-sm">
         <span class="font-medium mr-1">Localização inicial:</span>
@@ -154,10 +154,10 @@
           <span class="text-orange-400 text-xl mr-1">•</span>
           <span class="text-sm">{{ log?.origin_history}}</span>
         </div>
-        <div>
+        <!-- <div>
           <span class="text-green-400 text-xl mr-1">•</span>
           <span class="text-sm">{{ log?.generated_history}}</span>
-        </div>
+        </div> -->
       </div>
     }
   </div>

@@ -138,8 +138,8 @@ export class TrackTransformComponent implements OnInit {
         this.sizeList = data?.Product?.ProductSize;
         this.typeList = data?.Product?.ProductType;
 
-        if (data?.exited) {
-          this.router.navigate([this.getBackRoute(data)]);
+        if (data?.exited || data?.Location === null) {
+          this.router.navigate(['/in/track']);
           this.snackService.open('Este volume não existe mais')
         } else {
           this.addVolume(data)
