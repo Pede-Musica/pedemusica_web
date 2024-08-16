@@ -60,7 +60,6 @@ export class SelectorCustomerComponent {
 
   public filter(event: any) {
     const value = event?.target?.value;
-    console.log(value)
     this.search = value;
 
     this.getProducers();

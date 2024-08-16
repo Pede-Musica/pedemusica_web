@@ -20,6 +20,7 @@ export class TrackExitComponent implements OnInit {
   public isLoading = signal(true);
   public exitData: any = {};
   public date = '';
+  public invoice = '';
 
   constructor(
     public navigationService: NavigationService,
@@ -84,7 +85,8 @@ export class TrackExitComponent implements OnInit {
 
           const data = {
             exit_id: this.exitData.id,
-            date: new Date(this.date).toISOString()
+            date: new Date(this.date).toISOString(),
+            invoice: this.invoice
           }
 
           this._registerService.closeExit(data).subscribe(

@@ -39,6 +39,7 @@ export class PersonListComponent {
   public isUser: boolean | string = '';
   public isProducer: boolean | string = '';
   public isCustomer: boolean | string = '';
+  public search: string = '';
 
 
   constructor(
@@ -111,7 +112,7 @@ export class PersonListComponent {
   public getUsers() {
     this.isLoading.set(true);
     const params = {
-      search: '',
+      search: this.search,
       page: this.page_index + 1,
       pageSize: this.page_size,
       order: this.order,
@@ -132,5 +133,10 @@ export class PersonListComponent {
     )
   }
 
+  public filter(event: any) {
+    const value = event?.target?.value;
+    this.search = value;
 
+    this.getUsers();
+  }
 }

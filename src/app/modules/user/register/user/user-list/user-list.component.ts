@@ -59,7 +59,6 @@ export class UserListComponent implements OnInit {
 
   public getUsers() {
     this.isLoading.set(true);
-    console.log(this.order)
     const params = {
       search: '',
       page: this.page_index + 1,

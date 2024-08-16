@@ -12,6 +12,7 @@ import { MaterialService } from '@app/services/user/material.service';
 import { RegisterService } from '@app/services/user/register.service';
 import { VolumeService } from '@app/services/user/volume.service';
 import { DialogTransformComponent } from '@app/shared/components/dialog-transform/dialog-transform.component';
+import { single } from 'rxjs';
 
 @Component({
   selector: 'app-track-transform',
@@ -27,6 +28,9 @@ export class TrackTransformComponent implements OnInit {
   public volumeList: Array<any> = [];
   public materialList: Array<any> = [];
   public exitList: Array<any> = [];
+  public sizeList: Array<any> = [];
+  public typeList: Array<any> = [];
+  public removeAmount: number = 0
 
   constructor(
     public navigationService: NavigationService,
@@ -71,14 +75,8 @@ export class TrackTransformComponent implements OnInit {
   }
 
   get totalAmount() {
-    let total = 0;
 
-    this.volumeList.map((volume) => {
-      const material = this.materialList.find(m => m.id === volume?.material_id)
-      total = total + (volume.amount * material.volume);
-    })
-
-    return this.regex.getNextNumber(total / this.volumeData.volume)
+    return this.volumeData?.volume * this.removeAmount
   }
 
   get notAlocate() {
@@ -86,10 +84,10 @@ export class TrackTransformComponent implements OnInit {
 
     this.volumeList.map((volume) => {
       const material = this.materialList.find(m => m.id === volume?.material_id)
-      total = total + (volume.amount * material.volume);
+      total = total + (volume.amount * (volume.single ? volume?.volume : material.volume));
     })
 
-    const result = this.totalDrawn - total;
+    const result = this.totalAmount - total;
 
     return result
   }
@@ -99,7 +97,32 @@ export class TrackTransformComponent implements OnInit {
   }
 
   get remaining() {
-    return (this.volumeData.amount * this.volumeData.volume) - this.totalDrawn
+    return (this.volumeData.amount * this.volumeData.volume) - this.totalAmount
+  }
+
+  get limit() {
+    if(this.removeAmount > 0) {
+      return false
+    } {
+      return true
+    }
+  }
+
+  get checkLimit() {
+    const amount_available = this.volumeData?.amount;
+    if(amount_available > this.removeAmount) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  public addRemove(){
+    this.removeAmount ++
+  }
+
+  public removeRemove(){
+    this.removeAmount --
   }
 
   public getBackRoute(volume: any) {
@@ -112,6 +135,9 @@ export class TrackTransformComponent implements OnInit {
     this._volumeService.detail(id).subscribe(
       data => {
         this.volumeData = data;
+        this.sizeList = data?.Product?.ProductSize;
+        this.typeList = data?.Product?.ProductType;
+
         if (data?.exited) {
           this.router.navigate([this.getBackRoute(data)]);
           this.snackService.open('Este volume não existe mais')
@@ -143,6 +169,10 @@ export class TrackTransformComponent implements OnInit {
       location_id: '',
       material_id: data?.Material?.id,
       exit_id: '',
+      size: this.volumeData?.size,
+      type: this.volumeData?.type,
+      single: false,
+      volume: 0
     }
 
     this.volumeList.push(volume);
@@ -150,9 +180,12 @@ export class TrackTransformComponent implements OnInit {
 
   public getTotalVolume(volume: any) {
     try {
-      const material = this.materialList.find(m => m.id === volume?.material_id)
-      const total = `${volume.amount} x ${material.volume ? material.volume : '0'} kg = ${volume.amount * material.volume} kg`
-      return total
+      const material = this.materialList.find(m => m.id === volume?.material_id);
+      if(volume.single) {
+        return `${volume.amount} x ${volume.volume} kg = ${volume.amount * volume.volume} kg`
+      } else {
+        return `${volume.amount} x ${material.volume ? material.volume : '0'} kg = ${volume.amount * material.volume} kg`
+      }
     }
     catch (error) {
       return 'Erro ao calcular total'
@@ -203,8 +236,20 @@ export class TrackTransformComponent implements OnInit {
         stop = 'Selecione a saída';
       }
 
+      if ([null, '', undefined, false].includes(volume.size)) {
+        stop = 'Selecione o tamanho do produto';
+      }
+
+      if ([null, '', undefined, false].includes(volume.type)) {
+        stop = 'Selecione o tipo do produto';
+      }
+
       if (volume.amount === 0) {
         stop = 'Não é permitido volumes zerados', 'warning';
+      }
+
+      if (this.regex.isFloat(volume.amount)) {
+        stop = 'Não é permitido quantidades fracionadas, utilize volumes avulsos', 'warning';
       }
     })
 
@@ -218,14 +263,13 @@ export class TrackTransformComponent implements OnInit {
       current_volume: this.volumeData,
       updated_at: this.volumeData.updated_at,
       new_volumes: this.volumeList,
-      drawn: this.totalDrawn,
-      drawn_amount: this.totalAmount,
+      drawn: this.totalAmount,
+      drawn_amount: this.removeAmount,
       remaining: this.remaining,
       movimentation_type: this.template()
     }
 
     const dialogRef = this.dialog.open(DialogTransformComponent, { data: data });
-    console.log(data)
 
     dialogRef.afterClosed().subscribe(
       result => {
@@ -261,6 +305,13 @@ export class TrackTransformComponent implements OnInit {
         this.isLoading.set(false)
       }
     )
+  }
+
+  public setSingle(index: number, checked: boolean) {
+    if(checked) {
+      this.volumeList[index].amount = 1;
+      this.volumeList[index].volume = 0;
+    }
   }
 }
 

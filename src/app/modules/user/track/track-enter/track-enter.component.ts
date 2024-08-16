@@ -57,7 +57,7 @@ export class TrackEnterComponent implements OnInit {
     public snackService: SnackbarService
   ) {
     this.form = this._formBuilder.group({
-      field: ['', [Validators.required]],
+      field: [''],
       date: [this.dateTime.getDateTime(), [Validators.required]],
       observation: [''],
     })
@@ -106,7 +106,6 @@ export class TrackEnterComponent implements OnInit {
         if (response) {
           this.selectedProducer.set(true)
           this.producer = response
-          console.log(response)
         }
       }
     )
@@ -118,8 +117,6 @@ export class TrackEnterComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       response => {
         if (response) {
-          console.log(response)
-
           const sizes = response?.ProductSize;
           const types = response?.ProductType;
 
@@ -238,8 +235,6 @@ export class TrackEnterComponent implements OnInit {
     }
 
     data.products = products;
-
-    console.log(data)
 
     this.finalData = data;
 

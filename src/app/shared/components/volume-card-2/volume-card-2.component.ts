@@ -104,8 +104,6 @@ export class VolumeCard2Component {
 
     dialogRef.afterClosed().subscribe(
       response => {
-        console.log(response)
-
         this._loadingService.setIsLoading(true);
         const data = {
           volume_id: this.volume.id,

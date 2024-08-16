@@ -164,5 +164,85 @@
 </ng-template>
 
 <ng-template #exitTemplate>
+  <div class="mb-2 lg:flex items-center">
+    <div class="mr-4 lg:mb-0 mb-4 flex items-center">
+      <app-title text="Registro de entrada" [icon]="icon"></app-title>
+      <span class="text-red-400 text-xl font-medium ml-2">S{{ registerData?.Exit?.id }}</span>
+    </div>
+  </div>
 
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Entrada">
+      <ng-container *ngTemplateOutlet="exitDetailTemplate"></ng-container>
+    </mat-tab>
+
+    <mat-tab label="Volumes">
+      <ng-container *ngTemplateOutlet="volumesExitTemplate"></ng-container>
+    </mat-tab>
+
+  </mat-tab-group>
+</ng-template>
+
+<ng-template #exitDetailTemplate>
+  <div class="px-2 py-4">
+
+    <div class="mb-4">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Cliente: </span>{{
+          registerData?.Exit?.Person?.name }}</span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Responsável: </span>{{
+          registerData?.Exit?.User?.Person?.name }}</span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Referente: </span>{{
+          regex.convertToBRTime(registerData?.Entry?.entry_at) }}</span>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Registrado em: </span>{{
+          regex.convertToBRTime(registerData?.created_at) }}</span>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+
+<ng-template #volumesExitTemplate>
+  <div class="mb-4 p-4">
+    <div>
+      <div class="mb-1 mt-[-10px]">
+        <span class="text-sm"><span class="font-medium text-gray-700">Volumes de saída</span></span>
+      </div>
+    </div>
+
+    @for (volume of registerData?.Exit?.Volume; track $index) {
+    <div class="py-2 px-3 rounded-md border border-gray-400 mb-2">
+      <div class="flex items-center justify-between">
+        <div class="mr-2 flex items-center">
+          <div class="mr-2">
+            <app-label [text]="volume.product_name"></app-label>
+          </div>
+          <span class="text-xs text-gray-800 rounded-full mr-2">• {{ volume.type }} •</span>
+          <span class="text-xs text-gray-800 rounded-full">{{ volume.size }}</span>
+        </div>
+      </div>
+      <div class="p-1 text-sm">
+        <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
+        <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
+        <span class="text-xs text-gray-400">({{ volume.Material ? volume.Material.name : 'Avulso'}})</span>
+      </div>
+    </div>
+    }
+  </div>
 </ng-template>

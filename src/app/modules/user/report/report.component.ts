@@ -8,6 +8,8 @@ interface props {
   id: number
   type: string
   created_at: string
+  Exit: any,
+  Register: any,
   Entry: {
     id: any
     observation: string

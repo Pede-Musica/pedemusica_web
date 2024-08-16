@@ -77,7 +77,6 @@ export class VolumeCard1Component {
 
     sheets.afterDismissed().subscribe(
       response => {
-        console.log(response)
         switch(response){
           case 'register':{
             this.router.navigate(['/in/register/' + this.volume?.Entry?.Register?.id])

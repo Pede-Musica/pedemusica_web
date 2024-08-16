@@ -44,8 +44,45 @@ export class Regex {
   }
 
   public formatToTwoDigits(number: any) {
-    return number < 10 ? '0' + number : number.toString();
+    if (number < 10 && number > 1) {
+      let formatted = number.toFixed(2);
+
+      // Se os decimais forem 00, retorna o número com dois dígitos (ex: 1 -> 01)
+      if (formatted.endsWith('00')) {
+        return '0' + Math.floor(number).toString();
+      }
+
+      // Se o segundo decimal for 0, retorna o número com uma casa decimal e dois dígitos (ex: 1.50 -> 01.5)
+      if (formatted.endsWith('0')) {
+        return '0' + formatted.slice(0, -1);
+      }
+
+      // Retorna o número formatado com dois dígitos e duas casas decimais (ex: 1.23 -> 01.23)
+      return '0' + formatted;
+    }
+
+    if (number >= 10) {
+      let formatted = number.toFixed(2);
+
+      // Se os decimais forem 00, retorna apenas a parte inteira
+      if (formatted.endsWith('00')) {
+        return Math.floor(number).toString();
+      }
+
+      // Se o segundo decimal for 0, retorna com uma casa decimal
+      if (formatted.endsWith('0')) {
+        return formatted.slice(0, -1);
+      }
+
+      return formatted;
+    }
+
+    return number.toString();
   }
+
+
+
+
 
   public getFirstNameAndLastNameInitial(fullName: string) {
     // Divide a string em um array de palavras usando o espaço como separador
@@ -76,11 +113,21 @@ export class Regex {
     }
   }
 
-  public getNextNumber(number: number){
+  public getNextNumber(number: number) {
     return Math.ceil(number);
   }
 
   public decimal(number: number) {
     return parseFloat(number.toFixed(2));
-}
+  }
+
+  public isFloat(value: any) {
+    if (typeof value === 'number') {
+      return Number.isFinite(value) && !Number.isInteger(value);
+    }
+    if (typeof value === 'string') {
+      return /^[+-]?\d*\.\d+$/.test(value);
+    }
+    return false;
+  }
 }

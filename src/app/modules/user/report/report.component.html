@@ -57,6 +57,47 @@
             </div>
           </mat-card>
         }
+        @case ('exit') {
+          <mat-card appearance="outlined" class="flex border-t border-gray-400 px-2 pb-1 mb-1">
+            <div class="flex justify-between">
+              <div class="flex items-center">
+                <mat-icon class="text-red-500 scale-[65%]">exit_to_app</mat-icon>
+                <span class="text-red-500 text-sm font-medium">S{{ register?.Exit?.id }}</span>
+              </div>
+
+              <div>
+                <button mat-icon-button [routerLink]="'/in/register/' + register.id" matTooltip="Detalhar registro">
+                  <mat-icon class="text-gray-400 scale-75">description</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="leading-4 pl-1 mb-2">
+              <div>
+                <span class="text-xs text-gray-700">Cliente: {{ register?.Exit?.Person?.name}}</span>
+              </div>
+            </div>
+
+            <div class="text-xs pl-1 mb-1">
+              @for (volume of register?.Exit?.Volume; track $index) {
+                <div class="mb-1">
+                  <div class="flex items-center">
+                    <div class="w-1 h-4 bg-orange-400 mr-2"></div>
+                    <span class="mr-2"><span class="font-medium">{{ volume.product_name }}</span> • {{ volume?.type }} • {{ volume?.size }}</span>
+                    <span>  ➝  {{ volume?.amount }} {{ volume?.amount > 1 ? 'unidades' : 'unidade' }} • {{ volume.volume }} kg</span>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="flex items-center justify-between pl-1">
+              <div>
+                <span class="text-xs text-gray-700">Responsável: {{ regex.getFirstAndLastName(register?.Exit?.User?.Person?.name) }}</span>
+              </div>
+              <span class="text-xs text-gray-400">{{ regex.convertToBRTime(register?.created_at) }}</span>
+            </div>
+          </mat-card>
+        }
       }
     }
   </div>

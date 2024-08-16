@@ -64,7 +64,6 @@ export class TrackExitFormComponent {
         if (response) {
           this.selectedCustomer.set(true)
           this.customer = response
-          console.log(response)
         }
       }
     )
