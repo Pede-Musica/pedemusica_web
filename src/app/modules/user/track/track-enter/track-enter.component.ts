@@ -124,6 +124,7 @@ export class TrackEnterComponent implements OnInit {
             {
               size: sizes[0]?.name,
               type: types[0]?.name,
+              weight: 0,
               amount: 0,
               material: {
                 volume: false,
@@ -150,6 +151,7 @@ export class TrackEnterComponent implements OnInit {
     const volume = {
       size: prod.ProductSize[0]?.name,
       type: prod.ProductType[0]?.name,
+      weight: 0,
       amount: 0,
       material: {
         volume: false,
@@ -188,6 +190,7 @@ export class TrackEnterComponent implements OnInit {
     }
     const data = this.form.value;
 
+    //Verifica se tem produtor selecionado
     if (this.selectedProducer() === false) {
       this.snackService.open('Selecione o produtor')
       return
@@ -195,11 +198,11 @@ export class TrackEnterComponent implements OnInit {
 
     data.producer = this.producer;
 
+    //Verifica se a lista de produtos não está vazia
     if (this.productList.length === 0) {
       this.snackService.open('Entrada sem produtos')
       return
     }
-
 
     let error: string | boolean = false;
     const products = this.productList;
@@ -207,23 +210,38 @@ export class TrackEnterComponent implements OnInit {
     products?.map((prod: any) => {
       prod?.volumes?.map((volume: any) => {
 
+        //Verifica se cada produto tem material definido
         if ([null, false, '', undefined].includes(volume?.material?.volume)) {
           error = 'Material não definido'
         }
+
+        //Verifica se  cada produto tem localização definido
         if ([null, false, '', undefined].includes(volume?.location)) {
           error = 'Localização do volume não definido'
         }
-        if (volume?.amount === 0) {
-          error = 'Quantidade não pode ser zero'
+
+        //Verifica se cada produto tem peso válido
+        if (volume?.weight === 0) {
+          error = 'Peso não pode ser zero'
         }
+
+        //Verifica se cada produto tem peso válido
+        if (volume?.weight < 0) {
+          error = 'Peso não pode ser nagativo'
+        }
+
+        //Verifica se cada produto tem tamanho definido
         if ([null, false, '', undefined].includes(volume?.size)) {
           error = 'Volume não definido'
         }
+
+        //Verifica se cada produto tem tipo definido
         if ([null, false, '', undefined].includes(volume?.type)) {
           error = 'Tipo não definido'
         }
       })
 
+      //Verifica se cada produto tem volume definido
       if (prod?.volumes?.length === 0) {
         error = 'Sem volumes adicionados'
       }

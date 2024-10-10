@@ -30,7 +30,7 @@ export class TrackTransformComponent implements OnInit {
   public exitList: Array<any> = [];
   public sizeList: Array<any> = [];
   public typeList: Array<any> = [];
-  public removeAmount: number = 0
+  public removeWeight: number = 0
 
   constructor(
     public navigationService: NavigationService,
@@ -74,9 +74,18 @@ export class TrackTransformComponent implements OnInit {
     return total
   }
 
+  get checkRemove() {
+    if(this.removeWeight > this.volumeData.weight) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
   get totalAmount() {
 
-    return this.volumeData?.volume * this.removeAmount
+    return this.volumeData?.volume * this.removeWeight
   }
 
   get notAlocate() {
@@ -97,11 +106,11 @@ export class TrackTransformComponent implements OnInit {
   }
 
   get remaining() {
-    return (this.volumeData.amount * this.volumeData.volume) - this.totalAmount
+    return this.volumeData.weight - this.removeWeight
   }
 
   get limit() {
-    if(this.removeAmount > 0) {
+    if(this.removeWeight > 0) {
       return false
     } {
       return true
@@ -109,8 +118,8 @@ export class TrackTransformComponent implements OnInit {
   }
 
   get checkLimit() {
-    const amount_available = this.volumeData?.amount;
-    if(amount_available > this.removeAmount) {
+    const amount_available = this.volumeData?.weight;
+    if(amount_available > this.removeWeight) {
       return false
     } else {
       return true
@@ -118,11 +127,11 @@ export class TrackTransformComponent implements OnInit {
   }
 
   public addRemove(){
-    this.removeAmount ++
+    this.removeWeight ++
   }
 
   public removeRemove(){
-    this.removeAmount --
+    this.removeWeight --
   }
 
   public getBackRoute(volume: any) {
@@ -217,11 +226,6 @@ export class TrackTransformComponent implements OnInit {
       return;
     }
 
-    if (this.notAlocate > 0) {
-      this.snackService.open(`${this.notAlocate} ${this.notAlocate > 1 ? 'unidades' : 'unidade'} ainda não foram alocadas`)
-      return;
-    }
-
     let stop: boolean | string = false;
     this.volumeList.map((volume) => {
       if (volume.amount < 0) {
@@ -244,10 +248,6 @@ export class TrackTransformComponent implements OnInit {
         stop = 'Selecione o tipo do produto';
       }
 
-      if (volume.amount === 0) {
-        stop = 'Não é permitido volumes zerados', 'warning';
-      }
-
       if (this.regex.isFloat(volume.amount)) {
         stop = 'Não é permitido quantidades fracionadas, utilize volumes avulsos', 'warning';
       }
@@ -264,7 +264,7 @@ export class TrackTransformComponent implements OnInit {
       updated_at: this.volumeData.updated_at,
       new_volumes: this.volumeList,
       drawn: this.totalAmount,
-      drawn_amount: this.removeAmount,
+      drawn_weight: this.removeWeight,
       remaining: this.remaining,
       movimentation_type: this.template()
     }

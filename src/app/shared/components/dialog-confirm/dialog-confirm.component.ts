@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-confirm',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './dialog-confirm.component.scss'
 })
 export class DialogConfirmComponent {
+
+  readonly data = inject<any>(MAT_DIALOG_DATA);
 
 }

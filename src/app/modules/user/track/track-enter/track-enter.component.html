@@ -119,7 +119,8 @@
             </button>
           </div>
           <div>
-            <span (click)="deleteProduct($index)" class="text-xs text-blue-400 hover:underline">Remover</span>
+            <span (click)="deleteProduct($index)"
+              class="text-xs text-blue-400 hover:underline hover:cursor-pointer">Remover</span>
           </div>
         </div>
 
@@ -150,6 +151,39 @@
             </div>
           </div>
 
+          <div class="mb-2">
+            <div class="lg:w-[300px] w-full mr-4">
+              <label class="text-xs text-gray-400">Peso</label>
+              <div class="flex items-center">
+                <input type="number" [(ngModel)]="volume.weight" [ngModelOptions]="{standalone: true}"
+                  class="bg-gray-50 border mr-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                <span class="font-medium">KG</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex">
+            <!-- <div>
+              <label class="text-xs text-gray-400">Quantidade</label>
+              <input type="number" [(ngModel)]="volume.amount" [ngModelOptions]="{standalone: true}"
+                class="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 lg:min-w-[50px] max-w-[100px] text-sm border-gray-300 p-2.5">
+            </div> -->
+            <div class="w-full">
+              <label class="text-xs text-gray-400">Material</label>
+              <select [(ngModel)]="volume.material" [ngModelOptions]="{standalone: true}"
+                class=" text-gray-900 text-sm border border-gray-300 block p-2.5 w-full bg-gray-50 rounded-lg">
+                @for (material of materialList; track $index) {
+                <option [ngValue]="material">{{ material?.name }}</option>
+                }
+              </select>
+              <!-- <div class="text-end">
+              <span class="text-xs text-gray-400">
+                {{ getTotalVolume(volume) }}
+              </span>
+            </div> -->
+            </div>
+          </div>
+
           <div class="w-full mb-1">
             <label class="text-xs text-gray-400">Localização</label>
             <select [(ngModel)]="volume.location" [ngModelOptions]="{standalone: true}"
@@ -160,27 +194,7 @@
             </select>
           </div>
 
-          <div class="flex">
-            <div>
-              <label class="text-xs text-gray-400">Quantidade</label>
-              <input type="number" [(ngModel)]="volume.amount" [ngModelOptions]="{standalone: true}"
-                class="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 lg:min-w-[50px] max-w-[100px] text-sm border-gray-300 p-2.5">
-            </div>
-            <div class="w-full">
-              <label class="text-xs text-gray-400">Material</label>
-              <select [(ngModel)]="volume.material" [ngModelOptions]="{standalone: true}"
-                class=" text-gray-900 text-sm border border-gray-300 block p-2.5 w-full bg-gray-50 rounded-e-lg">
-                @for (material of materialList; track $index) {
-                <option [ngValue]="material">{{ material?.name }}</option>
-                }
-              </select>
-              <div class="text-end">
-                <span class="text-xs text-gray-400">
-                  {{ getTotalVolume(volume) }}
-                </span>
-              </div>
-            </div>
-          </div>
+
 
         </mat-card>
         }
@@ -290,12 +304,12 @@
             <span class="text-sm"><span class="font-medium">Localização: </span> {{ volume?.location?.name }}</span>
           </div>
           <div class="mr-2">
-            <span class="text-sm"><span class="font-medium">Quantidade: </span> {{ volume?.amount }} unidades • {{
+            <span class="text-sm"><span class="font-medium">Peso: </span> {{ volume?.weight }} kg • {{
               volume?.material?.name }}</span>
           </div>
-          <div class="mr-2">
+          <!-- <div class="mr-2">
             <span class="text-sm"><span class="font-medium">Total: </span> {{ getTotalVolume(volume) }}</span>
-          </div>
+          </div> -->
         </mat-card>
         }
         }

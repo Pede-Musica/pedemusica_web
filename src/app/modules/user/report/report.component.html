@@ -43,7 +43,7 @@
                   <div class="flex items-center">
                     <div class="w-1 h-4 bg-orange-400 mr-2"></div>
                     <span class="mr-2"><span class="font-medium">{{ volume.product_name }}</span> • {{ volume?.type }} • {{ volume?.size }}</span>
-                    <span>  ➝  {{ volume?.amount }} {{ volume?.amount > 1 ? 'unidades' : 'unidade' }} • {{ volume.volume }} kg</span>
+                    <span>  ➝  {{ volume?.weight }} kg</span>
                   </div>
                 </div>
               }
@@ -84,7 +84,7 @@
                   <div class="flex items-center">
                     <div class="w-1 h-4 bg-orange-400 mr-2"></div>
                     <span class="mr-2"><span class="font-medium">{{ volume.product_name }}</span> • {{ volume?.type }} • {{ volume?.size }}</span>
-                    <span>  ➝  {{ volume?.amount }} {{ volume?.amount > 1 ? 'unidades' : 'unidade' }} • {{ volume.volume }} kg</span>
+                    <span>  ➝  {{ volume?.weight }} kg</span>
                   </div>
                 </div>
               }

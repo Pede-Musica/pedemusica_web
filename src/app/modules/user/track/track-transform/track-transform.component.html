@@ -26,24 +26,24 @@
 
     <div>
       <div class="mb-2">
-        <div class="text-sm">
+        <div class="text-sm mb-1">
           <span class="font-medium">Registro: </span>
           <span class="text-green-400 font-medium">E{{ volumeData?.Entry?.id }} </span>
         </div>
-        <div class="text-sm">
+        <div class="text-sm mb-1">
           <span class="font-medium">Produtor: </span>
           <span>{{ volumeData?.Entry?.Producer?.Person?.name }} </span>
         </div>
-        <div class="text-sm">
+        <div class="text-sm mb-1">
           <span class="font-medium">Localização atual: </span>
           <span>{{ volumeData?.Location?.name }} </span>
           <span>({{ volumeData?.Location?.Sector?.name }})</span>
         </div>
-        <div class="text-sm">
+        <div class="text-sm mb-1">
           <span class="font-medium">Criado em: </span>
           <span>{{ dateTime.convertToBRTime(volumeData.created_at) }} </span>
         </div>
-        <div class="text-sm">
+        <div class="text-sm mb-1">
           <span class="font-medium">Responsável: </span>
           <span>{{ volumeData?.Entry?.User?.Person?.name }} </span>
         </div>
@@ -66,13 +66,8 @@
               <span class="text-green-400">Disponível</span>
             </div>
             <div>
-              <span class="font-normal mr-1"> {{ regex.formatToTwoDigits(volumeData?.amount) }} {{ volumeData?.amount >
-                1 ? 'unidades' : 'unidade' }}</span>
-              <span class="font-normal mr-2">• {{ volumeData?.volume }} kg</span>
+              <span class="font-normal mr-1"> {{ regex.formatToTwoDigits(volumeData?.weight) }} kg</span>
               <span class="text-gray-400">({{ volumeData.Material.name }})</span>
-            </div>
-            <div>
-              <span>Peso total: {{ totalVolume }} kg</span>
             </div>
           </mat-card>
 
@@ -80,13 +75,12 @@
             <div class="text-sm mb-1">
               <span class="text-orange-500">Retirar</span>
             </div>
-            <div class="flex items-center mb-[3px]">
-              <button mat-icon-button (click)="addRemove()" [disabled]="checkLimit"
-                [class]="checkLimit ? '!bg-gray-200':'!bg-orange-400 !text-white'">
+            <div class="flex items-center mb-[8px]">
+              <button mat-icon-button (click)="addRemove()" class="!bg-orange-400 !text-white">
                 <mat-icon>add</mat-icon>
               </button>
               <div class="min-w-[150px]">
-                <input type="number" [(ngModel)]="removeAmount" [ngModelOptions]="{standalone: true}"
+                <input type="number" [(ngModel)]="removeWeight" [ngModelOptions]="{standalone: true}"
                   class="mx-1 border border-gray-300 rounded-md px-4 py-2 w-[150px]">
               </div>
               <button mat-icon-button (click)="removeRemove()" [disabled]="limit"
@@ -94,17 +88,12 @@
                 <mat-icon>remove</mat-icon>
               </button>
               <div class="mx-2">
-                <span>{{ removeAmount > 1 ? 'unidades' : 'unidade' }}</span>
+                <span>KG</span>
               </div>
             </div>
-            <div class="text-sm flex items-center">
-              <mat-icon class="text-red-500">arrow_drop_down</mat-icon>
-              <span class="mr-2">{{ totalAmount }}
-                kg</span>
-            </div>
-            @if (notAlocate > 0) {
+            @if (checkRemove) {
             <div>
-              <span class="text-red-500">{{ notAlocate }} kg ainda não alocado</span>
+              <span class="text-red-500">Valor de retirada superior que o disponível</span>
             </div>
             }
             @if (notAlocate < 0) { <div>
@@ -150,11 +139,11 @@
               <span (click)="deleteVolume($index)" class="text-xs text-blue-400 hover:underline">Remover</span>
             </div>
 
-            <div class="flex mb-2">
+            <div class="sm:flex mb-2">
               <div>
                 <label class="text-xs text-gray-400">Tipo</label>
                 <select [(ngModel)]="volume.type" [ngModelOptions]="{standalone: true}"
-                  class=" text-gray-900 text-sm rounded-l-lg border border-gray-300 block p-2.5 min-w-[175px] bg-gray-50">
+                  class=" text-gray-900 text-sm rounded-l-lg border border-gray-300 block p-2.5 sm:min-w-[175px] min-w-full  bg-gray-50">
                   @for (type of typeList; track $index) {
                   <option [value]="type?.name">{{ type?.name }}</option>
                   }
@@ -163,51 +152,36 @@
               <div class="w-full">
                 <label class="text-xs text-gray-400">Tamanho</label>
                 <select [(ngModel)]="volume.size" [ngModelOptions]="{standalone: true}"
-                  class=" text-gray-900 text-sm border border-gray-300 block p-2.5 min-w-[175px] bg-gray-50 rounded-e-lg">
+                  class=" text-gray-900 text-sm border border-gray-300 block p-2.5 sm:min-w-[175px] min-w-full bg-gray-50 rounded-e-lg">
                   @for (size of sizeList; track $index) {
                   <option [value]="size?.name">{{ size?.name }}</option>
                   }
                 </select>
               </div>
             </div>
-
+            <!--
             <div class="py-1">
               <mat-slide-toggle [(ngModel)]="volume.single" [ngModelOptions]="{standalone: true}"
                 (ngModelChange)="setSingle($index, $event)">Volume avulso</mat-slide-toggle>
-            </div>
+            </div> -->
 
-            <div class="mb-1 flex">
-              <div>
-                <label class="text-xs text-gray-500">Quantidade</label>
-                <input type="number" [(ngModel)]="volume.amount" [ngModelOptions]="{standalone: true}"
-                  class="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 lg:min-w-[50px] max-w-[100px] text-sm border-gray-300 p-2.5">
+            <div class="mb-1">
+              <div class="mb-1">
+                <label class="text-xs text-gray-500">Peso</label>
+                <div class="flex items-center">
+                  <input type="number" [(ngModel)]="volume.weight" [ngModelOptions]="{standalone: true}"
+                  class="mr-2 rounded-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 lg:min-w-[200px] max-w-[200px] text-sm border-gray-300 p-2.5">
+                  <span>KG</span>
+                </div>
               </div>
               <div class="w-full">
-                @if(volume.single) {
-                <div>
-                  <label class="text-xs text-gray-500">Peso do volume</label>
-                  <div class="flex">
-                    <input type="number" [(ngModel)]="volume.volume" [ngModelOptions]="{standalone: true}"
-                      class="rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 max-w-[150px] w-full text-sm border-gray-300 p-2.5">
-                    <span class="px-4 pt-1">kg</span>
-                  </div>
-                </div>
-                }
-                @else {
                 <label class="text-xs text-gray-400">Material</label>
                 <select [(ngModel)]="volume.material_id" [ngModelOptions]="{standalone: true}"
-                  class=" text-gray-900 text-sm border border-gray-300 block p-2.5 w-full bg-gray-50 rounded-e-lg">
+                  class=" text-gray-900 text-sm border border-gray-300 block p-2.5 w-full bg-gray-50 rounded-lg">
                   @for (material of materialList; track $index) {
                   <option [ngValue]="material.id">{{ material?.name }}</option>
                   }
                 </select>
-                }
-
-                <div class="text-end">
-                  <span class="text-xs text-gray-400">
-                    {{ getTotalVolume(volume) }}
-                  </span>
-                </div>
               </div>
             </div>
 

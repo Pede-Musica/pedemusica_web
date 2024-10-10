@@ -17,6 +17,7 @@ interface volumeProps {
   product_name: string
   type: string
   size: string
+  weight: number
   amount: number
   volume: number
   volume_type: string
@@ -57,6 +58,7 @@ export class VolumeCard2Component {
     entry_id: '',
     exit_id: '',
     product_name: '',
+    weight: 0,
     amount: 0,
     created_at: '',
     size: '',

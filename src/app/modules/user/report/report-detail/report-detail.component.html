@@ -90,8 +90,8 @@
           </div>
         </div>
         <div class="p-1 text-sm">
-          <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
-          <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
+          <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume?.weight) + ' kg' }}</span>
+          <!-- <span class="font-medium mr-2">• {{ volume.volume }} kg</span> -->
           <span class="text-xs text-gray-400">({{ volume?.Material ? volume?.Material?.name : 'avulso' }})</span>
         </div>
         <div class="p-1 text-sm">
@@ -130,8 +130,8 @@
         </div>
       </div>
       <div class="p-1 text-sm">
-        <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
-        <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
+        <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume?.weight) + ' kg' }}</span>
+        <!-- <span class="font-medium mr-2">• {{ volume.volume }} kg</span> -->
         <span class="text-xs text-gray-400">({{ volume?.Material ? volume?.Material?.name : 'avulso'}})</span>
       </div>
       <div class="p-1 text-sm">
@@ -238,8 +238,7 @@
         </div>
       </div>
       <div class="p-1 text-sm">
-        <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume.amount) }} unidades</span>
-        <span class="font-medium mr-2">• {{ volume.volume }} kg</span>
+        <span class="font-medium mr-1">{{ regex.formatToTwoDigits(volume?.weight) + ' kg' }}</span>
         <span class="text-xs text-gray-400">({{ volume.Material ? volume.Material.name : 'Avulso'}})</span>
       </div>
     </div>

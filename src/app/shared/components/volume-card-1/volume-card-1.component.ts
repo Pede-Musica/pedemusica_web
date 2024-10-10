@@ -5,6 +5,11 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DateTime } from '@app/resources/handlers/datetime';
 import { Regex } from '@app/resources/handlers/regex';
 import { SheetVolumeComponent } from '../sheet-volume/sheet-volume.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { VolumeService } from '@app/services/user/volume.service';
+import { SnackbarService } from '@app/services/common/snackbar.service';
+import { LoadingService } from '@app/services/common/loading.service';
 
 interface volumeProps {
   id: string
@@ -13,6 +18,7 @@ interface volumeProps {
   type: string
   size: string
   amount: number
+  weight: number
   volume: number
   volume_type: string
   created_at: string
@@ -44,6 +50,7 @@ export class VolumeCard1Component {
     entry_id: '',
     product_name: '',
     amount: 0,
+    weight: 0,
     created_at: '',
     size: '',
     type: '',
@@ -69,7 +76,11 @@ export class VolumeCard1Component {
     public regex: Regex,
     public dateTime: DateTime,
     private _bottomSheet: MatBottomSheet,
-    public router: Router
+    public router: Router,
+    public dialog: MatDialog,
+    public volumeService: VolumeService,
+    public snackService: SnackbarService,
+    public loadingService: LoadingService,
   ){}
 
   public openBottomSheet() {
@@ -86,6 +97,36 @@ export class VolumeCard1Component {
             this.router.navigate(['/in/track/transform/' + this.volume.id])
             break
           }
+          case 'delete':{
+            this.deleteVolume();
+            break
+          }
+        }
+      }
+    )
+  }
+
+  public deleteVolume() {
+
+    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: 'Deseja excluir o volume?' });
+
+    dialogRef.afterClosed().subscribe(
+      response => {
+        if(response) {
+
+          this.loadingService.setIsLoading(true)
+
+          this.volumeService.delete(this.volume.id).subscribe(
+            response => {
+              this.loadingService.setIsLoading(false)
+              this.snackService.open(response?.message)
+              window.location.reload();
+            },
+            excp => {
+              this.snackService.open(excp.error?.message)
+              this.loadingService.setIsLoading(false)
+            }
+          )
         }
       }
     )
