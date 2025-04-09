@@ -1,22 +1,8 @@
-<section class="flex h-screen w-full fade50">
-  <div class="h-full w-full lg:flex items-center hidden relative">
-    <div class="absolute p-10 z-50 max-w-[900px]">
-      <div class="text-white bg-primary/15 p-2 rounded-md">
-        <div class=" mb-2">
-          <span class="text-5xl drop-shadow-lg stroke-black stroke-2"><strong>Bem vindo ao CooperFlow</strong></span><br>
-        </div>
-        <div class="text-4xl font-normal drop-shadow-lg stroke-black stroke-2 flex">
-          <span class="mr-2">Aqui a sua cooperativa é mais prática, eficiente e inteligente.</span>
-        </div>
-      </div>
-    </div>
-    <img [src]="imagesService.background_login" alt="" class="object-cover h-full opacity-90 w-full">
-  </div>
-  <div class="h-full w-3 bg-secondary"></div>
-  <div class="lg:min-w-[500px] lg:max-w-[500px] w-full h-full p-4 flex justify-center items-center">
+<section class="flex h-screen w-full fade50 justify-center items-center bg-gray-100">
+  <div class="lg:min-w-[400px] lg:max-w-[400px] lg:h-[500px] h-screen w-full rounded-xl p-4 flex justify-center items-center shadow-2xl bg-white">
     <div>
       <div class="flex justify-center mb-6">
-        <img [src]="imagesService.logo" alt="" class="max-h-[35px]">
+        <img [src]="imagesService.logo" alt="" class="max-h-[60px]">
       </div>
       <router-outlet></router-outlet>
     </div>
