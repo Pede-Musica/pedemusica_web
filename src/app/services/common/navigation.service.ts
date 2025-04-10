@@ -129,7 +129,7 @@ export class NavigationService {
           page: 'users',
           name: 'Usuários',
           icon: 'group',
-          path: '/in/persons'
+          path: '/in/users'
         },
         {
           page: 'sectors',

@@ -1,12 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { UserListComponent } from './register/user/user-list/user-list.component';
-import { UserFormComponent } from './register/user/user-form/user-form.component';
-import { ProducerListComponent } from './register/producer/producer-list/producer-list.component';
-import { ProducerFormComponent } from './register/producer/producer-form/producer-form.component';
-import { CustomerListComponent } from './register/customer/customer-list/customer-list.component';
-import { CustomerFormComponent } from './register/customer/customer-form/customer-form.component';
 import { LocationListComponent } from './register/location/location-list/location-list.component';
 import { LocationFormComponent } from './register/location/location-form/location-form.component';
 import { MaterialListComponent } from './register/material/material-list/material-list.component';
@@ -46,9 +39,9 @@ const routes: Routes = [
   { path: 'stock', component: StockComponent },
 
   // Cadastros
-  { path: 'persons', component: PersonListComponent },
-  { path: 'persons/new', component: PersonFormComponent },
-  { path: 'persons/:id', component: PersonFormComponent },
+  { path: 'users', component: PersonListComponent },
+  { path: 'users/new', component: PersonFormComponent },
+  { path: 'users/:id', component: PersonFormComponent },
 
   { path: 'products', component: ProductListComponent },
   { path: 'products/new', component: ProductFormComponent },
