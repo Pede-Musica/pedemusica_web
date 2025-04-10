@@ -73,7 +73,7 @@ export class PersonFormComponent {
 
 
   get icon() {
-    return this.navigationService.getIcon('persons');
+    return this.navigationService.getIcon('users');
   }
 
   get type() {

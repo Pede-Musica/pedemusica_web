@@ -85,22 +85,34 @@ export class NavigationService {
       type: '',
       child: [
         {
+          page: 'start',
+          name: 'Início',
+          icon: 'flag',
+          path: '/in/start'
+        },
+        {
           page: 'track',
-          name: 'Rastreabilidade',
-          icon: 'account_tree',
+          name: 'Pedidos',
+          icon: 'edit_square',
           path: '/in/track'
         },
         {
-          page: 'register',
-          name: 'Registros',
-          icon: 'app_registration',
-          path: '/in/register'
+          page: 'table',
+          name: 'Mesas',
+          icon: 'table_restaurant',
+          path: '/in/table'
         },
         {
-          page: 'stock',
-          name: 'Estoque',
-          icon: 'inventory_2',
-          path: '/in/stock'
+          page: 'finance',
+          name: 'Financeiro',
+          icon: 'payments',
+          path: '/in/finance'
+        },
+        {
+          page: 'monitoring',
+          name: 'Relatórios',
+          icon: 'insert_chart',
+          path: '/in/monitoring'
         },
       ]
     },
@@ -108,34 +120,28 @@ export class NavigationService {
       type: 'Cadastros',
       child: [
         {
-          page: 'persons',
-          name: 'Pessoas',
-          icon: 'group',
-          path: '/in/persons'
-        },
-        {
           page: 'products',
-          name: 'Produtos',
+          name: 'Cardápio',
           icon: 'nature',
           path: '/in/products'
         },
         {
+          page: 'users',
+          name: 'Usuários',
+          icon: 'group',
+          path: '/in/persons'
+        },
+        {
           page: 'sectors',
           name: 'Setores',
-          icon: 'pin_drop',
+          icon: 'account_tree',
           path: '/in/sectors'
         },
         {
-          page: 'locations',
+          page: 'Sistema',
           name: 'Localizações',
           icon: 'flag',
           path: '/in/locations'
-        },
-        {
-          page: 'materials',
-          name: 'Materiais',
-          icon: 'inventory',
-          path: '/in/materials'
         },
       ]
     },

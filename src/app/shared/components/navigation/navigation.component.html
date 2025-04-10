@@ -1,21 +1,21 @@
 <nav class="w-full">
   <div
-    class="lg:h-[60px] h-[45px] bg-gray-100 w-full mat-elevation-z2 flex items-center justify-between sm:border-r-8 sm:border-l-0 border-l-8 border-primary">
-    <div class="py-2 lg:px-4 px-2 flex items-center">
+    class="lg:h-[60px] h-[45px] bg-gray-50 w-full mat-elevation-z2 flex items-center justify-between sm:border-l-4 sm:border-r-0 border-r-8 border-primary">
+    <div class="py-2 lg:px-4 px-1 flex items-center">
       <div class="mr-1 lg:hidden flex">
         <button mat-icon-button (click)="openSideBar()">
           <mat-icon>menu</mat-icon>
         </button>
       </div>
-      <div [routerLink]="navigationService.getPATH('track')" class="hover:bg-gray-200 rounded-md p-1 hover:cursor-pointer">
-        <img [src]="imagesService.logo" alt="" class="h-[30px]">
+      <div [routerLink]="navigationService.getPATH('track')" class="hover:bg-gray-100 hover:scale-105 rounded-md hover:cursor-pointer">
+        <img [src]="imagesService.logo" alt="" class="h-[45px]">
       </div>
     </div>
 
     <div class="flex justify-end items-center px-2">
       <div class="mr-4">
         <button mat-icon-button routerLink="/in/track/exit/list">
-          <mat-icon [matBadge]="navigationService.hasExits()" [matBadgeHidden]="checkExits">local_shipping</mat-icon>
+          <mat-icon>note_add</mat-icon>
         </button>
       </div>
       <div class="lg:flex hidden">
@@ -30,7 +30,7 @@
         </button>
       </div>
       <mat-menu #menu="matMenu">
-        <div class="text-center text-sm border-b border-gray-300 pb-1 lg:hidden flex justify-center">
+        <div class="text-center text-sm border-b border-gray-50 pb-1 lg:hidden flex justify-center">
           <span>{{ regex.getFirstNameAndLastNameInitial(user_name()) }}</span>
         </div>
         <button mat-menu-item (click)="doLogout()">

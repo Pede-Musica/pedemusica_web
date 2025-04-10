@@ -28,7 +28,7 @@ interface userProps {
 export class PersonListComponent {
 
   public isLoading = signal(true);
-  displayedColumns: string[] = ['name', 'email', 'status', 'created_at', 'action',];
+  displayedColumns: string[] = ['name', 'email', 'phone',];
   public personList: Array<userProps> = [];
   public personTotal: number = 0;
   public page_size: number = 10;
