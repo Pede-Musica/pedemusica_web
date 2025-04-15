@@ -1,13 +1,26 @@
+<!-- Global loading -->
 @if (loadingService.isLoading()) {
 <div class="fixed w-screen h-screen bg-gray-200/10 z-50 flex items-center justify-center">
   <app-loading-transform></app-loading-transform>
 </div>
 }
+
 <section [class]="(loadingService.isLoading() ? 'blur-sm' : '')">
+
+
   <div class="mb-[2px] fixed top-0 w-full z-40">
     <app-navigation (openEvent)="openSidebar.set(!openSidebar())"></app-navigation>
+
+    <!-- Topbar loading -->
+    @if (loadingService.topLoading()) {
+    <div class="w-screen">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    }
   </div>
+
   <main class="min-h-screen w-full flex fade50  lg:pt-[60px] pt-[48px]">
+
     @if(openSidebar()) {
     <div class="border-r-2 fixed h-full fade_in lg:shadow-none shadow-xl rounded-tr-lg z-40 mt-1">
       <app-sidebar></app-sidebar>

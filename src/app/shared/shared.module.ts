@@ -12,15 +12,14 @@ import { LabelComponent } from './components/label/label.component';
 import { SelectorProducerComponent } from './components/selector-producer/selector-producer.component';
 import { SelectorProductComponent } from './components/selector-product/selector-product.component';
 import { LabelRequiredComponent } from './components/label-required/label-required.component';
-import { VolumeCard1Component } from './components/volume-card-1/volume-card-1.component';
-import { VolumeCard2Component } from './components/volume-card-2/volume-card-2.component';
 import { ZeroLengthComponent } from './components/zero-length/zero-length.component';
 import { LoadingTransformComponent } from './components/loading-transform/loading-transform.component';
 import { DialogTransformComponent } from './components/dialog-transform/dialog-transform.component';
 import { SheetVolumeComponent } from './components/sheet-volume/sheet-volume.component';
 import { SelectorCustomerComponent } from './components/selector-customer/selector-customer.component';
-import { SelectorLocationComponent } from './components/selector-location/selector-location.component';
 import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { DotPulseComponent } from './components/dot-pulse/dot-pulse.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -39,22 +38,21 @@ const config: ExtraOptions = {
     SelectorProducerComponent,
     SelectorProductComponent,
     LabelRequiredComponent,
-    VolumeCard1Component,
-    VolumeCard2Component,
     ZeroLengthComponent,
     LoadingTransformComponent,
     DialogTransformComponent,
     SheetVolumeComponent,
     SelectorCustomerComponent,
-    SelectorLocationComponent,
-    DialogConfirmComponent
+    DialogConfirmComponent,
+    DotPulseComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
     NgxMaskPipe,
-    NgxMaskDirective
+    NgxMaskDirective,
+    MatProgressBarModule
   ],
   exports: [
     RouterModule,
@@ -68,15 +66,14 @@ const config: ExtraOptions = {
     NgxMaskDirective,
     LabelComponent,
     LabelRequiredComponent,
-    VolumeCard1Component,
-    VolumeCard2Component,
     ZeroLengthComponent,
     LoadingTransformComponent,
     DialogTransformComponent,
     SheetVolumeComponent,
     SelectorCustomerComponent,
-    SelectorLocationComponent,
-    DialogConfirmComponent
+    DialogConfirmComponent,
+    MatProgressBarModule,
+    DotPulseComponent
   ],
 })
 export class SharedModule { }

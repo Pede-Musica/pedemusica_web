@@ -6,6 +6,8 @@ import { Injectable, signal } from '@angular/core';
 export class LoadingService {
 
   public isLoading = signal(false)
+  public topLoading = signal(false)
+  public globalLoading = signal(false)
 
   constructor() { }
 

@@ -85,10 +85,10 @@ export class NavigationService {
       type: '',
       child: [
         {
-          page: 'start',
+          page: 'home',
           name: 'Início',
           icon: 'flag',
-          path: '/in/start'
+          path: '/in/home'
         },
         {
           page: 'track',

@@ -11,9 +11,9 @@
     <div class="mr-2">
       <app-title [text]="title" [icon]="icon"></app-title>
     </div>
-    <button mat-button routerLink="/in/locations/new" class="!text-primary flex items-center"
-      matTooltip="Adicionar nova localização">
-      <mat-icon>add</mat-icon>
-      Adicionar</button>
+
+    <div>
+      <app-loader></app-loader>
+    </div>
   </div>
 </ng-template>

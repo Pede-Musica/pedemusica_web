@@ -4,6 +4,7 @@ import { ImagesService } from '@app/services/common/images.service';
 import { Regex } from '@app/resources/handlers/regex';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { RegisterService } from '@app/services/user/register.service';
+import { StoreService } from '@app/services/common/store.service';
 
 @Component({
   selector: 'app-navigation',
@@ -15,6 +16,7 @@ export class NavigationComponent implements OnInit {
   @Output() openEvent = new EventEmitter<boolean>();
   public user_name = signal('');
   public open = signal(true);
+  public client_name = signal('Capivara Coffee');
 
   constructor(
     public imagesService: ImagesService,
@@ -22,7 +24,7 @@ export class NavigationComponent implements OnInit {
     public regex: Regex,
     private _authService: AuthService,
     public navigationService: NavigationService,
-    private _registerService: RegisterService
+    public storeService: StoreService
   ) { }
 
   ngOnInit(): void {

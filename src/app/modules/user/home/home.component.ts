@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { LoadingService } from '@app/services/common/loading.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 
 @Component({
@@ -12,11 +13,19 @@ export class HomeComponent implements OnInit{
   public isLoading = signal(true);
 
   constructor(
-    public navigationService: NavigationService
+    public navigationService: NavigationService,
+    public loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    document.title = 'Home'
+    this.isLoading.set(false);
+
+    this.loadingService.topLoading.set(true);
+
+    setTimeout(() => {
+      this.loadingService.topLoading.set(false);
+    }, 2000)
   }
 
   get title() {
