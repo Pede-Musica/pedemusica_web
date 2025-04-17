@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
       },
       excp => {
         this.isLoading.set(false);
-        this.snackbarService.open(excp.error.message)
+        this.snackbarService.open(excp.error.message ?? 'Houve um erro inesperado')
       }
     )
   }

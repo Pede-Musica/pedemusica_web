@@ -41,7 +41,11 @@ export class MainLayoutComponent implements OnInit {
       this.openSidebar.set(false)
     }
 
-    this.navigationService.getExits();
+    this.loadingService.isLoading.set(true);
+
+    setTimeout(() => {
+      this.loadingService.isLoading.set(false);
+    }, 2000)
   }
 
   @HostListener('window:resize', ['$event'])

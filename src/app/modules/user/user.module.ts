@@ -10,8 +10,6 @@ import { ProductFormComponent } from './register/product/product-form/product-fo
 import { ProductListComponent } from './register/product/product-list/product-list.component';
 import { ReportComponent } from './report/report.component';
 import { StockComponent } from './stock/stock.component';
-import { PersonFormComponent } from './register/person/person-form/person-form.component';
-import { PersonListComponent } from './register/person/person-list/person-list.component';
 import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
 import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
 import { SettingComponent } from './setting/setting.component';
@@ -27,8 +25,6 @@ import { ReportDetailComponent } from './report/report-detail/report-detail.comp
     ProductListComponent,
     ReportComponent,
     StockComponent,
-    PersonFormComponent,
-    PersonListComponent,
     ProfileFormComponent,
     ProfileListComponent,
     SettingComponent,

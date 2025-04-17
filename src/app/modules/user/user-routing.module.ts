@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductListComponent } from './register/product/product-list/product-list.component';
 import { ProductFormComponent } from './register/product/product-form/product-form.component';
-import { PersonListComponent } from './register/person/person-list/person-list.component';
-import { PersonFormComponent } from './register/person/person-form/person-form.component';
 import { ProfileListComponent } from './system/profile/profile-list/profile-list.component';
 import { ProfileFormComponent } from './system/profile/profile-form/profile-form.component';
 import { SettingComponent } from './setting/setting.component';
 import { HomeComponent } from './home/home.component';
+import { UserListComponent } from './register/user/user-list/user-list.component';
+import { UserFormComponent } from './register/user/user-form/user-form.component';
 
 const routes: Routes = [
 
@@ -15,9 +15,9 @@ const routes: Routes = [
 
 
   // Cadastros
-  { path: 'users', component: PersonListComponent },
-  { path: 'users/new', component: PersonFormComponent },
-  { path: 'users/:id', component: PersonFormComponent },
+  { path: 'users', component: UserListComponent },
+  { path: 'users/new', component: UserFormComponent },
+  { path: 'users/:id', component: UserFormComponent },
 
   { path: 'products', component: ProductListComponent },
   { path: 'products/new', component: ProductFormComponent },
