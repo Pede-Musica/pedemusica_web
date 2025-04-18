@@ -20,12 +20,6 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     document.title = 'Home'
     this.isLoading.set(false);
-
-    this.loadingService.topLoading.set(true);
-
-    setTimeout(() => {
-      this.loadingService.topLoading.set(false);
-    }, 2000)
   }
 
   get title() {

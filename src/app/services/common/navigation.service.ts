@@ -86,8 +86,8 @@ export class NavigationService {
       child: [
         {
           page: 'home',
-          name: 'Início',
-          icon: 'flag',
+          name: 'Home',
+          icon: 'home',
           path: '/in/home'
         },
         {
