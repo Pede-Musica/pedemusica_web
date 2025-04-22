@@ -40,12 +40,6 @@ export class MainLayoutComponent implements OnInit {
       this.displayMode.set('mobile')
       this.openSidebar.set(false)
     }
-
-    this.loadingService.isLoading.set(true);
-
-    setTimeout(() => {
-      this.loadingService.isLoading.set(false);
-    }, 2000)
   }
 
   @HostListener('window:resize', ['$event'])

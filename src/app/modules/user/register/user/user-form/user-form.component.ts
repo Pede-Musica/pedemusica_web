@@ -5,6 +5,7 @@ import { DialogService } from '@app/services/common/dialog.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
 import { PersonService } from '@app/services/user/person.service';
+import { UserService } from '@app/services/user/user.service';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-user-form',
@@ -23,17 +24,17 @@ export class UserFormComponent {
     public navigationService: NavigationService,
     private _formBuilder: FormBuilder,
     public dialogService: DialogService,
-    private _personService: PersonService,
     private _router: Router,
     private _snackService: SnackbarService,
-    private _activeRoute: ActivatedRoute
+    private _activeRoute: ActivatedRoute,
+    private _userService: UserService
   ) {
     this.form = this._formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required]],
       phone2: [''],
-      address: ['', [Validators.required]],
+      address: [''],
       type: [1, [Validators.required]],
       cpf_cnpj: ['', [Validators.required]],
     });
@@ -62,7 +63,7 @@ export class UserFormComponent {
   public detail(id: string) {
     this.isLoading.set(true);
 
-    this._personService.detail(id).subscribe(
+    this._userService.detail(id).subscribe(
       data => {
         this.form.patchValue(data);
         this.isLoading.set(false);
@@ -90,9 +91,9 @@ export class UserFormComponent {
 
     if (this.isEditing()) {
       data.id = this.user_id();
-      observable = this._personService.update(data);
+      observable = this._userService.update(data);
     } else {
-      observable = this._personService.create(data);
+      observable = this._userService.create(data);
     }
 
     observable.subscribe(

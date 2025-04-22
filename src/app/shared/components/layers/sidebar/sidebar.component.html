@@ -7,7 +7,7 @@
         </div>
         <ng-container *ngFor="let child of item.child">
           <div [routerLink]="child.path" (click)="navigate(child.path)"
-            routerLinkActive="text-black font-medium bg-gray-200/80 rounded-md"
+            routerLinkActive="text-black font-medium bg-gray-200/90 rounded-md"
             class="flex items-center py-1 px-2 hover:cursor-pointer text-gray-600 hover:bg-gray-100 hover:rounded-r-md hover:text-gray-600 hover:font-medium">
             <mat-icon class="mr-1 scale-75">{{ child.icon }} </mat-icon>
             <span class="text-sm pt-1">{{ child.name }}</span>

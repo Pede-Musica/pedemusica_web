@@ -24,6 +24,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatChipsModule} from '@angular/material/chips';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [],
@@ -53,7 +54,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatBottomSheetModule,
     MatListModule,
     MatBadgeModule,
-    MatChipsModule
+    MatChipsModule,
+    ClipboardModule
   ],
   exports: [
     MatInputModule,
@@ -80,7 +82,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatBottomSheetModule,
     MatListModule,
     MatBadgeModule,
-    MatChipsModule
+    MatChipsModule,
+    ClipboardModule
   ]
 })
 export class MaterialModule { }

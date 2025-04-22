@@ -130,4 +130,23 @@ export class Regex {
     }
     return false;
   }
+
+
+  public formatPhoneNumber(number: string) {
+    // Remove tudo que não for número
+    const num = number.replace(/\D/g, '');
+
+    // Formatação para número com 11 dígitos (celular com DDD)
+    if (num.length === 11) {
+      return `(${num.slice(0, 2)}) ${num.slice(2, 7)}-${num.slice(7)}`;
+    }
+
+    // Formatação para número com 10 dígitos (fixo com DDD)
+    if (num.length === 10) {
+      return `(${num.slice(0, 2)}) ${num.slice(2, 6)}-${num.slice(6)}`;
+    }
+
+    // Se não tiver 10 ou 11 dígitos, retorna o número sem formatar
+    return number;
+  }
 }
