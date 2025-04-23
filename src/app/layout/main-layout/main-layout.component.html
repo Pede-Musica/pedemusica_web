@@ -29,7 +29,7 @@
     @if(openSidebar() && displayMode() === 'mobile'){
     <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-30"></div>
     }
-    <div class="w-full min-h-full p-1 bg-gray-50/50 lg:pl-[200px]">
+    <div class="w-full min-h-full p-1 bg-gray-50/50 lg:pl-[200px] mt-7 lg:mt-0">
       <router-outlet></router-outlet>
     </div>
   </main>

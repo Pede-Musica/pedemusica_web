@@ -6,6 +6,7 @@ import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
 import { PersonService } from '@app/services/user/person.service';
 import { UserService } from '@app/services/user/user.service';
+import { DialogComponent } from '@app/shared/components/dialogs/dialog/dialog.component';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-user-form',
@@ -19,6 +20,7 @@ export class UserFormComponent {
   public showError = signal(false);
   public form: FormGroup;
   public user_id = signal('');
+  public allPermissionChecked = signal(false);
 
   constructor(
     public navigationService: NavigationService,
@@ -37,6 +39,8 @@ export class UserFormComponent {
       address: [''],
       type: [1, [Validators.required]],
       cpf_cnpj: ['', [Validators.required]],
+      is_active: [false, Validators.required],
+      client_admin: [false, Validators.required]
     });
 
   }
@@ -98,7 +102,7 @@ export class UserFormComponent {
 
     observable.subscribe(
       response => {
-        this._snackService.open(response.message);
+        const dialogRef = this.dialogService.open(true, 'Usuário criado com sucesso!', 'success', `Um e-mail foi enviado para ${data.email} para realizar o primeiro acesso.`)
         this._router.navigate([this.navigationService.getPATH('users')]);
       },
       error => {
@@ -106,5 +110,10 @@ export class UserFormComponent {
         this._snackService.open(error.error.message)
       }
     )
+  }
+
+  public setPermission(event: any) {
+    const toggle = event.checked;
+    this.allPermissionChecked.set(toggle)
   }
 }

@@ -24,7 +24,7 @@ export class NavigationService {
 
   constructor(
     private _registerService: RegisterService
-  ) {}
+  ) { }
 
   public getExits() {
     this._registerService.listExits().subscribe(
@@ -101,19 +101,7 @@ export class NavigationService {
           name: 'Mesas',
           icon: 'table_restaurant',
           path: '/in/table'
-        },
-        {
-          page: 'finance',
-          name: 'Financeiro',
-          icon: 'payments',
-          path: '/in/finance'
-        },
-        {
-          page: 'monitoring',
-          name: 'Relatórios',
-          icon: 'insert_chart',
-          path: '/in/monitoring'
-        },
+        }
       ]
     },
     {
@@ -145,22 +133,28 @@ export class NavigationService {
         },
       ]
     },
-    /* {
+    {
       type: 'Sistema',
       child: [
         {
-          page: 'profiles',
-          name: 'Perfis',
-          icon: 'manage_accounts',
-          path: '/in/profiles'
+          page: 'finance',
+          name: 'Financeiro',
+          icon: 'payments',
+          path: '/in/finance'
         },
         {
-          page: 'settings',
-          name: 'Configurações',
-          icon: 'settings',
-          path: '/in/setting'
-        },
+          page: 'monitoring',
+          name: 'Relatórios',
+          icon: 'insert_chart',
+          path: '/in/monitoring'
+        }
+        // {
+        //   page: 'settings',
+        //   name: 'Configurações',
+        //   icon: 'settings',
+        //   path: '/in/setting'
+        // }
       ]
-    } */
+    }
   ]
 }

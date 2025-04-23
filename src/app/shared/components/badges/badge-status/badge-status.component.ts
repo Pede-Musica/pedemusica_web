@@ -7,16 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class BadgeStatusComponent {
 
-  @Input() text: string = '';
-  @Input() color: string = ''
-
-  get backgroundColor() {
-    switch(this.color) {
-      case 'green': return 'bg-green-500'
-      case 'red': return 'bg-red-500'
-    }
-
-    return 'bg-white'
-  }
+  @Input() type: string = ''
 
 }

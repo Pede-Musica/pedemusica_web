@@ -14,10 +14,10 @@ import { SelectorProductComponent } from './components/selector-product/selector
 import { LabelRequiredComponent } from './components/label-required/label-required.component';
 import { ZeroLengthComponent } from './components/zero-length/zero-length.component';
 import { LoadingTransformComponent } from './components/loaders/loading-transform/loading-transform.component';
-import { DialogTransformComponent } from './components/dialog-transform/dialog-transform.component';
+import { DialogTransformComponent } from './components/dialogs/dialog-transform/dialog-transform.component';
 import { SheetVolumeComponent } from './components/sheet-volume/sheet-volume.component';
 import { SelectorCustomerComponent } from './components/selector-customer/selector-customer.component';
-import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
+import { DialogConfirmComponent } from './components/dialogs/dialog-confirm/dialog-confirm.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { DotPulseComponent } from './components/dot-pulse/dot-pulse.component';
 import { BadgeStatusComponent } from './components/badges/badge-status/badge-status.component';

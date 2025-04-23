@@ -15,19 +15,18 @@
       <label class="block text-sm font-medium text-gray-900">Ordem</label>
       <select id="order" (change)="filterOrder($event)" [value]="order"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-        <option selected value="asc">A → Z</option>
-        <option value="desc">Z → A</option>
+        <option selected value="asc">A ➟ Z</option>
+        <option value="desc">Z ➟ A</option>
       </select>
     </div>
 
     <div class="lg:w-[150px] w-full lg:mr-4 mb-2">
-      <label class="block text-sm font-medium text-gray-900">Tipo</label>
-      <select id="type" (change)="filterType($event)" [value]="type"
+      <label class="block text-sm font-medium text-gray-900">Status</label>
+      <select id="type" (change)="filterStatus($event)" [value]="type"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         <option value="">Todos</option>
-        <option value="user">Usuários</option>
-        <option value="producer">Produtores</option>
-        <option value="customer">Clientes</option>
+        <option [value]="true">Ativo</option>
+        <option [value]="false">Inativo</option>
       </select>
     </div>
 
@@ -47,55 +46,71 @@
 
 <ng-template #mainTemplate>
 
-  <div class="mb-2">
-
-    <table mat-table [dataSource]="userList">
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element">
-          @switch (element.is_active) {
-            @case (true) {
-              <app-badge-status color="green" text="Ativo"></app-badge-status>
-            }
-            @case (false) {
-              <app-badge-status color="red" text="Inativo"></app-badge-status>
-            }
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.name ?? ''}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> E-mail (Usuário) </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef> Contato </th>
-        <td mat-cell *matCellDef="let element">
-          <div class="flex items-center">
-            {{ regex.formatPhoneNumber(element.phone)}}
-            <button mat-icon-button matTooltip="Copiar" [cdkCopyToClipboard]="element.phone">
-              <mat-icon class="text-gray-500">content_copy</mat-icon>
-            </button>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
-
   @if (userList.length === 0) {
   <div class="p-2">
     <app-zero-length text="Nenhum usuário encontrado"></app-zero-length>
   </div>
   }
+
+  @else {
+    <div class="mb-4 text-gray-500 text-end">
+      <span class="text-sm">{{ userList.length + ' ' + (userList.length > 1 ? 'usuários encontrados' : 'usuário
+        encontrado')}}</span>
+    </div>
+  <div class="mb-2 w-full overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-800">
+      <thead class="text-xs text-gray-700 bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-medium">Status</th>
+          <th scope="col" class="px-6 py-3 text-medium">Nome</th>
+          <th scope="col" class="px-6 py-3 text-medium">E-mail (usuário)</th>
+          <th scope="col" class="px-6 py-3 text-medium">Contato</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of userList; track $index) {
+        <tr scope="row" class="border-b border-gray-200 even:bg-gray-50">
+          <td class="px-6 py-2">
+            @switch (item.is_active) {
+            @case (true) {
+            <app-badge-status type="active"></app-badge-status>
+            }
+            @case (false) {
+            <app-badge-status type="inactive"></app-badge-status>
+            }
+            }
+          </td>
+
+          <td class="px-6 py-2 min-w-[200px]">
+            <span>{{ item.name }}</span>
+          </td>
+
+          <td class="px-6 py-2 min-w-[200px]">
+            <span>{{ item.email }}</span>
+          </td>
+
+          <td class="px-6 py-2 min-w-[200px]">
+            <div class="flex items-center">
+              {{ regex.formatPhoneNumber(item.phone)}}
+              <button mat-icon-button matTooltip="Copiar" [cdkCopyToClipboard]="item.phone">
+                <mat-icon class="text-gray-500">content_copy</mat-icon>
+              </button>
+            </div>
+          </td>
+
+          <td>
+            <button mat-icon-button matTooltip="Editar" [routerLink]="'/in/users/' + item.id">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   <mat-paginator (page)="pageEvent($event)" [length]="userTotal" [pageSize]="page_size"
     [pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="page_index"></mat-paginator>
+  }
 </ng-template>

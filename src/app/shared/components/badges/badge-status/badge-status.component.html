@@ -1,3 +1,14 @@
-<div [ngClass]="`px-2 py-1 ${backgroundColor}`">
-  <span>{{ text }}</span>
+<div class="max-w-[75px]">
+  @switch (type) {
+    @case ('active') {
+      <div class="px-1 bg-green-500 text-xs font-medium text-white rounded-full text-center">
+        <span>Ativo</span>
+      </div>
+    }
+    @case ('inactive') {
+      <div class="px-1 bg-red-500 text-xs font-medium text-white rounded-full text-center">
+        <span>Inativo</span>
+      </div>
+    }
+  }
 </div>

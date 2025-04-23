@@ -9,15 +9,11 @@ import { UserService } from '@app/services/user/user.service';
 
 interface userProps {
   id: string
+  is_active: boolean
   name: string
   email: string
   phone: string
   created_at: string
-  isUser: boolean
-  isProducer: boolean
-  isCustomer: boolean
-  User: any
-  Producer: any
 }
 
 @Component({
@@ -36,9 +32,7 @@ export class UserListComponent {
 
   public order: string = 'asc';
   public type: string = "";
-  public isUser: boolean | string = '';
-  public isProducer: boolean | string = '';
-  public isCustomer: boolean | string = '';
+  public active: boolean | string = '';
   public search: string = '';
 
 
@@ -75,36 +69,9 @@ export class UserListComponent {
   }
 
 
-  public filterType(event: any) {
-    const type = event?.target?.value;
-    this.type = type;
-
-    switch(type) {
-      case 'user': {
-        this.isUser = true;
-        this.isProducer = '';
-        this.isCustomer = '';
-        break;
-      }
-      case 'producer': {
-        this.isUser = '';
-        this.isProducer = true;
-        this.isCustomer = '';
-        break;
-      }
-      case 'customer': {
-        this.isUser = '';
-        this.isProducer = '';
-        this.isCustomer = true;
-        break;
-      }
-      default: {
-        this.isUser = '';
-        this.isProducer = '';
-        this.isCustomer = '';
-        break;
-      }
-    }
+  public filterStatus(event: any) {
+    const active = event?.target?.value;
+    this.active = active
 
     this.getUsers();
   }
@@ -116,9 +83,7 @@ export class UserListComponent {
       page: this.page_index + 1,
       pageSize: this.page_size,
       order: this.order,
-      isUser: this.isUser,
-      isProducer: this.isProducer,
-      isCustomer: this.isCustomer
+      active: this.active
     }
 
     this._userService.paginate(params).subscribe(
