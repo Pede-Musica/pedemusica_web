@@ -52,6 +52,8 @@ export class UserFormComponent {
       this.isEditing.set(true);
       this.user_id.set(user_id)
       this.detail(user_id);
+    } else {
+      document.title = 'Novo usuário'
     }
   }
 
@@ -70,6 +72,7 @@ export class UserFormComponent {
     this._userService.detail(id).subscribe(
       data => {
         this.form.patchValue(data);
+        document.title = data?.name ?? 'Editar usuário';
         this.isLoading.set(false);
       },
       error => {

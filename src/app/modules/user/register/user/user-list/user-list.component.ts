@@ -44,6 +44,7 @@ export class UserListComponent {
   ) {}
 
   ngOnInit(): void {
+    document.title = 'Usuários do sistema';
     this.getUsers();
   }
 
