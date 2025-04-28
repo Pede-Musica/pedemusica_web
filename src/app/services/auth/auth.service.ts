@@ -88,4 +88,8 @@ export class AuthService {
       role: decoded?.role,
     };
   }
+
+  public forgotPassword(data: any): Observable<any> {
+    return this.http.post(`user/forgot-password`, data);
+  }
 }

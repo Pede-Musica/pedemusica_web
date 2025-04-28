@@ -7,7 +7,7 @@ import { RecoveryPasswordComponent } from './recovery-password/recovery-password
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'new-account/:token', component: NewAccountComponent },
-  { path: 'recovery-password/:token', component: RecoveryPasswordComponent },
+  { path: 'forgot-password', component: RecoveryPasswordComponent },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
