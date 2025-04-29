@@ -1,12 +1,12 @@
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ImagesService } from '@app/services/common/images.service';
+import { SharedModule } from "../../shared/shared.module";
 
 @Component({
   selector: 'app-auth-layout',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, SharedModule],
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.scss'
 })

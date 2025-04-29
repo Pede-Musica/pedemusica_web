@@ -91,6 +91,7 @@ export class NewAccountComponent implements OnInit {
 
     this._authService.setPassword(data).subscribe(
       response => {
+        localStorage.setItem('lastUser', data.email)
         this.snackbarService.open(response.message);
         this._authService.clearAuthData();
       },

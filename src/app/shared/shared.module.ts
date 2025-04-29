@@ -21,6 +21,7 @@ import { DialogConfirmComponent } from './components/dialogs/dialog-confirm/dial
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { DotPulseComponent } from './components/dot-pulse/dot-pulse.component';
 import { BadgeStatusComponent } from './components/badges/badge-status/badge-status.component';
+import { LoadingFoodComponent } from './components/loaders/loading-food/loading-food.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -46,7 +47,8 @@ const config: ExtraOptions = {
     SelectorCustomerComponent,
     DialogConfirmComponent,
     DotPulseComponent,
-    BadgeStatusComponent
+    BadgeStatusComponent,
+    LoadingFoodComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +78,8 @@ const config: ExtraOptions = {
     DialogConfirmComponent,
     MatProgressBarModule,
     DotPulseComponent,
-    BadgeStatusComponent
+    BadgeStatusComponent,
+    LoadingFoodComponent
   ],
 })
 export class SharedModule { }

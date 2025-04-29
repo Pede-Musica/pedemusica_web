@@ -105,7 +105,10 @@ export class UserFormComponent {
 
     observable.subscribe(
       response => {
-        const dialogRef = this.dialogService.open(true, 'Usuário criado com sucesso!', 'success', `Um e-mail foi enviado para ${data.email} para realizar o primeiro acesso.`)
+        const dialogRef = this.dialogService.open(
+          true,
+          'Usuário criado com sucesso!', 'success', `Um e-mail foi enviado para ${data.email} para realizar o primeiro acesso. Verifique a caixa de spam.`
+        )
         this._router.navigate([this.navigationService.getPATH('users')]);
       },
       error => {

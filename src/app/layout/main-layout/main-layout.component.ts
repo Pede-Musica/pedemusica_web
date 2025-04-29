@@ -16,7 +16,9 @@ import { StoreService } from '@app/services/common/store.service';
 export class MainLayoutComponent implements OnInit {
 
   public openSidebar = signal(false);
-  public displayMode = signal('')
+  public displayMode = signal('');
+  public isLoading = signal(true)
+
 
   constructor(
     public navigationService: NavigationService,

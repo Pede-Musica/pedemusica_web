@@ -37,6 +37,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     document.title = 'Hangodash - Login';
+    const latestUser = localStorage.getItem('lastUser');
+    if(latestUser){
+      this.form.patchValue({ email: String(latestUser) })
+    }
     this.checkAuth()
   }
 
@@ -70,6 +74,7 @@ export class LoginComponent implements OnInit {
 
     this._authService.login(data).subscribe(
       response => {
+        localStorage.setItem('lastUser', data.email)
         this._authService.setToken(response.access_token);
         this._authService.setUser(response.user_name)
         this._authService.setExpires(response.expires_in);

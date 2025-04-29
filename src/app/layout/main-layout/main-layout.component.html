@@ -1,54 +1,65 @@
-<!-- Global loading -->
-@if (loadingService.isLoading()) {
-<div class="fixed w-screen h-screen bg-gray-200/10 z-50 flex items-center justify-center">
-  <app-loading-transform></app-loading-transform>
-</div>
+@if (isLoading()) {
+  <div class="w-screen h-screen flex justify-center items-center bg-[#FEFEFE]">
+    <app-loading-food></app-loading-food>
+  </div>
+}
+@else {
+<ng-container *ngTemplateOutlet="mainTemplate"></ng-container>
 }
 
-<section [class]="(loadingService.isLoading() ? 'blur-sm' : '')">
-
-  <div class="mb-[2px] fixed top-0 w-full z-40">
-    <app-navigation (openEvent)="openSidebar.set(!openSidebar())"></app-navigation>
-
-    <!-- Topbar loading -->
-    @if (loadingService.topLoading()) {
-    <div class="w-screen">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
-    }
+<ng-template #mainTemplate>
+  <!-- Global loading -->
+  @if (loadingService.isLoading()) {
+  <div class="fixed w-screen h-screen bg-gray-200/10 z-50 flex items-center justify-center">
+    <app-loading-transform></app-loading-transform>
   </div>
+  }
 
-  <main class="min-h-screen w-full flex fade50  lg:pt-[60px] pt-[48px]">
+  <section [class]="(loadingService.isLoading() ? 'blur-sm' : '')">
 
-    @if(openSidebar()) {
-    <div class="border-r-2 fixed h-full fade_in lg:shadow-none shadow-xl rounded-tr-lg z-40 mt-1">
-      <app-sidebar></app-sidebar>
+    <div class="mb-[2px] fixed top-0 w-full z-40">
+      <app-navigation (openEvent)="openSidebar.set(!openSidebar())"></app-navigation>
+
+      <!-- Topbar loading -->
+      @if (loadingService.topLoading()) {
+      <div class="w-screen">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+      }
     </div>
-    }
-    @if(openSidebar() && displayMode() === 'mobile'){
-    <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-30"></div>
-    }
-    <div class="w-full min-h-full p-1 bg-gray-50/50 lg:pl-[200px] mt-7 lg:mt-0">
-      <router-outlet></router-outlet>
+
+    <main class="min-h-screen w-full flex fade50  lg:pt-[60px] pt-[48px]">
+
+      @if(openSidebar()) {
+      <div class="border-r-2 fixed h-full fade_in lg:shadow-none shadow-xl rounded-tr-lg z-40 mt-1">
+        <app-sidebar></app-sidebar>
+      </div>
+      }
+      @if(openSidebar() && displayMode() === 'mobile'){
+      <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-30"></div>
+      }
+      <div class="w-full min-h-full p-1 bg-gray-50/50 lg:pl-[200px] mt-7 lg:mt-0">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+
+    <div class="lg:hidden flex pb-2 z-40 fixed bottom-1 right-0 px-4">
+      <button mat-icon-button [matMenuTriggerFor]="menu"
+        class="mat-elevation-z8 !bg-orange-500 !text-white sm:!w-[70px] sm:!h-[70px] flex items-center justify-center">
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="mb-2">
+        <button mat-menu-item routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2"
+          matTooltip="Entrada de produtos">
+          <mat-icon class="!text-green-500">move_to_inbox</mat-icon>
+          Entrada</button>
+
+        <button mat-menu-item routerLink="/in/track/exit/init" class="!text-blue-500 flex items-center"
+          matTooltip="Saída de produtos">
+          <mat-icon class="!text-blue-500">local_shipping</mat-icon>
+          Saída</button>
+      </mat-menu>
     </div>
-  </main>
 
-  <div class="lg:hidden flex pb-2 z-40 fixed bottom-1 right-0 px-4">
-    <button mat-icon-button [matMenuTriggerFor]="menu"
-      class="mat-elevation-z8 !bg-orange-500 !text-white sm:!w-[70px] sm:!h-[70px] flex items-center justify-center">
-      <mat-icon>add</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu" class="mb-2">
-      <button mat-menu-item routerLink="/in/track/enter" class="!text-green-500 flex items-center mr-2"
-        matTooltip="Entrada de produtos">
-        <mat-icon class="!text-green-500">move_to_inbox</mat-icon>
-        Entrada</button>
-
-      <button mat-menu-item routerLink="/in/track/exit/init" class="!text-blue-500 flex items-center"
-        matTooltip="Saída de produtos">
-        <mat-icon class="!text-blue-500">local_shipping</mat-icon>
-        Saída</button>
-    </mat-menu>
-  </div>
-
-</section>
+  </section>
+</ng-template>
