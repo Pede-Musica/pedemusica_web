@@ -84,7 +84,14 @@
           </td>
 
           <td class="px-6 py-2 min-w-[200px]">
-            <span>{{ item.name }}</span>
+            <div class="flex items-center gap-2">
+              <span>{{ item.name }}</span>
+            @if(item.client_admin) {
+              <div class="text-white bg-blue-700 px-2 rounded-full text-xs">
+                <span>ADM</span>
+              </div>
+            }
+            </div>
           </td>
 
           <td class="px-6 py-2 min-w-[200px]">

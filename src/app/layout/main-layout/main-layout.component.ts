@@ -5,6 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { LoadingService } from '@app/services/common/loading.service';
 import { StoreService } from '@app/services/common/store.service';
+import { UserService } from '@app/services/user/user.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -17,14 +18,15 @@ export class MainLayoutComponent implements OnInit {
 
   public openSidebar = signal(false);
   public displayMode = signal('');
-  public isLoading = signal(true)
+  public isLoading = signal(false)
 
 
   constructor(
     public navigationService: NavigationService,
     private _route: Router,
     public loadingService: LoadingService,
-    public storeService: StoreService
+    public storeService: StoreService,
+    private _userService: UserService
   ) {
     this._route.events.subscribe((val) => {
       if(this.displayMode() === 'mobile') {
@@ -42,6 +44,8 @@ export class MainLayoutComponent implements OnInit {
       this.displayMode.set('mobile')
       this.openSidebar.set(false)
     }
+
+    this.checkPermissions()
   }
 
   @HostListener('window:resize', ['$event'])
@@ -56,5 +60,18 @@ export class MainLayoutComponent implements OnInit {
     }
   }
 
+  public checkPermissions() {
+
+    this.isLoading.set(true)
+
+    this._userService.checkPermission().subscribe(
+      response => {
+        this.navigationService.isClientAdmin.set(response.client_admin ?? false)
+        setTimeout(() => {
+          this.isLoading.set(false)
+        }, 2000)
+      }
+    )
+  }
 
 }

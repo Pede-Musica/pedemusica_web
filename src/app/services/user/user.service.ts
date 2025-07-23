@@ -24,4 +24,8 @@ export class UserService {
   public update(data: any): Observable<any> {
     return this.http.post(`user/update`, data);
   }
+
+  public checkPermission(): Observable<any> {
+    return this.http.get(`user/check-permission`);
+  }
 }

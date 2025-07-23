@@ -5,12 +5,22 @@ interface childProps {
   page: string
   name: string
   icon: string
-  path: string
+  path: string,
+  needAdmin: boolean
 }
 
 interface MenuProps {
   type: string
-  child: childProps[]
+  child: childProps[],
+}
+
+export interface permissionProps {
+  type: string
+  items: {
+    name: string
+    code: string
+    checked: boolean
+  }[]
 }
 
 @Injectable({
@@ -21,6 +31,7 @@ export class NavigationService {
 
   public isOpen = signal(false);
   public hasExits = signal(0);
+  public isClientAdmin = signal(false);
 
   constructor(
     private _registerService: RegisterService
@@ -88,19 +99,22 @@ export class NavigationService {
           page: 'home',
           name: 'Home',
           icon: 'home',
-          path: '/in/home'
+          path: '/in/home',
+          needAdmin: false
         },
         {
           page: 'track',
           name: 'Pedidos',
           icon: 'edit_square',
-          path: '/in/track'
+          path: '/in/track',
+          needAdmin: false
         },
         {
           page: 'table',
           name: 'Mesas',
           icon: 'table_restaurant',
-          path: '/in/table'
+          path: '/in/table',
+          needAdmin: false
         }
       ]
     },
@@ -111,25 +125,29 @@ export class NavigationService {
           page: 'products',
           name: 'Cardápio',
           icon: 'nature',
-          path: '/in/products'
+          path: '/in/products',
+          needAdmin: false
         },
         {
           page: 'users',
           name: 'Usuários',
           icon: 'group',
-          path: '/in/users'
+          path: '/in/users',
+          needAdmin: true
         },
         {
           page: 'sectors',
           name: 'Setores',
           icon: 'account_tree',
-          path: '/in/sectors'
+          path: '/in/sectors',
+          needAdmin: true
         },
         {
           page: 'Sistema',
           name: 'Localizações',
           icon: 'flag',
-          path: '/in/locations'
+          path: '/in/locations',
+          needAdmin: true
         },
       ]
     },
@@ -140,13 +158,15 @@ export class NavigationService {
           page: 'finance',
           name: 'Financeiro',
           icon: 'payments',
-          path: '/in/finance'
+          path: '/in/finance',
+          needAdmin: true
         },
         {
           page: 'monitoring',
           name: 'Relatórios',
           icon: 'insert_chart',
-          path: '/in/monitoring'
+          path: '/in/monitoring',
+          needAdmin: true
         }
         // {
         //   page: 'settings',
@@ -157,4 +177,50 @@ export class NavigationService {
       ]
     }
   ]
+
+
+  public permissions: permissionProps[] = [
+    {
+      type: 'Home',
+      items: [
+        {
+          name: 'Abrir/Fechar loja',
+          code: 'H1',
+          checked: false
+        },
+        {
+          name: 'Abrir/Fechar delivery',
+          code: 'H2',
+          checked: false
+        }
+      ]
+    },
+    {
+      type: 'Pedidos',
+      items: [
+        {
+          name: 'Gerenciar pedidos',
+          code: 'O1',
+          checked: false
+        },
+        {
+          name: 'Abrir pedido (Web e App)',
+          code: 'O2',
+          checked: false
+        }
+      ]
+    },
+    {
+      type: 'Mesas',
+      items: [
+        {
+          name: 'Gerenciar mesas',
+          code: 'T1',
+          checked: false
+        },
+      ]
+    }
+  ]
 }
+
+

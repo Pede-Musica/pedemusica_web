@@ -10,6 +10,7 @@ import { UserService } from '@app/services/user/user.service';
 interface userProps {
   id: string
   is_active: boolean
+  client_admin: boolean
   name: string
   email: string
   phone: string

@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from '@app/services/common/dialog.service';
-import { NavigationService } from '@app/services/common/navigation.service';
+import { NavigationService, permissionProps } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
 import { PersonService } from '@app/services/user/person.service';
 import { UserService } from '@app/services/user/user.service';
@@ -21,6 +21,7 @@ export class UserFormComponent {
   public form: FormGroup;
   public user_id = signal('');
   public allPermissionChecked = signal(false);
+  public permissionList: Array<permissionProps> = []
 
   constructor(
     public navigationService: NavigationService,
@@ -34,13 +35,13 @@ export class UserFormComponent {
     this.form = this._formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]],
-      phone2: [''],
+      phone: ['', [Validators.required, Validators.minLength(10)]],
+      phone2: ['', [Validators.minLength(10)]],
       address: [''],
       type: [1, [Validators.required]],
       cpf_cnpj: ['', [Validators.required]],
-      is_active: [false, Validators.required],
-      client_admin: [false, Validators.required]
+      isActive: [true, Validators.required],
+      clientAdmin: [false, Validators.required]
     });
 
   }
@@ -55,6 +56,8 @@ export class UserFormComponent {
     } else {
       document.title = 'Novo usuário'
     }
+
+    this.permissionList = [...this.navigationService.permissions]
   }
 
 
@@ -66,6 +69,18 @@ export class UserFormComponent {
     return this.form.get(['type'])?.value;
   }
 
+  get phoneMask(): string {
+    const value = this.form.get('phone')?.value || '';
+    const numbers = value.replace(/\D/g, '');
+    return numbers.length > 10 ? '(00) 00000-0000' : '(00) 0000-00009';
+  }
+
+  get phoneMask2(): string {
+    const value = this.form.get('phone2')?.value || '';
+    const numbers = value.replace(/\D/g, '');
+    return numbers.length > 10 ? '(00) 00000-0000' : '(00) 0000-00009';
+  }
+
   public detail(id: string) {
     this.isLoading.set(true);
 
@@ -73,6 +88,7 @@ export class UserFormComponent {
       data => {
         this.form.patchValue(data);
         document.title = data?.name ?? 'Editar usuário';
+        this.form.controls['email'].disable()
         this.isLoading.set(false);
       },
       error => {
@@ -86,6 +102,7 @@ export class UserFormComponent {
 
     if (this.form.invalid) {
       this.showError.set(true)
+      console.log(this.form.invalid)
       return
     }
 
@@ -93,6 +110,8 @@ export class UserFormComponent {
 
     const data = this.form.value;
     data.isUser = true;
+
+    const permissions = this.permissionList;
 
     let observable: Observable<any>;
 
@@ -107,7 +126,7 @@ export class UserFormComponent {
       response => {
         const dialogRef = this.dialogService.open(
           true,
-          'Usuário criado com sucesso!', 'success', `Um e-mail foi enviado para ${data.email} para realizar o primeiro acesso. Verifique a caixa de spam.`
+          response.message, 'success', `Um e-mail foi enviado para ${data.email} para realizar o primeiro acesso. Verifique a caixa de spam.`
         )
         this._router.navigate([this.navigationService.getPATH('users')]);
       },
@@ -119,7 +138,25 @@ export class UserFormComponent {
   }
 
   public setPermission(event: any) {
-    const toggle = event.checked;
-    this.allPermissionChecked.set(toggle)
+    const checked = event.checked;
+    this.allPermissionChecked.set(checked)
+
+    this.permissionList.map(p => {
+      p.items.map(i => {
+        i.checked = checked
+      })
+    })
+  }
+
+  public updatePermission(event: any, code: string) {
+    const { checked } = event;
+
+    this.permissionList.map(p => {
+      p.items.map(i => {
+        if(i.code === code) {
+          i.checked = checked
+        }
+      })
+    })
   }
 }
