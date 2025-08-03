@@ -7,13 +7,81 @@
 </section>
 
 <ng-template #mainTemplate>
-  <div class="mb-4 flex items-center justify-between">
+  <div class="mb-4">
     <div class="mr-2">
-      <app-title [text]="title" [icon]="icon"></app-title>
-    </div>
+      <div class="mb-5">
+        <app-title [text]="title" [icon]="icon"></app-title>
+      </div>
 
-    <div>
-      <app-loader></app-loader>
+      <div class="w-full">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="mr-1 text-gray-500">list</mat-icon>
+              Lista de pedidos ({{ requestList.length ? requestList.length : '' }})
+            </ng-template>
+            <ng-container *ngTemplateOutlet="ListTemplate"></ng-container>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="mr-1 text-yellow-500">star</mat-icon>
+              Favoritos ({{ favoriteList.length ? favoriteList.length : '' }})
+            </ng-template>
+            <ng-container *ngTemplateOutlet="FavoriteTemplate"></ng-container>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #ListTemplate>
+  <div class="p-2">
+    @for (item of requestList; track $index) {
+    <mat-card class="px-4 py-1.5 mb-2" appearance="raised">
+      <div class="flex">
+        <div class="flex items-center px-2 hover:scale-125">
+          <mat-icon fontIcon="star" type="button" class="hover:text-yellow-400 hover:cursor-pointer text-gray-400" matTooltip="Favoritar música" [ngClass]="{'text-yellow-400' : item.favorite }" (click)="favoriteRequest(item.id, item.favorite)"></mat-icon>
+        </div>
+        <div>
+          <div>
+            <span class="text-xs text-gray-500">{{ regex.convertToBRTime(item.created_at) }} - {{ item.user_name ? item.user_name : 'Anônimo' }}</span>
+          </div>
+          <div class="text-xs">
+            <span>Música: {{ item.song_name }}</span>
+          </div>
+          <div class="text-xs">
+            <span>Mesa: {{ item.table ? item.table : '---' }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    }
+  </div>
+</ng-template>
+
+<ng-template #FavoriteTemplate>
+  <div class="p-2">
+    @for (item of favoriteList; track $index) {
+    <mat-card class="px-4 py-1.5 mb-2" appearance="raised">
+      <div class="flex">
+        <div class="flex items-center px-2 hover:scale-125">
+          <mat-icon fontIcon="star" type="button" class="hover:text-yellow-400 hover:cursor-pointer text-gray-400" matTooltip="Favoritar música" [ngClass]="{'text-yellow-400' : item.favorite }" (click)="favoriteRequest(item.id, item.favorite)"></mat-icon>
+        </div>
+        <div>
+          <div>
+            <span class="text-xs text-gray-500">Pedido {{ item.id }} - {{ item.user_name ? item.user_name : 'Anônimo' }} - {{ regex.convertToBRTime(item.created_at) }}</span>
+          </div>
+          <div class="text-xs">
+            <span>Música: {{ item.song_name }}</span>
+          </div>
+          <div class="text-xs">
+            <span>Mesa: {{ item.table }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    }
   </div>
 </ng-template>

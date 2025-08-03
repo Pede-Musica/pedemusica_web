@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    document.title = 'Hangodash - Login';
+    document.title = 'Pede Música - Login';
     const latestUser = localStorage.getItem('lastUser');
     if(latestUser){
       this.form.patchValue({ email: String(latestUser) })

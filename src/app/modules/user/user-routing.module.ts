@@ -11,27 +11,10 @@ import { UserFormComponent } from './register/user/user-form/user-form.component
 
 const routes: Routes = [
 
-  { path: 'home', component: HomeComponent },
-
-
-  // Cadastros
-  { path: 'users', component: UserListComponent },
-  { path: 'users/new', component: UserFormComponent },
-  { path: 'users/:id', component: UserFormComponent },
-
-  { path: 'products', component: ProductListComponent },
-  { path: 'products/new', component: ProductFormComponent },
-  { path: 'products/:id', component: ProductFormComponent },
-
-  { path: 'profiles', component: ProfileListComponent },
-  { path: 'profiles/new', component: ProfileFormComponent },
-  { path: 'profiles/:id', component: ProfileFormComponent },
-
-  { path: 'setting', component: SettingComponent },
-
+  { path: 'requests', component: HomeComponent },
   {
     path: '**',
-    redirectTo: 'track',
+    redirectTo: 'requests',
     pathMatch: 'full'
   }
 ];

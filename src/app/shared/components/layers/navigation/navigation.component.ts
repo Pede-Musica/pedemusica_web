@@ -16,7 +16,7 @@ export class NavigationComponent implements OnInit {
   @Output() openEvent = new EventEmitter<boolean>();
   public user_name = signal('');
   public open = signal(true);
-  public client_name = signal('Capivara Coffee');
+  public client_name = signal('Nosso Quintal');
 
   constructor(
     public imagesService: ImagesService,

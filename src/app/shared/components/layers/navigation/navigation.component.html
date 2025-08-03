@@ -8,21 +8,16 @@
         </button>
       </div>
       <div [routerLink]="navigationService.getPATH('track')" class="hover:bg-gray-100 hover:scale-105 rounded-md hover:cursor-pointer">
-        <img [src]="imagesService.logo" alt="" class="h-[45px]">
+        <img [src]="imagesService.pedeMusicaLogo" alt="" class="h-[45px]">
       </div>
       <div class="bg-gray-400 h-[40px] w-[1px] mx-4 hidden lg:flex"></div>
       <div class="pt-2 hidden lg:flex items-center">
         <span class="text-gray-600 font-medium">{{ client_name() }}</span>
-        <ng-component *ngTemplateOutlet="openStatusBadge"></ng-component>
+        <!-- <ng-component *ngTemplateOutlet="openStatusBadge"></ng-component> -->
       </div>
     </div>
 
     <div class="flex justify-end items-center px-2">
-      <div class="mr-4">
-        <button mat-icon-button routerLink="/in/track/exit/list">
-          <mat-icon>note_add</mat-icon>
-        </button>
-      </div>
       <div class="lg:flex hidden">
         <button mat-button [matMenuTriggerFor]="menu" class="!text-black">
           <mat-icon>person</mat-icon>
@@ -46,10 +41,10 @@
     </div>
   </div>
 
-  <div class="flex lg:hidden justify-center min-w-[100px] items-center p-1 bg-gray-50 shadow-md">
+  <!-- <div class="flex lg:hidden justify-center min-w-[100px] items-center p-1 bg-gray-50 shadow-md">
     <span class="text-gray-500 font-medium text-sm">{{ client_name() }}</span>
     <ng-component *ngTemplateOutlet="openStatusBadge"></ng-component>
-  </div>
+  </div> -->
 </nav>
 
 

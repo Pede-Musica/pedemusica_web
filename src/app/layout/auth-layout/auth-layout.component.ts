@@ -17,7 +17,7 @@ export class AuthLayoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    console.log('working')
   }
 
 

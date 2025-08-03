@@ -33,7 +33,7 @@ export class AuthService {
     localStorage.removeItem('user_data');
     localStorage.removeItem('expires_in');
 
-    this.router.navigate(['auth/login']);
+    this.router.navigate(['admin/login']);
   }
 
   public getToken(): string | null{

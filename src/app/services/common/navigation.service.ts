@@ -96,86 +96,14 @@ export class NavigationService {
       type: '',
       child: [
         {
-          page: 'home',
-          name: 'Home',
-          icon: 'home',
-          path: '/in/home',
-          needAdmin: false
-        },
-        {
-          page: 'track',
+          page: 'requests',
           name: 'Pedidos',
-          icon: 'edit_square',
-          path: '/in/track',
+          icon: 'music_note',
+          path: '/in/requests',
           needAdmin: false
-        },
-        {
-          page: 'table',
-          name: 'Mesas',
-          icon: 'table_restaurant',
-          path: '/in/table',
-          needAdmin: false
-        }
-      ]
-    },
-    {
-      type: 'Cadastros',
-      child: [
-        {
-          page: 'products',
-          name: 'Cardápio',
-          icon: 'nature',
-          path: '/in/products',
-          needAdmin: false
-        },
-        {
-          page: 'users',
-          name: 'Usuários',
-          icon: 'group',
-          path: '/in/users',
-          needAdmin: true
-        },
-        {
-          page: 'sectors',
-          name: 'Setores',
-          icon: 'account_tree',
-          path: '/in/sectors',
-          needAdmin: true
-        },
-        {
-          page: 'Sistema',
-          name: 'Localizações',
-          icon: 'flag',
-          path: '/in/locations',
-          needAdmin: true
         },
       ]
     },
-    {
-      type: 'Sistema',
-      child: [
-        {
-          page: 'finance',
-          name: 'Financeiro',
-          icon: 'payments',
-          path: '/in/finance',
-          needAdmin: true
-        },
-        {
-          page: 'monitoring',
-          name: 'Relatórios',
-          icon: 'insert_chart',
-          path: '/in/monitoring',
-          needAdmin: true
-        }
-        // {
-        //   page: 'settings',
-        //   name: 'Configurações',
-        //   icon: 'settings',
-        //   path: '/in/setting'
-        // }
-      ]
-    }
   ]
 
 

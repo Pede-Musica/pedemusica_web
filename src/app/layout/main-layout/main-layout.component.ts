@@ -45,7 +45,7 @@ export class MainLayoutComponent implements OnInit {
       this.openSidebar.set(false)
     }
 
-    this.checkPermissions()
+    this.openSidebar.set(false)
   }
 
   @HostListener('window:resize', ['$event'])
@@ -60,18 +60,5 @@ export class MainLayoutComponent implements OnInit {
     }
   }
 
-  public checkPermissions() {
-
-    this.isLoading.set(true)
-
-    this._userService.checkPermission().subscribe(
-      response => {
-        this.navigationService.isClientAdmin.set(response.client_admin ?? false)
-        setTimeout(() => {
-          this.isLoading.set(false)
-        }, 2000)
-      }
-    )
-  }
 
 }

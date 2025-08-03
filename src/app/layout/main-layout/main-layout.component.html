@@ -27,15 +27,15 @@
 
       <main class="min-h-screen w-full flex fade50  lg:pt-[60px] pt-[48px]">
 
-        @if(openSidebar()) {
+        <!-- @if(openSidebar()) {
         <div class="border-r-2 fixed h-full fade_in lg:shadow-none shadow-xl rounded-tr-lg z-40 mt-1">
           <app-sidebar></app-sidebar>
         </div>
         }
         @if(openSidebar() && displayMode() === 'mobile'){
         <div (click)="openSidebar.set(false)" class="w-screen h-screen absolute bg-black/20 backdrop-blur-sm z-30"></div>
-        }
-        <div class="w-full min-h-full p-1 bg-gray-50/50 lg:pl-[200px] mt-7 lg:mt-0">
+        } -->
+        <div class="w-full min-h-full p-1 bg-gray-50/50 mt-7 lg:mt-0">
           <router-outlet></router-outlet>
         </div>
       </main>
