@@ -10,6 +10,6 @@ RUN ls -la /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY mime.types /etc/nginx/mime.types
 RUN chmod -R 755 /usr/share/nginx/html
-EXPOSE 4200
+EXPOSE 4250
 
 CMD ["nginx", "-g", "daemon off;"]
