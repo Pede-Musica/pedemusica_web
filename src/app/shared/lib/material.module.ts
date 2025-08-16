@@ -26,7 +26,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatChipsModule} from '@angular/material/chips';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [],
@@ -58,7 +58,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatBadgeModule,
     MatChipsModule,
     ClipboardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ],
   exports: [
     MatInputModule,
@@ -87,7 +88,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatBadgeModule,
     MatChipsModule,
     ClipboardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule { }

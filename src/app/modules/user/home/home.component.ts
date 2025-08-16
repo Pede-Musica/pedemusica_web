@@ -4,6 +4,15 @@ import { LoadingService } from '@app/services/common/loading.service';
 import { NavigationService } from '@app/services/common/navigation.service';
 import { SnackbarService } from '@app/services/common/snackbar.service';
 import { RequestService } from '@app/services/user/request.service';
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 
 interface Request {
   id: number
@@ -22,9 +31,12 @@ interface Request {
 export class HomeComponent implements OnInit {
 
   public pathname = window.location.pathname;
-  public isLoading = signal(true);
+  public isLoading = signal(false);
   public requestList: Request[] = [];
   public favoriteList: Request[] = [];
+  public filter = new FormControl('today');
+  public favorite = false;
+
 
   constructor(
     public navigationService: NavigationService,
@@ -35,13 +47,14 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    document.title = 'Pedidos'
-    this.isLoading.set(false);
+    document.title = 'Pedidos';
 
-    this.getRequests();
+    this.isLoading.set(true);
+
+    this.getRequests(this.filter.value!, this.favorite);
 
     setInterval(() => {
-      this.getRequests();
+      this.getRequests(this.filter.value!, this.favorite);
     }, 5000)
 
   }
@@ -54,13 +67,17 @@ export class HomeComponent implements OnInit {
     return this.navigationService.getIcon('requests');
   }
 
-  public getRequests() {
-    const data = {};
+  public getRequests(filter: string, favorite: boolean) {
 
-    this._requestServices.paginate(data).subscribe(
+    const params = {
+      filter: filter,
+      favorite: favorite
+    };
+
+    this._requestServices.paginate(params).subscribe(
       data => {
         this.requestList = data.requests;
-        this.favoriteList = data.favorites
+        this.isLoading.set(false);
       }
     )
   }
@@ -79,7 +96,7 @@ export class HomeComponent implements OnInit {
         } else {
           this._snackService.open('Música adicionada na lista de favoritos');
         }
-        this.getRequests()
+        this.getRequests(this.filter.value!, this.favorite)
       },
       excp => {
         this._snackService.open('Falha ao atualizar música');
@@ -88,5 +105,16 @@ export class HomeComponent implements OnInit {
         }, 1500)
       }
     )
+  }
+
+  public filterRequests(selected: MatSelectChange) {
+    this.filter.setValue(selected.value)
+    this.getRequests(selected.value, this.favorite)
+  }
+
+  public filterRequestsType(selected: any) {
+    const favoriteValue = selected === 'favorites' ? true : false
+    this.favorite = favoriteValue
+    this.getRequests(this.filter.value!, favoriteValue)
   }
 }
