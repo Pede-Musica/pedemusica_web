@@ -17,8 +17,8 @@ export class RequestService {
     return this.http.get(`request/paginate`, { params });
   }
 
-  public updateFavorite(data: any): Observable<any> {
-    return this.http.post(`request/favorite`, data);
+  public update(data: any): Observable<any> {
+    return this.http.post(`request/update`, data);
   }
 
 }

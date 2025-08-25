@@ -18,6 +18,7 @@ interface Request {
   id: number
   song_name: string
   favorite: boolean
+  done: boolean
   created_at: string
   table: string
   user_name: string
@@ -82,20 +83,16 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  public favoriteRequest(id: any, favorite: boolean) {
+  public update(id: any, change: string) {
 
     const data = {
       id: id,
-      favorite: !favorite
+      change: change
     }
 
-    this._requestServices.updateFavorite(data).subscribe(
+    this._requestServices.update(data).subscribe(
       response => {
-        if (favorite) {
-          this._snackService.open('Música retirada da lista de favoritos');
-        } else {
-          this._snackService.open('Música adicionada na lista de favoritos');
-        }
+        this._snackService.open(response.message);
         this.getRequests(this.filter.value!, this.favorite)
       },
       excp => {
@@ -107,9 +104,11 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  public filterRequests(selected: MatSelectChange) {
-    this.filter.setValue(selected.value)
-    this.getRequests(selected.value, this.favorite)
+  public filterRequests(selected: Event) {
+    const selectedValue = (selected.target as HTMLSelectElement).value;
+    console.log(selectedValue)
+    this.filter.setValue(selectedValue)
+    this.getRequests(selectedValue, this.favorite)
   }
 
   public filterRequestsType(selected: any) {
